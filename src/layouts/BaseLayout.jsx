@@ -2,8 +2,11 @@ import { Layout } from "antd";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
+import { useMessage } from "../utils/messageUtils";
 
 export default function BaseLayout() {
+  const messageContextHolder = useMessage();
+
   return (
     <Layout
       style={{
@@ -17,10 +20,11 @@ export default function BaseLayout() {
         overflow: "hidden",
       }}
     >
+      {messageContextHolder}
       <Sidebar />
       <Layout>
         <Header />
-        <Layout.Content style={{ overflow: "auto" }}>
+        <Layout.Content style={{ overflow: "auto", marginTop: 10 }}>
           <Outlet />
         </Layout.Content>
       </Layout>
