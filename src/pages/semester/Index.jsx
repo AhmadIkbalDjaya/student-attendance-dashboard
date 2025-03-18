@@ -14,7 +14,7 @@ export default function IndexSemesterPage() {
       const result = await getAllSemester();
       setSemesters(result.data);
     } catch (error) {
-      showMessage({ type: "error", content: "Failed Get Data" });
+      showMessage({ type: "error", content: error.message });
     }
   };
 
@@ -22,10 +22,11 @@ export default function IndexSemesterPage() {
     try {
       await deleteSemester(id);
       fetchData();
-      handleCloseDeleteModal();
       showMessage({ type: "success", content: "Semester Deleted" });
     } catch (error) {
-      showMessage({ type: "error", content: "Failed Delete Semester" });
+      showMessage({ type: "error", content: error.message });
+    } finally {
+      handleCloseDeleteModal();
     }
   };
 
