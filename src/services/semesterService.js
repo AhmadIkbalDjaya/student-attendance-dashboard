@@ -1,14 +1,11 @@
 import apiClient from "../config/api";
+import handleApiError from "../helpers/handleApiError";
 export const getAllSemester = async () => {
   try {
-    const response = await apiClient.get("/admin/semesterr");
+    const response = await apiClient.get("/admin/semester");
     return response.data;
   } catch (error) {
-    let errorMessage = "Failed Get Data";
-    if (error.response && error.response.data && error.response.data.message) {
-      errorMessage = error.response.data.message;
-    }
-    throw new Error(errorMessage);
+    return handleApiError(error);
   }
 };
 
@@ -17,10 +14,6 @@ export const deleteSemester = async (id) => {
     const response = await apiClient.delete(`/admin/semester/${id}`);
     return response.data;
   } catch (error) {
-    let errorMessage = "Failed to delete semester";
-    if (error.response && error.response.data && error.response.data.message) {
-      errorMessage = error.response.data.message;
-    }
-    throw new Error(errorMessage);
+    return handleApiError(error, "Deleted failed");
   }
 };

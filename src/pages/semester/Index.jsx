@@ -22,7 +22,7 @@ export default function IndexSemesterPage() {
     try {
       await deleteSemester(id);
       fetchData();
-      showMessage({ type: "success", content: "Semester Deleted" });
+      showMessage({ type: "success", content: "Deleted successfully" });
     } catch (error) {
       showMessage({ type: "error", content: error.message });
     } finally {
