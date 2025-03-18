@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DashboardPage from "./pages/Dashboard";
-import BaseLayout from "./layouts/Base";
+import BaseLayout from "./layouts/BaseLayout";
+import IndexSemesterPage from "./pages/semester/Index";
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<BaseLayout />}>
           <Route index element={<DashboardPage />} />
+          <Route path="/semester" element={<IndexSemesterPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
