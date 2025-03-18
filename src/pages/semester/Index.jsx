@@ -5,11 +5,26 @@ import {
   IconPlus,
   IconTrash,
 } from "@tabler/icons-react";
-import { Button, Flex, Modal, Space, Table, Typography } from "antd";
-import { useState } from "react";
+import { Button, Flex, message, Modal, Space, Table, Typography } from "antd";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
+import { deleteSemester, getAllSemester } from "../../services/semesterService";
+
 export default function IndexSemesterPage() {
+  const [messageApi, contextHolder] = message.useMessage();
+  const showMessage = ({ type, content }) => {
+    messageApi.open({
+      type,
+      content,
+      style: {
+        marginTop: "20px",
+      },
+    });
+  };
+
+  const [semesters, setSemesters] = useState([]);
+
   const [deleteData, setDeleteData] = useState({
     show: false,
     record: null,
@@ -29,6 +44,30 @@ export default function IndexSemesterPage() {
     });
   };
 
+  const fetchData = async () => {
+    try {
+      const result = await getAllSemester();
+      setSemesters(result.data);
+    } catch (error) {
+      showMessage({ type: "error", content: "Failed Get Data" });
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteSemester(id);
+      fetchData();
+      handleCloseDeleteModal();
+      showMessage({ type: "error", content: "Semester Deleted" });
+    } catch (error) {
+      showMessage({ type: "error", content: "Failed Semester Deleted" });
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const columns = [
     {
       title: "Start Year",
@@ -42,8 +81,9 @@ export default function IndexSemesterPage() {
     },
     {
       title: "Category",
-      dataIndex: "odd_event",
+      dataIndex: "odd_even",
       key: "odd_event",
+      render: (value) => (value == 1 ? "Odd" : "Even"),
     },
     {
       title: "Active",
@@ -78,33 +118,22 @@ export default function IndexSemesterPage() {
     },
   ];
 
-  const dummyDatas = [
-    {
-      key: "1",
-      start_year: "2022",
-      end_year: "2023",
-      odd_event: "Genap",
-      is_active: 1,
-    },
-    {
-      key: "2",
-      start_year: "2022",
-      end_year: "2023",
-      odd_event: "Genap",
-      is_active: 0,
-    },
-  ];
-
   return (
     <>
       <div style={{ marginTop: "10px" }}>
+        {contextHolder}
         <Typography.Title level={3}>Semester</Typography.Title>
         <Flex justify="end" align="center" style={{ marginBottom: "10px" }}>
           <Button type="primary" icon={<IconPlus />}>
             Create
           </Button>
         </Flex>
-        <Table columns={columns} dataSource={dummyDatas} pagination={false} />
+        <Table
+          columns={columns}
+          dataSource={semesters}
+          pagination={false}
+          rowKey={"id"}
+        />
       </div>
 
       <Modal
@@ -115,6 +144,7 @@ export default function IndexSemesterPage() {
         closeIcon={null}
         okType="danger"
         okText="Yes"
+        onOk={() => handleDelete(deleteData.record.id)}
         width={{
           xs: "90%",
           sm: "80%",

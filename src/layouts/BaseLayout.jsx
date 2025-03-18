@@ -20,7 +20,9 @@ export default function BaseLayout() {
       <Sidebar />
       <Layout>
         <Header />
-        <Outlet />
+        <Layout.Content style={{ overflow: "auto" }}>
+          <Outlet />
+        </Layout.Content>
       </Layout>
     </Layout>
   );
