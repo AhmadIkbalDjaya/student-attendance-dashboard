@@ -10,12 +10,17 @@ import { NavLink } from "react-router-dom";
 
 export default function IndexSemesterPage() {
   const [semesters, setSemesters] = useState([]);
+  const [getLoading, setGetLoading] = useState(false);
+
   const fetchData = async () => {
     try {
+      setGetLoading(true);
       const result = await getAllSemester();
       setSemesters(result.data);
     } catch (error) {
       showMessage({ type: "error", content: error.message });
+    } finally {
+      setGetLoading(false);
     }
   };
 
@@ -86,7 +91,10 @@ export default function IndexSemesterPage() {
       fixed: "right",
       width: 150,
       render: (_, record) => (
-        <TableAction handleDelete={() => handleOpenDeleteModal(record)} />
+        <TableAction
+          editLink={`/semester/${record.id}/edit`}
+          handleDelete={() => handleOpenDeleteModal(record)}
+        />
       ),
     },
   ];
@@ -106,6 +114,7 @@ export default function IndexSemesterPage() {
         dataSource={semesters}
         pagination={false}
         rowKey={"id"}
+        loading={getLoading}
       />
 
       <DeleteModal
