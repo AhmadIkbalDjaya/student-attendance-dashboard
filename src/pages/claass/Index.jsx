@@ -1,7 +1,7 @@
-import { Button, Flex, Table, Typography } from "antd";
+import { Breadcrumb, Button, Flex, Table, Typography } from "antd";
+import { Link, NavLink } from "react-router-dom";
 import { IconPlus } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
 
 import { deleteClaass, getAllClaasses } from "../../services/claassService";
 import DeleteModal from "../../components/DeleteModal";
@@ -89,8 +89,18 @@ export default function IndexClaassPage() {
     },
   ];
 
+  const breadcrumbItems = [
+    {
+      title: <Link to="/">Dashboard</Link>,
+    },
+    {
+      title: "Class",
+    },
+  ];
+
   return (
     <>
+      <Breadcrumb separator=">" items={breadcrumbItems} />
       <Typography.Title level={3}>Class</Typography.Title>
       <Flex justify="end" align="center" style={{ marginBottom: "10px" }}>
         <NavLink to="/claass/create">

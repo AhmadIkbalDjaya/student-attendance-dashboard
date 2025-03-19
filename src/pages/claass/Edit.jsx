@@ -1,9 +1,9 @@
-import { Button, Flex, Form, Typography } from "antd";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Breadcrumb, Button, Flex, Form, Typography } from "antd";
 import { useEffect, useState } from "react";
 
-import { showMessage } from "../../utils/messageUtils";
 import { getClaass, updateClaass } from "../../services/claassService";
+import { showMessage } from "../../utils/messageUtils";
 import ClaassForm from "./components/ClaassForm";
 
 export default function EditClaassPage() {
@@ -37,8 +37,21 @@ export default function EditClaassPage() {
     fetchClaass();
   }, []);
 
+  const breadcrumbItems = [
+    {
+      title: <Link to="/">Dashboard</Link>,
+    },
+    {
+      title: <Link to="/claass">Class</Link>,
+    },
+    {
+      title: "Edit Class",
+    },
+  ];
+
   return (
     <>
+      <Breadcrumb separator=">" items={breadcrumbItems} />
       <Flex justify="space-between" style={{ margin: "10px 0" }}>
         <Typography.Title level={3}>Create Class</Typography.Title>
         <Flex gap={10}>

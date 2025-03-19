@@ -1,11 +1,10 @@
-import { Button, Flex, Form, Typography } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Breadcrumb, Button, Flex, Form, Typography } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import { createSemester } from "../../services/semesterService";
 import { showMessage } from "../../utils/messageUtils";
 import SemesterForm from "./components/SemesterForm";
-
 
 export default function CreateSemesterPage() {
   const navigate = useNavigate();
@@ -24,8 +23,20 @@ export default function CreateSemesterPage() {
     }
   };
 
+  const breadcrumbItems = [
+    {
+      title: <Link to="/">Dashboard</Link>,
+    },
+    {
+      title: <Link to="/semester">Semester</Link>,
+    },
+    {
+      title: "Create Semester",
+    },
+  ];
   return (
     <>
+      <Breadcrumb separator=">" items={breadcrumbItems} />
       <Flex justify="space-between" style={{ margin: "10px 0" }}>
         <Typography.Title level={3}>Create Semester</Typography.Title>
         <Flex gap={10}>

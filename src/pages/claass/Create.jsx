@@ -1,5 +1,5 @@
-import { Button, Flex, Form, Typography } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Breadcrumb, Button, Flex, Form, Typography } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import { createClaass } from "../../services/claassService";
@@ -22,9 +22,21 @@ export default function CreateClaassPage() {
       setSubmitLoading(false);
     }
   };
+  const breadcrumbItems = [
+    {
+      title: <Link to="/">Dashboard</Link>,
+    },
+    {
+      title: <Link to="/claass">Class</Link>,
+    },
+    {
+      title: "Create Class",
+    },
+  ];
 
   return (
     <>
+      <Breadcrumb separator=">" items={breadcrumbItems} />
       <Flex justify="space-between" style={{ margin: "10px 0" }}>
         <Typography.Title level={3}>Create Class</Typography.Title>
         <Flex gap={10}>

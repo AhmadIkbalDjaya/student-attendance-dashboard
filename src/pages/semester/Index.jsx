@@ -1,7 +1,15 @@
 import { IconCircleCheck, IconCircleX, IconPlus } from "@tabler/icons-react";
-import { Button, Flex, Modal, Popover, Table, Typography } from "antd";
+import { Link, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import {
+  Breadcrumb,
+  Button,
+  Flex,
+  Modal,
+  Popover,
+  Table,
+  Typography,
+} from "antd";
 
 import {
   deleteSemester,
@@ -130,8 +138,18 @@ export default function IndexSemesterPage() {
     },
   ];
 
+  const breadcrumbItems = [
+    {
+      title: <Link to="/">Dashboard</Link>,
+    },
+    {
+      title: "Semester",
+    },
+  ];
+
   return (
     <>
+      <Breadcrumb separator=">" items={breadcrumbItems} />
       <Typography.Title level={3}>Semester</Typography.Title>
       <Flex justify="end" align="center" style={{ marginBottom: "10px" }}>
         <NavLink to="/semester/create">

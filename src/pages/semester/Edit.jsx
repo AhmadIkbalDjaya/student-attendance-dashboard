@@ -1,5 +1,5 @@
-import { Button, Flex, Form, Typography } from "antd";
-import { useNavigate, useParams } from "react-router-dom";
+import { Breadcrumb, Button, Flex, Form, Typography } from "antd";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { getSemester, updateSemester } from "../../services/semesterService";
@@ -37,8 +37,20 @@ export default function EditSemesterPage() {
     fetchSemester();
   }, []);
 
+  const breadcrumbItems = [
+    {
+      title: <Link to="/">Dashboard</Link>,
+    },
+    {
+      title: <Link to="/semester">Semester</Link>,
+    },
+    {
+      title: "Edit Semester",
+    },
+  ];
   return (
     <>
+      <Breadcrumb separator=">" items={breadcrumbItems} />
       <Flex justify="space-between" style={{ margin: "10px 0" }}>
         <Typography.Title level={3}>Edit Semester</Typography.Title>
         <Flex gap={10}>
