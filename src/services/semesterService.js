@@ -47,3 +47,12 @@ export const deleteSemester = async (id) => {
     return handleApiError(error, "Deleted failed");
   }
 };
+
+export const setActiveSemester = async (id) => {
+  try {
+    const response = await apiClient.get(`/admin/semester/${id}/setActive`);
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};

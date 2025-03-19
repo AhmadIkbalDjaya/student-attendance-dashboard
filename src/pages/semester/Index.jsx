@@ -1,12 +1,16 @@
 import { IconCircleCheck, IconCircleX, IconPlus } from "@tabler/icons-react";
-import { Button, Flex, Table, Typography } from "antd";
+import { Button, Flex, Modal, Popover, Table, Typography } from "antd";
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 
-import { deleteSemester, getAllSemester } from "../../services/semesterService";
+import {
+  deleteSemester,
+  getAllSemester,
+  setActiveSemester,
+} from "../../services/semesterService";
 import DeleteModal from "../../components/DeleteModal";
 import TableAction from "../../components/TableAction";
 import { showMessage } from "../../utils/messageUtils";
-import { NavLink } from "react-router-dom";
 
 export default function IndexSemesterPage() {
   const [semesters, setSemesters] = useState([]);
@@ -59,6 +63,23 @@ export default function IndexSemesterPage() {
     });
   };
 
+  const handleSetActiveSemester = (semesterId) => {
+    Modal.confirm({
+      title: "Are you sure set active this senester?",
+      okText: "Yes",
+      centered: true,
+      onOk: async () => {
+        try {
+          await setActiveSemester(semesterId);
+          fetchData();
+          showMessage({ type: "success", content: "Set active successfully" });
+        } catch (error) {
+          showMessage({ type: "error", content: error.message });
+        }
+      },
+    });
+  };
+
   const columns = [
     {
       title: "Start Year",
@@ -94,7 +115,17 @@ export default function IndexSemesterPage() {
         <TableAction
           editLink={`/semester/${record.id}/edit`}
           handleDelete={() => handleOpenDeleteModal(record)}
-        />
+        >
+          {!record.is_active && (
+            <Popover content="Set active semester">
+              <Button
+                onClick={() => handleSetActiveSemester(record.id)}
+                type="text"
+                icon={<IconCircleCheck color="green" />}
+              />
+            </Popover>
+          )}
+        </TableAction>
       ),
     },
   ];

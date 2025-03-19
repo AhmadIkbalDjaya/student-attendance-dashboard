@@ -12,9 +12,11 @@ function App() {
       <Routes>
         <Route path="/" element={<BaseLayout />}>
           <Route index element={<DashboardPage />} />
-          <Route path="/semester" element={<IndexSemesterPage />} />
-          <Route path="/semester/create" element={<CreateSemesterPage />} />
-          <Route path="/semester/:id/edit" element={<EditSemesterPage />} />
+          <Route path="semester">
+            <Route path="" element={<IndexSemesterPage />} />
+            <Route path="create" element={<CreateSemesterPage />} />
+            <Route path=":id/edit" element={<EditSemesterPage />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

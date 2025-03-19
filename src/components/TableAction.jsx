@@ -1,8 +1,13 @@
 import { IconEdit, IconTrash } from "@tabler/icons-react";
 import { NavLink } from "react-router-dom";
-import { Button, Space } from "antd";
+import { Button, Popover, Space } from "antd";
 
-export default function TableAction({ handleDelete, onClickEdit, editLink }) {
+export default function TableAction({
+  handleDelete,
+  onClickEdit,
+  editLink,
+  children,
+}) {
   const editButton = (
     <Button
       type="text"
@@ -13,12 +18,17 @@ export default function TableAction({ handleDelete, onClickEdit, editLink }) {
 
   return (
     <Space align="center" size={0}>
-      {editLink ? <NavLink to={editLink}>{editButton}</NavLink> : editButton}
-      <Button
-        type="text"
-        icon={<IconTrash color="#d63939" />}
-        onClick={handleDelete}
-      />
+      <Popover content="Edit">
+        {editLink ? <NavLink to={editLink}>{editButton}</NavLink> : editButton}
+      </Popover>
+      <Popover content="Delete">
+        <Button
+          type="text"
+          icon={<IconTrash color="#d63939" />}
+          onClick={handleDelete}
+        />
+      </Popover>
+      {children}
     </Space>
   );
 }
