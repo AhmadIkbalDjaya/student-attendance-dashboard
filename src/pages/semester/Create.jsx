@@ -4,7 +4,8 @@ import { useState } from "react";
 
 import { createSemester } from "../../services/semesterService";
 import { showMessage } from "../../utils/messageUtils";
-import SemesterForm from "./SemesterForm";
+import SemesterForm from "./components/SemesterForm";
+
 
 export default function CreateSemesterPage() {
   const navigate = useNavigate();

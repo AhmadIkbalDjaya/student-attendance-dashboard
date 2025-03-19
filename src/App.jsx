@@ -5,6 +5,9 @@ import BaseLayout from "./layouts/BaseLayout";
 import IndexSemesterPage from "./pages/semester/Index";
 import CreateSemesterPage from "./pages/semester/Create";
 import EditSemesterPage from "./pages/semester/Edit";
+import IndexClaassPage from "./pages/claass/Index";
+import CreateClaassPage from "./pages/claass/Create";
+import EditClaassPage from "./pages/claass/Edit";
 
 function App() {
   return (
@@ -16,6 +19,11 @@ function App() {
             <Route path="" element={<IndexSemesterPage />} />
             <Route path="create" element={<CreateSemesterPage />} />
             <Route path=":id/edit" element={<EditSemesterPage />} />
+          </Route>
+          <Route path="claass">
+            <Route path="" element={<IndexClaassPage />} />
+            <Route path="create" element={<CreateClaassPage />} />
+            <Route path=":id/edit" element={<EditClaassPage />} />
           </Route>
         </Route>
       </Routes>

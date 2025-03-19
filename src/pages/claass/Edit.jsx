@@ -2,11 +2,11 @@ import { Button, Flex, Form, Typography } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import { getSemester, updateSemester } from "../../services/semesterService";
 import { showMessage } from "../../utils/messageUtils";
-import SemesterForm from "./components/SemesterForm";
+import { getClaass, updateClaass } from "../../services/claassService";
+import ClaassForm from "./components/ClaassForm";
 
-export default function EditSemesterPage() {
+export default function EditClaassPage() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [form] = Form.useForm();
@@ -14,8 +14,8 @@ export default function EditSemesterPage() {
   const handleSubmit = async () => {
     try {
       setSubmitLoading(true);
-      await updateSemester(id, form.getFieldValue());
-      navigate("/semester");
+      await updateClaass(id, form.getFieldValue());
+      navigate("/claass");
       showMessage({ type: "success", content: "Updated successfully" });
     } catch (error) {
       showMessage({ type: "error", content: error.message });
@@ -24,9 +24,9 @@ export default function EditSemesterPage() {
     }
   };
 
-  const fetchSemester = async () => {
+  const fetchClaass = async () => {
     try {
-      const result = await getSemester(id);
+      const result = await getClaass(id);
       form.setFieldsValue(result.data);
     } catch (error) {
       showMessage({ type: "error", content: error.message });
@@ -34,13 +34,13 @@ export default function EditSemesterPage() {
   };
 
   useEffect(() => {
-    fetchSemester();
+    fetchClaass();
   }, []);
 
   return (
     <>
       <Flex justify="space-between" style={{ margin: "10px 0" }}>
-        <Typography.Title level={3}>Edit Semester</Typography.Title>
+        <Typography.Title level={3}>Create Class</Typography.Title>
         <Flex gap={10}>
           <Button
             color="danger"
@@ -59,7 +59,7 @@ export default function EditSemesterPage() {
           </Button>
         </Flex>
       </Flex>
-      <SemesterForm form={form} handleSubmit={handleSubmit} />
+      <ClaassForm form={form} handleSubmit={handleSubmit} />
     </>
   );
 }

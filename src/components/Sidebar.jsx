@@ -1,7 +1,7 @@
 import { Layout, Menu } from "antd";
 import React from "react";
 import useSidebarStore from "../store/sidebarStore";
-import { IconBooks, IconHome } from "@tabler/icons-react";
+import { IconBooks, IconChalkboard, IconHome } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
@@ -16,10 +16,16 @@ export default function Sidebar() {
       onClick: () => navigate("/"),
     },
     {
-      key: "2",
+      key: "semester",
       label: "Semester",
       icon: <IconBooks style={{ marginLeft: -3 }} size={22} />,
       onClick: () => navigate("/semester"),
+    },
+    {
+      key: "claass",
+      label: "Class",
+      icon: <IconChalkboard style={{ marginLeft: -3 }} size={22} />,
+      onClick: () => navigate("/claass"),
     },
   ];
   return (
