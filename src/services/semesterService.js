@@ -9,6 +9,15 @@ export const getAllSemester = async () => {
   }
 };
 
+export const createSemester = async (data) => {
+  try {
+    const response = await apiClient.post("/admin/semester", data);
+    return response.data;
+  } catch (error) {
+    return handleApiError(error, "Create failed");
+  }
+};
+
 export const deleteSemester = async (id) => {
   try {
     const response = await apiClient.delete(`/admin/semester/${id}`);

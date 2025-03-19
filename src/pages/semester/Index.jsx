@@ -6,6 +6,7 @@ import { deleteSemester, getAllSemester } from "../../services/semesterService";
 import DeleteModal from "../../components/DeleteModal";
 import TableAction from "../../components/TableAction";
 import { showMessage } from "../../utils/messageUtils";
+import { NavLink } from "react-router-dom";
 
 export default function IndexSemesterPage() {
   const [semesters, setSemesters] = useState([]);
@@ -94,9 +95,11 @@ export default function IndexSemesterPage() {
     <>
       <Typography.Title level={3}>Semester</Typography.Title>
       <Flex justify="end" align="center" style={{ marginBottom: "10px" }}>
-        <Button type="primary" icon={<IconPlus />}>
-          Create
-        </Button>
+        <NavLink to="/semester/create">
+          <Button type="primary" icon={<IconPlus />}>
+            Create
+          </Button>
+        </NavLink>
       </Flex>
       <Table
         columns={columns}
