@@ -1,7 +1,7 @@
-import { Card, Col, Form, Input, InputNumber, Row, Select } from "antd";
+import { Card, Col, Form, Input, Row, Select } from "antd";
+import { useEffect, useState } from "react";
 
 import { getAllMajors } from "../../../services/majorService";
-import { useEffect, useState } from "react";
 export default function ClaassForm({ form, handleSubmit }) {
   const [majors, setMajors] = useState([]);
 
@@ -32,7 +32,7 @@ export default function ClaassForm({ form, handleSubmit }) {
               label="Name"
               rules={[{ required: true, message: "Name is required" }]}
             >
-              <Input style={{ width: "100%" }} placeholder="Class Name" />
+              <Input placeholder="Class Name" />
             </Form.Item>
           </Col>
           <Col span={12}>

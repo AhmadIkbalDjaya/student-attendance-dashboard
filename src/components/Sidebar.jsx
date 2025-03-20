@@ -1,12 +1,17 @@
-import { Layout, Menu } from "antd";
-import React from "react";
 import useSidebarStore from "../store/sidebarStore";
-import { IconBooks, IconChalkboard, IconHome } from "@tabler/icons-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Layout, Menu } from "antd";
+import {
+  IconBooks,
+  IconChalkboard,
+  IconHome,
+  IconUserPentagon,
+} from "@tabler/icons-react";
 
 export default function Sidebar() {
   const collapse = useSidebarStore((state) => state.collapse);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const items = [
     {
@@ -27,7 +32,25 @@ export default function Sidebar() {
       icon: <IconChalkboard style={{ marginLeft: -3 }} size={22} />,
       onClick: () => navigate("/claass"),
     },
+    {
+      key: "teacher",
+      label: "Teacher",
+      icon: <IconUserPentagon style={{ marginLeft: -3 }} size={22} />,
+      onClick: () => navigate("/teacher"),
+    },
   ];
+
+  let selectedKey = [];
+  if (location.pathname == "/") {
+    selectedKey = ["1"];
+  } else if (location.pathname.startsWith("/semester")) {
+    selectedKey = ["semester"];
+  } else if (location.pathname.startsWith("/claass")) {
+    selectedKey = ["claass"];
+  } else if (location.pathname.startsWith("/teacher")) {
+    selectedKey = ["teacher"];
+  }
+
   return (
     <Layout.Sider
       style={{
@@ -40,7 +63,12 @@ export default function Sidebar() {
       collapsedWidth={60}
       collapsed={collapse}
     >
-      <Menu items={items} mode="inline" defaultSelectedKeys={["1"]} />
+      <Menu
+        items={items}
+        mode="inline"
+        defaultSelectedKeys={["1"]}
+        selectedKeys={selectedKey}
+      />
     </Layout.Sider>
   );
 }
