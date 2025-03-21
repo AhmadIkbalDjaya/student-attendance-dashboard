@@ -2,11 +2,11 @@ import { Breadcrumb, Button, Flex, Form, Typography } from "antd";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import { getStudent, updateStudent } from "../../services/studentService";
+import { getCourse, updateCourse } from "../../services/courseService";
 import { showMessage } from "../../utils/messageUtils";
-import StudentForm from "./components/StudentForm";
+import CourseForm from "./components/CourseForm";
 
-export default function EditStudentPage() {
+export default function EditCoursePage() {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -14,8 +14,8 @@ export default function EditStudentPage() {
   const handleSubmit = async () => {
     try {
       setSubmitLoading(true);
-      await updateStudent(id, form.getFieldValue());
-      navigate("/teacher");
+      await updateCourse(id, form.getFieldValue());
+      navigate("/course");
       showMessage({ type: "success", content: "Updated successfully" });
     } catch (error) {
       showMessage({ type: "error", content: error.message });
@@ -23,9 +23,9 @@ export default function EditStudentPage() {
       setSubmitLoading(false);
     }
   };
-  const fetchStudent = async () => {
+  const fetchCourse = async () => {
     try {
-      const result = await getStudent(id);
+      const result = await getCourse(id);
       form.setFieldsValue(result.data);
     } catch (error) {
       showMessage({ type: "error", content: error.message });
@@ -37,22 +37,22 @@ export default function EditStudentPage() {
       title: <Link to="/">Dashboard</Link>,
     },
     {
-      title: <Link to="/student">Student</Link>,
+      title: <Link to="/course">Course</Link>,
     },
     {
-      title: "Edit Student",
+      title: "Edit Course",
     },
   ];
 
   useEffect(() => {
-    fetchStudent();
+    fetchCourse();
   }, []);
 
   return (
     <>
       <Breadcrumb separator=">" items={breadcrumbItems} />
       <Flex justify="space-between" style={{ margin: "10px 0" }}>
-        <Typography.Title level={3}>Edit Student</Typography.Title>
+        <Typography.Title level={3}>Edit Course</Typography.Title>
         <Flex gap={10}>
           <Button
             color="danger"
@@ -71,7 +71,7 @@ export default function EditStudentPage() {
           </Button>
         </Flex>
       </Flex>
-      <StudentForm form={form} handleSubmit={handleSubmit} />
+      <CourseForm form={form} handleSubmit={handleSubmit} />
     </>
   );
 }

@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Layout, Menu } from "antd";
 import {
   IconBooks,
+  IconBrandDatabricks,
   IconChalkboard,
   IconHome,
   IconUserPentagon,
@@ -45,6 +46,12 @@ export default function Sidebar() {
       icon: <IconUsers style={{ marginLeft: -3 }} size={22} />,
       onClick: () => navigate("/student"),
     },
+    {
+      key: "course",
+      label: "Course",
+      icon: <IconBrandDatabricks style={{ marginLeft: -3 }} size={22} />,
+      onClick: () => navigate("/course"),
+    },
   ];
 
   let selectedKey = [];
@@ -58,6 +65,8 @@ export default function Sidebar() {
     selectedKey = ["teacher"];
   } else if (location.pathname.startsWith("/student")) {
     selectedKey = ["student"];
+  } else if (location.pathname.startsWith("/course")) {
+    selectedKey = ["course"];
   }
 
   return (

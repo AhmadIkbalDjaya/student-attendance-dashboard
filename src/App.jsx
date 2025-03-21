@@ -16,6 +16,10 @@ import IndexStudentPage from "./pages/student/Index";
 import CreateStudentPage from "./pages/student/Create";
 import EditStudentPage from "./pages/student/Edit";
 import ShowStudentPage from "./pages/student/Show";
+import IndexCoursePage from "./pages/course/Index";
+import CreateCoursePage from "./pages/course/Create";
+import EditCoursePage from "./pages/course/Edit";
+import ShowCoursePage from "./pages/course/Show";
 
 function App() {
   return (
@@ -44,6 +48,12 @@ function App() {
             <Route path="create" element={<CreateStudentPage />} />
             <Route path=":id/edit" element={<EditStudentPage />} />
             <Route path=":id" element={<ShowStudentPage />} />
+          </Route>
+          <Route path="course">
+            <Route path="" element={<IndexCoursePage />} />
+            <Route path="create" element={<CreateCoursePage />} />
+            <Route path=":id/edit" element={<EditCoursePage />} />
+            <Route path=":id" element={<ShowCoursePage />} />
           </Route>
         </Route>
       </Routes>
