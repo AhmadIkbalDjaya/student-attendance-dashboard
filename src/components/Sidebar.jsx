@@ -5,6 +5,7 @@ import {
   IconBooks,
   IconBrandDatabricks,
   IconChalkboard,
+  IconChartInfographic,
   IconHome,
   IconUserPentagon,
   IconUsers,
@@ -52,6 +53,12 @@ export default function Sidebar() {
       icon: <IconBrandDatabricks style={{ marginLeft: -3 }} size={22} />,
       onClick: () => navigate("/course"),
     },
+    {
+      key: "recap",
+      label: "Recap",
+      icon: <IconChartInfographic style={{ marginLeft: -3 }} size={22} />,
+      onClick: () => navigate("/recap"),
+    },
   ];
 
   let selectedKey = [];
@@ -67,6 +74,8 @@ export default function Sidebar() {
     selectedKey = ["student"];
   } else if (location.pathname.startsWith("/course")) {
     selectedKey = ["course"];
+  } else if (location.pathname.startsWith("/recap")) {
+    selectedKey = ["recap"];
   }
 
   return (

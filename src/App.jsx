@@ -20,6 +20,8 @@ import IndexCoursePage from "./pages/course/Index";
 import CreateCoursePage from "./pages/course/Create";
 import EditCoursePage from "./pages/course/Edit";
 import ShowCoursePage from "./pages/course/Show";
+import IndexRecapPage from "./pages/recap/Index";
+import ShowRecapPage from "./pages/recap/Show";
 
 function App() {
   return (
@@ -55,6 +57,8 @@ function App() {
             <Route path=":id/edit" element={<EditCoursePage />} />
             <Route path=":id" element={<ShowCoursePage />} />
           </Route>
+          <Route path="recap" element={<IndexRecapPage />} />
+          <Route path="recap/:id" element={<ShowRecapPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
