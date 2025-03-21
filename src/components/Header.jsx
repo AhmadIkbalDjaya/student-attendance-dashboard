@@ -1,8 +1,31 @@
-import { Avatar, Button, Layout, Typography } from "antd";
-import { IconMenu3 } from "@tabler/icons-react";
+import { Avatar, Button, Dropdown, Layout, Typography } from "antd";
+import { IconLogout, IconMenu3, IconUserFilled } from "@tabler/icons-react";
 import useSidebarStore from "../store/sidebarStore";
+import { useNavigate } from "react-router-dom";
 export default function Header() {
   const { collapse, toggle } = useSidebarStore((state) => state);
+  const navigate = useNavigate();
+  const items = [
+    {
+      key: "1",
+      label: "Ahmad Ikbal Djaya",
+      disabled: true,
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: "2",
+      label: "Profile",
+      extra: <IconUserFilled size={12} />,
+    },
+    {
+      key: "3",
+      label: "Logout",
+      extra: <IconLogout size={12} />,
+      onClick: () => navigate("/login"),
+    },
+  ];
 
   return (
     <Layout.Header
@@ -26,7 +49,17 @@ export default function Header() {
       >
         Student Attendance
       </Typography.Title>
-      <Avatar style={{ marginLeft: "auto" }}>C</Avatar>
+      <Dropdown menu={{ items }} trigger={["click"]}>
+        <Avatar
+          style={{
+            marginLeft: "auto",
+            cursor: "pointer",
+            backgroundColor: "#1890ff",
+          }}
+        >
+          C
+        </Avatar>
+      </Dropdown>
     </Layout.Header>
   );
 }

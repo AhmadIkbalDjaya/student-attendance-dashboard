@@ -25,11 +25,14 @@ import ShowRecapPage from "./pages/recap/Show";
 import IndexAboutUsPage from "./pages/about-us/Index";
 import CreateAboutUsPage from "./pages/about-us/Create";
 import EditAboutUsPage from "./pages/about-us/Edit";
+import NotFoundPage from "./pages/NotFound";
+import LoginPage from "./pages/Login";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="login" element={<LoginPage />} />
         <Route path="/" element={<BaseLayout />}>
           <Route index element={<DashboardPage />} />
           <Route path="semester">
@@ -68,6 +71,7 @@ function App() {
             <Route path=":id/edit" element={<EditAboutUsPage />} />
           </Route>
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
