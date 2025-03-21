@@ -22,6 +22,9 @@ import EditCoursePage from "./pages/course/Edit";
 import ShowCoursePage from "./pages/course/Show";
 import IndexRecapPage from "./pages/recap/Index";
 import ShowRecapPage from "./pages/recap/Show";
+import IndexAboutUsPage from "./pages/about-us/Index";
+import CreateAboutUsPage from "./pages/about-us/Create";
+import EditAboutUsPage from "./pages/about-us/Edit";
 
 function App() {
   return (
@@ -59,6 +62,11 @@ function App() {
           </Route>
           <Route path="recap" element={<IndexRecapPage />} />
           <Route path="recap/:id" element={<ShowRecapPage />} />
+          <Route path="about-us">
+            <Route path="" element={<IndexAboutUsPage />} />
+            <Route path="create" element={<CreateAboutUsPage />} />
+            <Route path=":id/edit" element={<EditAboutUsPage />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

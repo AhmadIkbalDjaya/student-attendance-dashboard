@@ -1,37 +1,37 @@
 import apiClient from "../config/api";
 import handleApiError from "../helpers/handleApiError";
 
-export const getAllClaasses = async () => {
+export const getAllAboutUs = async () => {
   try {
-    const response = await apiClient.get("/admin/claass");
+    const response = await apiClient.get("/admin/aboutUs");
     return response.data;
   } catch (error) {
     return handleApiError(error);
   }
 };
 
-export const getClaass = async (id) => {
+export const getAboutUs = async (id) => {
   try {
-    const response = await apiClient.get(`/admin/claass/${id}`);
+    const response = await apiClient.get(`/admin/aboutUs/${id}`);
     return response.data;
   } catch (error) {
     return handleApiError(error);
   }
 };
 
-export const createClaass = async (data) => {
+export const createAboutUs = async (data) => {
   try {
-    const response = await apiClient.post("/admin/claass", data);
+    const response = await apiClient.post("/admin/aboutUs", data);
     return response.data;
   } catch (error) {
     return handleApiError(error, "Create failed");
   }
 };
 
-export const updateClaass = async (id, data) => {
+export const updateAboutUs = async (id, data) => {
   try {
     const response = await apiClient.post(
-      `/admin/claass/${id}?_method=PUT`,
+      `/admin/aboutUs/${id}?_method=PUT`,
       data
     );
     return response.data;
@@ -40,9 +40,9 @@ export const updateClaass = async (id, data) => {
   }
 };
 
-export const deleteClaass = async (id) => {
+export const deleteAboutUs = async (id) => {
   try {
-    const response = await apiClient.delete(`/admin/claass/${id}`);
+    const response = await apiClient.delete(`/admin/aboutUs/${id}`);
     return response.data;
   } catch (error) {
     return handleApiError(error, "Deleted failed");

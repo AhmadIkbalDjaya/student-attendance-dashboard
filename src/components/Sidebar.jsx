@@ -7,6 +7,7 @@ import {
   IconChalkboard,
   IconChartInfographic,
   IconHome,
+  IconUserCircle,
   IconUserPentagon,
   IconUsers,
 } from "@tabler/icons-react";
@@ -59,6 +60,12 @@ export default function Sidebar() {
       icon: <IconChartInfographic style={{ marginLeft: -3 }} size={22} />,
       onClick: () => navigate("/recap"),
     },
+    {
+      key: "about-us",
+      label: "About Us",
+      icon: <IconUserCircle style={{ marginLeft: -3 }} size={22} />,
+      onClick: () => navigate("/about-us"),
+    },
   ];
 
   let selectedKey = [];
@@ -76,6 +83,8 @@ export default function Sidebar() {
     selectedKey = ["course"];
   } else if (location.pathname.startsWith("/recap")) {
     selectedKey = ["recap"];
+  } else if (location.pathname.startsWith("/about-us")) {
+    selectedKey = ["about-us"];
   }
 
   return (
