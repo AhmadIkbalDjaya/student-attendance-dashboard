@@ -12,6 +12,10 @@ import IndexTeacherPage from "./pages/teacher/Index";
 import CreateTeacherPage from "./pages/teacher/Create";
 import EditTeacherPage from "./pages/teacher/Edit";
 import ShowTeacherPage from "./pages/teacher/Show";
+import IndexStudentPage from "./pages/student/Index";
+import CreateStudentPage from "./pages/student/Create";
+import EditStudentPage from "./pages/student/Edit";
+import ShowStudentPage from "./pages/student/Show";
 
 function App() {
   return (
@@ -34,6 +38,12 @@ function App() {
             <Route path="create" element={<CreateTeacherPage />} />
             <Route path=":id/edit" element={<EditTeacherPage />} />
             <Route path=":id" element={<ShowTeacherPage />} />
+          </Route>
+          <Route path="student">
+            <Route path="" element={<IndexStudentPage />} />
+            <Route path="create" element={<CreateStudentPage />} />
+            <Route path=":id/edit" element={<EditStudentPage />} />
+            <Route path=":id" element={<ShowStudentPage />} />
           </Route>
         </Route>
       </Routes>

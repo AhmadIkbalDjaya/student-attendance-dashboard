@@ -6,6 +6,7 @@ import {
   IconChalkboard,
   IconHome,
   IconUserPentagon,
+  IconUsers,
 } from "@tabler/icons-react";
 
 export default function Sidebar() {
@@ -38,6 +39,12 @@ export default function Sidebar() {
       icon: <IconUserPentagon style={{ marginLeft: -3 }} size={22} />,
       onClick: () => navigate("/teacher"),
     },
+    {
+      key: "student",
+      label: "Student",
+      icon: <IconUsers style={{ marginLeft: -3 }} size={22} />,
+      onClick: () => navigate("/student"),
+    },
   ];
 
   let selectedKey = [];
@@ -49,6 +56,8 @@ export default function Sidebar() {
     selectedKey = ["claass"];
   } else if (location.pathname.startsWith("/teacher")) {
     selectedKey = ["teacher"];
+  } else if (location.pathname.startsWith("/student")) {
+    selectedKey = ["student"];
   }
 
   return (

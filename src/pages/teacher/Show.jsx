@@ -91,7 +91,7 @@ export default function ShowTeacherPage() {
     <>
       <Breadcrumb separator=">" items={breadcrumbItems} />
       <Flex justify="space-between" style={{ margin: "10px 0" }}>
-        <Typography.Title level={3}>Create Teacher</Typography.Title>
+        <Typography.Title level={3}>Teacher Detail</Typography.Title>
         <Flex gap={10}>
           <Button onClick={handleClickDelete} color="danger" variant="outlined">
             Delete
