@@ -11,8 +11,6 @@ export default function CreateCoursePage() {
   const [form] = Form.useForm();
   const [submitLoading, setSubmitLoading] = useState(false);
   const handleSubmit = async () => {
-    console.log(form.getFieldValue());
-
     try {
       setSubmitLoading(true);
       await createCourse(form.getFieldValue());

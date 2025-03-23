@@ -1,10 +1,21 @@
 import { Avatar, Button, Dropdown, Layout, Typography } from "antd";
 import { IconLogout, IconMenu3, IconUserFilled } from "@tabler/icons-react";
 import useSidebarStore from "../store/sidebarStore";
+import { logout } from "../services/authService";
 import { useNavigate } from "react-router-dom";
+import { showMessage } from "../utils/messageUtils";
 export default function Header() {
   const { collapse, toggle } = useSidebarStore((state) => state);
   const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/login");
+      showMessage({ type: "success", content: "Logout successfully" });
+    } catch (error) {
+      showMessage({ type: "error", content: error.message });
+    }
+  };
   const items = [
     {
       key: "1",
@@ -23,7 +34,7 @@ export default function Header() {
       key: "3",
       label: "Logout",
       extra: <IconLogout size={12} />,
-      onClick: () => navigate("/login"),
+      onClick: () => handleLogout(),
     },
   ];
 

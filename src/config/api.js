@@ -4,9 +4,29 @@ const apiClient = axios.create({
   baseURL: "http://localhost:8000/api",
   headers: {
     "Content-type": "application/json",
-    // "Authorization": `Bearer ${localStorage.getItem("token")}`
-    Authorization: `Bearer 3|daNzAFEI1Slvdnue4d5j8IYdRFMc1FT4CMnDR3ZA1bbee4d1`,
   },
 });
+
+apiClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem("token");
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default apiClient;

@@ -24,8 +24,6 @@ export const createCourse = async (data) => {
     const response = await apiClient.post("/admin/course", data);
     return response.data;
   } catch (error) {
-    console.log(error);
-
     return handleApiError(error, "Create failed");
   }
 };

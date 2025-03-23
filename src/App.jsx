@@ -27,13 +27,25 @@ import CreateAboutUsPage from "./pages/about-us/Create";
 import EditAboutUsPage from "./pages/about-us/Edit";
 import NotFoundPage from "./pages/NotFound";
 import LoginPage from "./pages/Login";
+import { useMessage } from "./utils/messageUtils";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
+  const messageContextHolder = useMessage();
+
   return (
     <BrowserRouter>
+      {messageContextHolder}
       <Routes>
         <Route path="login" element={<LoginPage />} />
-        <Route path="/" element={<BaseLayout />}>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <BaseLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<DashboardPage />} />
           <Route path="semester">
             <Route path="" element={<IndexSemesterPage />} />

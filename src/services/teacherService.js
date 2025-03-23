@@ -24,8 +24,6 @@ export const createTeacher = async (data) => {
     const response = await apiClient.post("/admin/teacher", data);
     return response.data;
   } catch (error) {
-    console.log(error);
-
     return handleApiError(error, "Create failed");
   }
 };
@@ -53,10 +51,7 @@ export const deleteTeacher = async (id) => {
 
 export const setTeacherPassword = async (id, data) => {
   try {
-    const response = await apiClient.post(
-      `/admin/teacher/setPass/${id}`,
-      data
-    );
+    const response = await apiClient.post(`/admin/teacher/setPass/${id}`, data);
     return response.data;
   } catch (error) {
     return handleApiError(error);

@@ -11,8 +11,6 @@ export default function CreateStudentPage() {
   const [form] = Form.useForm();
   const [submitLoading, setSubmitLoading] = useState(false);
   const handleSubmit = async () => {
-    console.log(form.getFieldValue());
-
     try {
       setSubmitLoading(true);
       await createStudent(form.getFieldValue());

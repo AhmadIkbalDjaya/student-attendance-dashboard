@@ -9,13 +9,41 @@ import {
   Row,
   Typography,
 } from "antd";
-import sketch from "../assets/sketch.svg";
-import logo from "../assets/react.svg";
 import { IconLock, IconUser } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 
+import { showMessage } from "../utils/messageUtils";
+import { isAuthenticated, login } from "../services/authService";
+import sketch from "../assets/sketch.svg";
+import logo from "../assets/react.svg";
+import { useEffect, useState } from "react";
+import { use } from "react";
+
 export default function LoginPage() {
   const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
+
+  const handleSubmit = async () => {
+    try {
+      setLoadingSubmit(true);
+      await login(form.getFieldValue());
+      showMessage({ type: "success", content: "Login successfully" });
+      navigate("/");
+    } catch (error) {
+      showMessage({ type: "error", content: error.message });
+    } finally {
+      setLoadingSubmit(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated()) {
+      navigate("/");
+      showMessage({ type: "success", content: "You are logged in" });
+    }
+  }, []);
+
   return (
     <Row justify="space-between" align="stretch" style={{ height: "100vh" }}>
       <Col span={12}>
@@ -29,7 +57,7 @@ export default function LoginPage() {
           <Image src={logo} preview={false} height={"32px"} />
           <Typography.Title level={3}>Log in to become admin</Typography.Title>
 
-          <Form style={{ width: "100%" }}>
+          <Form onFinish={handleSubmit} form={form} style={{ width: "100%" }}>
             <Form.Item name="username">
               <Input
                 size="large"
@@ -49,13 +77,13 @@ export default function LoginPage() {
                 Remember me
               </Checkbox>
             </Form.Item>
-            <Form.Item name="password">
+            <Form.Item>
               <Button
                 size="large"
                 type="primary"
                 htmlType="submit"
-                onClick={() => navigate("/")}
                 style={{ width: "100%" }}
+                loading={loadingSubmit}
               >
                 Log in
               </Button>
