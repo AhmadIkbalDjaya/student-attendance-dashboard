@@ -11,6 +11,7 @@ export default function EditCoursePage() {
   const [form] = Form.useForm();
   const [submitLoading, setSubmitLoading] = useState(false);
   const { id } = useParams();
+  const [fetchLoading, setFetchLoading] = useState(false);
   const handleSubmit = async () => {
     try {
       setSubmitLoading(true);
@@ -25,8 +26,10 @@ export default function EditCoursePage() {
   };
   const fetchCourse = async () => {
     try {
+      setFetchLoading(true);
       const result = await getCourse(id);
       form.setFieldsValue(result.data);
+      setFetchLoading(false);
     } catch (error) {
       showMessage({ type: "error", content: error.message });
     }
@@ -71,7 +74,11 @@ export default function EditCoursePage() {
           </Button>
         </Flex>
       </Flex>
-      <CourseForm form={form} handleSubmit={handleSubmit} />
+      <CourseForm
+        form={form}
+        handleSubmit={handleSubmit}
+        fetchLoading={fetchLoading}
+      />
     </>
   );
 }

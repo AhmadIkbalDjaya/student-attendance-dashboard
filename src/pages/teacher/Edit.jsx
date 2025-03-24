@@ -11,6 +11,7 @@ export default function EditTeacherPage() {
   const [form] = Form.useForm();
   const [submitLoading, setSubmitLoading] = useState(false);
   const { id } = useParams();
+  const [fetchLoading, setFetchLoading] = useState(false);
   const handleSubmit = async () => {
     try {
       setSubmitLoading(true);
@@ -25,8 +26,10 @@ export default function EditTeacherPage() {
   };
   const fetchTeacher = async () => {
     try {
+      setFetchLoading(true);
       const result = await getTeacher(id);
       form.setFieldsValue(result.data);
+      setFetchLoading(false);
     } catch (error) {
       showMessage({ type: "error", content: error.message });
     }
@@ -70,7 +73,12 @@ export default function EditTeacherPage() {
           </Button>
         </Flex>
       </Flex>
-      <TeacherForm form={form} handleSubmit={handleSubmit} type="update" />
+      <TeacherForm
+        form={form}
+        handleSubmit={handleSubmit}
+        type="update"
+        fetchLoading={fetchLoading}
+      />
     </>
   );
 }

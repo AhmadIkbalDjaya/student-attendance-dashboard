@@ -1,6 +1,11 @@
-import { Card, Col, Form, Input, Row, Select } from "antd";
+import { Card, Col, Form, Input, Row, Select, Skeleton } from "antd";
 
-export default function TeacherForm({ form, handleSubmit, type = "store" }) {
+export default function TeacherForm({
+  form,
+  handleSubmit,
+  type = "store",
+  fetchLoading = false,
+}) {
   return (
     <Card>
       <Form
@@ -15,7 +20,11 @@ export default function TeacherForm({ form, handleSubmit, type = "store" }) {
               label="Name"
               rules={[{ required: true, message: "Name is required" }]}
             >
-              <Input placeholder="Enter name" />
+              {fetchLoading ? (
+                <Skeleton.Input block active={fetchLoading} />
+              ) : (
+                <Input placeholder="Enter name" />
+              )}
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -24,7 +33,11 @@ export default function TeacherForm({ form, handleSubmit, type = "store" }) {
               label="Username"
               rules={[{ required: true, message: "Username is required" }]}
             >
-              <Input placeholder="Enter username" />
+              {fetchLoading ? (
+                <Skeleton.Input block active={fetchLoading} />
+              ) : (
+                <Input placeholder="Enter username" />
+              )}
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -33,7 +46,11 @@ export default function TeacherForm({ form, handleSubmit, type = "store" }) {
               label="Email"
               rules={[{ required: true, message: "Email is required" }]}
             >
-              <Input placeholder="Enter email" />
+              {fetchLoading ? (
+                <Skeleton.Input block active={fetchLoading} />
+              ) : (
+                <Input placeholder="Enter email" />
+              )}
             </Form.Item>
           </Col>
           {type == "store" && (
@@ -43,13 +60,21 @@ export default function TeacherForm({ form, handleSubmit, type = "store" }) {
                 label="Password"
                 rules={[{ required: true, message: "Password is required" }]}
               >
-                <Input.Password placeholder="Enter password" />
+                {fetchLoading ? (
+                  <Skeleton.Input block active={fetchLoading} />
+                ) : (
+                  <Input.Password placeholder="Enter password" />
+                )}
               </Form.Item>
             </Col>
           )}
           <Col span={12}>
             <Form.Item name="phone" label="Phone">
-              <Input placeholder="Enter phone" />
+              {fetchLoading ? (
+                <Skeleton.Input block active={fetchLoading} />
+              ) : (
+                <Input placeholder="Enter phone" />
+              )}
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -58,13 +83,17 @@ export default function TeacherForm({ form, handleSubmit, type = "store" }) {
               label="Gender"
               rules={[{ required: true, message: "Gender is required" }]}
             >
-              <Select
-                options={["male", "female"].map((value) => ({
-                  value: value.toString(),
-                  label: value,
-                }))}
-                placeholder="Select teacher gender"
-              />
+              {fetchLoading ? (
+                <Skeleton.Input block active={fetchLoading} />
+              ) : (
+                <Select
+                  options={["male", "female"].map((value) => ({
+                    value: value.toString(),
+                    label: value,
+                  }))}
+                  placeholder="Select teacher gender"
+                />
+              )}
             </Form.Item>
           </Col>
         </Row>

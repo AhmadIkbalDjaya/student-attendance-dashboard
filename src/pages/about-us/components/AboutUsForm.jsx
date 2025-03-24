@@ -1,5 +1,9 @@
-import { Card, Col, Form, Input, Row } from "antd";
-export default function AboutUsForm({ form, handleSubmit }) {
+import { Card, Col, Form, Input, Row, Skeleton } from "antd";
+export default function AboutUsForm({
+  form,
+  handleSubmit,
+  fetchLoading = false,
+}) {
   return (
     <Card>
       <Form
@@ -14,7 +18,11 @@ export default function AboutUsForm({ form, handleSubmit }) {
               label="Name"
               rules={[{ required: true, message: "Name is required" }]}
             >
-              <Input placeholder="Enter Name" />
+              {fetchLoading ? (
+                <Skeleton.Input block active={fetchLoading} />
+              ) : (
+                <Input placeholder="Enter name" />
+              )}
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -23,7 +31,11 @@ export default function AboutUsForm({ form, handleSubmit }) {
               label="Position"
               rules={[{ required: true, message: "Position is required" }]}
             >
-              <Input placeholder="Enter Position" />
+              {fetchLoading ? (
+                <Skeleton.Input block active={fetchLoading} />
+              ) : (
+                <Input placeholder="Enter Position" />
+              )}
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -32,7 +44,11 @@ export default function AboutUsForm({ form, handleSubmit }) {
               label="Email"
               rules={[{ required: true, message: "Email is required" }]}
             >
-              <Input placeholder="Enter Email" />
+              {fetchLoading ? (
+                <Skeleton.Input block active={fetchLoading} />
+              ) : (
+                <Input placeholder="Enter Email" />
+              )}
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -41,7 +57,11 @@ export default function AboutUsForm({ form, handleSubmit }) {
               label="Phone"
               rules={[{ required: true, message: "Phone is required" }]}
             >
-              <Input placeholder="Enter Phone" />
+              {fetchLoading ? (
+                <Skeleton.Input block active={fetchLoading} />
+              ) : (
+                <Input placeholder="Enter Phone" />
+              )}
             </Form.Item>
           </Col>
         </Row>

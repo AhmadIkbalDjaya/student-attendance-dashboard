@@ -11,6 +11,8 @@ export default function EditClaassPage() {
   const { id } = useParams();
   const [form] = Form.useForm();
   const [submitLoading, setSubmitLoading] = useState(false);
+  const [fetchLoading, setFetchLoading] = useState(false);
+
   const handleSubmit = async () => {
     try {
       setSubmitLoading(true);
@@ -26,8 +28,10 @@ export default function EditClaassPage() {
 
   const fetchClaass = async () => {
     try {
+      setFetchLoading(true);
       const result = await getClaass(id);
       form.setFieldsValue(result.data);
+      setFetchLoading(false);
     } catch (error) {
       showMessage({ type: "error", content: error.message });
     }
@@ -72,7 +76,11 @@ export default function EditClaassPage() {
           </Button>
         </Flex>
       </Flex>
-      <ClaassForm form={form} handleSubmit={handleSubmit} />
+      <ClaassForm
+        form={form}
+        handleSubmit={handleSubmit}
+        fetchLoading={fetchLoading}
+      />
     </>
   );
 }

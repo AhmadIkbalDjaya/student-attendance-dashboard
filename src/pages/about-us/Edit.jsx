@@ -11,6 +11,7 @@ export default function EditAboutUsPage() {
   const { id } = useParams();
   const [form] = Form.useForm();
   const [submitLoading, setSubmitLoading] = useState(false);
+  const [fetchLoading, setFetchLoading] = useState(false);
   const handleSubmit = async () => {
     try {
       setSubmitLoading(true);
@@ -26,8 +27,10 @@ export default function EditAboutUsPage() {
 
   const fetchData = async () => {
     try {
+      setFetchLoading(true);
       const result = await getAboutUs(id);
       form.setFieldsValue(result.data);
+      setFetchLoading(false);
     } catch (error) {
       showMessage({ type: "error", content: error.message });
     }
@@ -72,7 +75,11 @@ export default function EditAboutUsPage() {
           </Button>
         </Flex>
       </Flex>
-      <AboutUsForm form={form} handleSubmit={handleSubmit} />
+      <AboutUsForm
+        form={form}
+        handleSubmit={handleSubmit}
+        fetchLoading={fetchLoading}
+      />
     </>
   );
 }
