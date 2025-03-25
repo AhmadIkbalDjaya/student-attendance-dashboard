@@ -7,6 +7,7 @@ import { deleteCourse, getAllCourses } from "../../services/courseService";
 import DeleteModal from "../../components/DeleteModal";
 import TableAction from "../../components/TableAction";
 import { showMessage } from "../../utils/messageUtils";
+import { tableHeaderStyle } from "../../utils/tableHeaderStyle";
 
 export default function IndexCoursePage() {
   const [courses, setCourses] = useState([]);
@@ -64,17 +65,21 @@ export default function IndexCoursePage() {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      onHeaderCell: tableHeaderStyle,
+      minWidth: 80,
     },
     {
       title: "Class",
       dataIndex: "claass",
       key: "claass",
+      onHeaderCell: tableHeaderStyle,
+      minWidth: 80,
     },
     {
       title: "Action",
       key: "action",
       fixed: "right",
-      width: 150,
+      width: 100,
       render: (_, record) => (
         <TableAction
           editLink={`/course/${record.id}/edit`}
@@ -112,6 +117,8 @@ export default function IndexCoursePage() {
         pagination={false}
         rowKey={"id"}
         loading={getLoading}
+        size="small"
+        scroll={{ y: "60vh", x: "max-content" }}
       />
 
       <DeleteModal

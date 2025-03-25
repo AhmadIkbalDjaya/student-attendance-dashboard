@@ -7,6 +7,7 @@ import { deleteStudent, getAllStudents } from "../../services/studentService";
 import DeleteModal from "../../components/DeleteModal";
 import TableAction from "../../components/TableAction";
 import { showMessage } from "../../utils/messageUtils";
+import { tableHeaderStyle } from "../../utils/tableHeaderStyle";
 
 export default function IndexStudentPage() {
   const [students, setStudents] = useState([]);
@@ -64,17 +65,21 @@ export default function IndexStudentPage() {
       title: "NIS",
       dataIndex: "nis",
       key: "nis",
+      onHeaderCell: tableHeaderStyle,
+      minWidth: 80,
     },
     {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      onHeaderCell: tableHeaderStyle,
+      minWidth: 80,
     },
     {
       title: "Action",
       key: "action",
       fixed: "right",
-      width: 150,
+      width: 100,
       render: (_, record) => (
         <TableAction
           editLink={`/student/${record.id}/edit`}
@@ -112,6 +117,8 @@ export default function IndexStudentPage() {
         pagination={false}
         rowKey={"id"}
         loading={getLoading}
+        size="small"
+        scroll={{ y: "60vh", x: "max-content" }}
       />
 
       <DeleteModal

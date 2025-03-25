@@ -7,6 +7,7 @@ import { deleteTeacher, getAllTeachers } from "../../services/teacherService";
 import DeleteModal from "../../components/DeleteModal";
 import TableAction from "../../components/TableAction";
 import { showMessage } from "../../utils/messageUtils";
+import { tableHeaderStyle } from "../../utils/tableHeaderStyle";
 
 export default function IndexTeacherPage() {
   const [teachers, setTeachers] = useState([]);
@@ -64,17 +65,21 @@ export default function IndexTeacherPage() {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      onHeaderCell: tableHeaderStyle,
+      minWidth: 80,
     },
     {
       title: "Username",
       dataIndex: "username",
       key: "username",
+      onHeaderCell: tableHeaderStyle,
+      minWidth: 80,
     },
     {
       title: "Action",
       key: "action",
       fixed: "right",
-      width: 150,
+      width: 100,
       render: (_, record) => (
         <TableAction
           editLink={`/teacher/${record.id}/edit`}
@@ -112,6 +117,8 @@ export default function IndexTeacherPage() {
         pagination={false}
         rowKey={"id"}
         loading={getLoading}
+        size="small"
+        scroll={{ y: "60vh", x: "max-content" }}
       />
 
       <DeleteModal

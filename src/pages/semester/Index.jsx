@@ -11,14 +11,15 @@ import {
   Typography,
 } from "antd";
 
+import { tableHeaderStyle } from "../../utils/tableHeaderStyle";
+import DeleteModal from "../../components/DeleteModal";
+import TableAction from "../../components/TableAction";
+import { showMessage } from "../../utils/messageUtils";
 import {
   deleteSemester,
   getAllSemester,
   setActiveSemester,
 } from "../../services/semesterService";
-import DeleteModal from "../../components/DeleteModal";
-import TableAction from "../../components/TableAction";
-import { showMessage } from "../../utils/messageUtils";
 
 export default function IndexSemesterPage() {
   const [semesters, setSemesters] = useState([]);
@@ -93,16 +94,22 @@ export default function IndexSemesterPage() {
       title: "Start Year",
       dataIndex: "start_year",
       key: "start_year",
+      onHeaderCell: tableHeaderStyle,
+      minWidth: 80,
     },
     {
       title: "End Year",
       dataIndex: "end_year",
       key: "end_year",
+      onHeaderCell: tableHeaderStyle,
+      minWidth: 80,
     },
     {
       title: "Category",
       dataIndex: "odd_even",
       key: "odd_event",
+      onHeaderCell: tableHeaderStyle,
+      minWidth: 80,
       render: (value) => (value == 1 ? "Odd" : "Even"),
     },
     {
@@ -110,15 +117,16 @@ export default function IndexSemesterPage() {
       dataIndex: "is_active",
       key: "is_active",
       align: "center",
-      width: 120,
+      width: 100,
       render: (value) =>
         value ? <IconCircleCheck color="green" /> : <IconCircleX color="red" />,
+      onHeaderCell: tableHeaderStyle,
     },
     {
       title: "Action",
       key: "action",
       fixed: "right",
-      width: 150,
+      width: 100,
       render: (_, record) => (
         <TableAction
           editLink={`/semester/${record.id}/edit`}
@@ -164,6 +172,8 @@ export default function IndexSemesterPage() {
         pagination={false}
         rowKey={"id"}
         loading={getLoading}
+        size="small"
+        scroll={{ y: "60vh", x: "max-content" }}
       />
 
       <DeleteModal

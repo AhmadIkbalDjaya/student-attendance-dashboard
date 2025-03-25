@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { getAllRecaps } from "../../services/recapService";
 import { showMessage } from "../../utils/messageUtils";
+import { tableHeaderStyle } from "../../utils/tableHeaderStyle";
 
 export default function IndexRecapPage() {
   const [recaps, setRecaps] = useState([]);
@@ -31,17 +32,22 @@ export default function IndexRecapPage() {
       title: "Course Name",
       dataIndex: "course",
       key: "course",
+      onHeaderCell: tableHeaderStyle,
+      minWidth: 80,
     },
     {
       title: "Class Name",
       dataIndex: "claass",
       key: "claass",
+      onHeaderCell: tableHeaderStyle,
+      minWidth: 80,
     },
     {
-      title: "",
+      title: "Action",
       key: "action",
       fixed: "right",
-      width: 150,
+      width: 80,
+      align: "center",
       render: (_, record) => (
         <Popover content="View">
           <NavLink to={`/recap/${record.id}`}>
@@ -71,6 +77,8 @@ export default function IndexRecapPage() {
         pagination={false}
         rowKey={"id"}
         loading={getLoading}
+        size="small"
+        scroll={{ y: "60vh", x: "max-content" }}
       />
     </>
   );

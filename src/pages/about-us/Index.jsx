@@ -7,6 +7,7 @@ import { deleteAboutUs, getAllAboutUs } from "../../services/aboutUsService";
 import DeleteModal from "../../components/DeleteModal";
 import TableAction from "../../components/TableAction";
 import { showMessage } from "../../utils/messageUtils";
+import { tableHeaderStyle } from "../../utils/tableHeaderStyle";
 
 export default function IndexAboutUsPage() {
   const [aboutUses, setAboutUses] = useState([]);
@@ -64,27 +65,35 @@ export default function IndexAboutUsPage() {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      onHeaderCell: tableHeaderStyle,
+      minWidth: 80,
     },
     {
       title: "Position",
       dataIndex: "position",
       key: "position",
+      onHeaderCell: tableHeaderStyle,
+      minWidth: 80,
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
+      onHeaderCell: tableHeaderStyle,
+      minWidth: 80,
     },
     {
       title: "Phone",
       dataIndex: "phone",
       key: "phone",
+      onHeaderCell: tableHeaderStyle,
+      minWidth: 80,
     },
     {
       title: "Action",
       key: "action",
       fixed: "right",
-      width: 150,
+      width: 100,
       render: (_, record) => (
         <TableAction
           editLink={`/about-us/${record.id}/edit`}
@@ -120,6 +129,8 @@ export default function IndexAboutUsPage() {
         pagination={false}
         rowKey={"id"}
         loading={getLoading}
+        size="small"
+        scroll={{ y: "60vh", x: "max-content" }}
       />
 
       <DeleteModal

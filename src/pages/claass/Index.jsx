@@ -7,6 +7,7 @@ import { deleteClaass, getAllClaasses } from "../../services/claassService";
 import DeleteModal from "../../components/DeleteModal";
 import TableAction from "../../components/TableAction";
 import { showMessage } from "../../utils/messageUtils";
+import { tableHeaderStyle } from "../../utils/tableHeaderStyle";
 
 export default function IndexClaassPage() {
   const [claasses, setClaasses] = useState([]);
@@ -64,22 +65,28 @@ export default function IndexClaassPage() {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      onHeaderCell: tableHeaderStyle,
+      minWidth: 80,
     },
     {
       title: "Level",
       dataIndex: "level",
       key: "level",
+      onHeaderCell: tableHeaderStyle,
+      minWidth: 80,
     },
     {
       title: "Major",
       dataIndex: "major",
       key: "major",
+      onHeaderCell: tableHeaderStyle,
+      minWidth: 80,
     },
     {
       title: "Action",
       key: "action",
       fixed: "right",
-      width: 150,
+      width: 100,
       render: (_, record) => (
         <TableAction
           editLink={`/claass/${record.id}/edit`}
@@ -115,6 +122,8 @@ export default function IndexClaassPage() {
         pagination={false}
         rowKey={"id"}
         loading={getLoading}
+        size="small"
+        scroll={{ y: "60vh", x: "max-content" }}
       />
 
       <DeleteModal
