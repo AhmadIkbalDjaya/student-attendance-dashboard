@@ -1,6 +1,5 @@
-import useSidebarStore from "../store/sidebarStore";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Layout, Menu } from "antd";
+import { useNavigate } from "react-router-dom";
+import { Grid, Menu } from "antd";
 import {
   IconBooks,
   IconBrandDatabricks,
@@ -12,59 +11,84 @@ import {
   IconUsers,
 } from "@tabler/icons-react";
 
-export default function Sidebar() {
-  const collapse = useSidebarStore((state) => state.collapse);
+import useSidebarStore from "../../store/sidebarStore";
+export default function SidebarMenu() {
+  const toggle = useSidebarStore((state) => state.toggle);
   const navigate = useNavigate();
-  const location = useLocation();
+  const screens = Grid.useBreakpoint();
 
   const items = [
     {
       key: "1",
       label: "Dashboard",
       icon: <IconHome style={{ marginLeft: -3 }} size={22} />,
-      onClick: () => navigate("/"),
+      onClick: () => {
+        navigate("/");
+        screens.xs ? toggle() : null;
+      },
     },
     {
       key: "semester",
       label: "Semester",
       icon: <IconBooks style={{ marginLeft: -3 }} size={22} />,
-      onClick: () => navigate("/semester"),
+      onClick: () => {
+        navigate("/semester");
+        screens.xs ? toggle() : null;
+      },
     },
     {
       key: "claass",
       label: "Class",
       icon: <IconChalkboard style={{ marginLeft: -3 }} size={22} />,
-      onClick: () => navigate("/claass"),
+      onClick: () => {
+        navigate("/claass");
+        screens.xs ? toggle() : null;
+      },
     },
     {
       key: "teacher",
       label: "Teacher",
       icon: <IconUserPentagon style={{ marginLeft: -3 }} size={22} />,
-      onClick: () => navigate("/teacher"),
+      onClick: () => {
+        navigate("/teacher");
+        screens.xs ? toggle() : null;
+      },
     },
     {
       key: "student",
       label: "Student",
       icon: <IconUsers style={{ marginLeft: -3 }} size={22} />,
-      onClick: () => navigate("/student"),
+      onClick: () => {
+        navigate("/student");
+        screens.xs ? toggle() : null;
+      },
     },
     {
       key: "course",
       label: "Course",
       icon: <IconBrandDatabricks style={{ marginLeft: -3 }} size={22} />,
-      onClick: () => navigate("/course"),
+      onClick: () => {
+        navigate("/course");
+        screens.xs ? toggle() : null;
+      },
     },
     {
       key: "recap",
       label: "Recap",
       icon: <IconChartInfographic style={{ marginLeft: -3 }} size={22} />,
-      onClick: () => navigate("/recap"),
+      onClick: () => {
+        navigate("/recap");
+        screens.xs ? toggle() : null;
+      },
     },
     {
       key: "about-us",
       label: "About Us",
       icon: <IconUserCircle style={{ marginLeft: -3 }} size={22} />,
-      onClick: () => navigate("/about-us"),
+      onClick: () => {
+        navigate("/about-us");
+        screens.xs ? toggle() : null;
+      },
     },
   ];
 
@@ -88,23 +112,11 @@ export default function Sidebar() {
   }
 
   return (
-    <Layout.Sider
-      style={{
-        backgroundColor: "#FFFFFF",
-        borderRadius: 8,
-        overflow: "hidden",
-        position: "relative",
-      }}
-      width={240}
-      collapsedWidth={60}
-      collapsed={collapse}
-    >
-      <Menu
-        items={items}
-        mode="inline"
-        defaultSelectedKeys={["1"]}
-        selectedKeys={selectedKey}
-      />
-    </Layout.Sider>
+    <Menu
+      items={items}
+      mode="inline"
+      defaultSelectedKeys={["1"]}
+      selectedKeys={selectedKey}
+    />
   );
 }

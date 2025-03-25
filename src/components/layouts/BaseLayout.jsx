@@ -1,26 +1,35 @@
-import { Layout } from "antd";
 import { Outlet } from "react-router-dom";
-import Sidebar from "../components/Sidebar";
-import Header from "../components/Header";
+import { Grid, Layout } from "antd";
+
+import Sidebar from "./Sidebar";
+import Header from "./Header";
 
 export default function BaseLayout() {
+  const screens = Grid.useBreakpoint();
+
   return (
     <Layout
+      hasSider
       style={{
         display: "flex",
         height: "100vh",
         width: "100vw",
-        padding: 10,
+        padding: screens.xs ? 5 : 10,
         boxSizing: "border-box",
         backgroundColor: "#F5F5F5",
         gap: 10,
-        overflow: "hidden",
+        overflow: "auto",
       }}
     >
       <Sidebar />
       <Layout>
         <Header />
-        <Layout.Content style={{ overflow: "auto", marginTop: 10 }}>
+        <Layout.Content
+          style={{
+            overflow: "initial",
+            marginTop: 10,
+          }}
+        >
           <Outlet />
         </Layout.Content>
       </Layout>

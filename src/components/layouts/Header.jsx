@@ -1,9 +1,10 @@
-import { Avatar, Button, Dropdown, Layout, Typography } from "antd";
 import { IconLogout, IconMenu3, IconUserFilled } from "@tabler/icons-react";
-import useSidebarStore from "../store/sidebarStore";
-import { logout } from "../services/authService";
+import { Avatar, Button, Dropdown, Layout, Typography } from "antd";
+
+import useSidebarStore from "../../store/sidebarStore";
+import { showMessage } from "../../utils/messageUtils";
+import { logout } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
-import { showMessage } from "../utils/messageUtils";
 export default function Header() {
   const { collapse, toggle } = useSidebarStore((state) => state);
   const navigate = useNavigate();
@@ -16,10 +17,12 @@ export default function Header() {
       showMessage({ type: "error", content: error.message });
     }
   };
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const items = [
     {
       key: "1",
-      label: "Ahmad Ikbal Djaya",
+      label: user?.username?.charAt(0).toUpperCase() + user?.username?.slice(1),
       disabled: true,
     },
     {
@@ -47,6 +50,11 @@ export default function Header() {
         padding: "10px",
         borderRadius: 8,
         backgroundColor: "#FFFFFF",
+        position: "sticky",
+        top: 0,
+        zIndex: 10,
+        width: "100%",
+        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.15)",
       }}
     >
       <Button
@@ -68,7 +76,7 @@ export default function Header() {
             backgroundColor: "#1890ff",
           }}
         >
-          C
+          {user?.username?.charAt(0).toUpperCase()}
         </Avatar>
       </Dropdown>
     </Layout.Header>

@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import DashboardPage from "./pages/Dashboard";
-import BaseLayout from "./layouts/BaseLayout";
+import BaseLayout from "./components/layouts/BaseLayout";
 import IndexSemesterPage from "./pages/semester/Index";
 import CreateSemesterPage from "./pages/semester/Create";
 import EditSemesterPage from "./pages/semester/Edit";
