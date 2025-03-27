@@ -13,7 +13,7 @@ export default function SemesterForm({
         onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
       >
         <Row gutter={12}>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               name="start_year"
               label="Start Year"
@@ -32,7 +32,7 @@ export default function SemesterForm({
               )}
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item name="end_year" label="End Year">
               {fetchLoading ? (
                 <Skeleton.Input block active={fetchLoading} />
@@ -46,7 +46,7 @@ export default function SemesterForm({
               )}
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item name="odd_even" label="Category" required>
               {fetchLoading ? (
                 <Skeleton.Input block active={fetchLoading} />

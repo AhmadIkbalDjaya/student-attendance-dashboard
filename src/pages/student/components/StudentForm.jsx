@@ -32,7 +32,7 @@ export default function StudentForm({
         onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
       >
         <Row gutter={12}>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               name="nis"
               label="NIS"
@@ -45,7 +45,7 @@ export default function StudentForm({
               )}
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               name="name"
               label="Name"
@@ -58,7 +58,7 @@ export default function StudentForm({
               )}
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               name="gender"
               label="Gender"
@@ -77,7 +77,7 @@ export default function StudentForm({
               )}
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               name="claass_id"
               label="Class"

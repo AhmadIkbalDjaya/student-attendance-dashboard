@@ -63,7 +63,7 @@ export default function CourseForm({
         onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
       >
         <Row gutter={12}>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               name="name"
               label="Name"
@@ -76,7 +76,7 @@ export default function CourseForm({
               )}
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               name="claass_id"
               label="Class"
@@ -101,7 +101,7 @@ export default function CourseForm({
               )}
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               name="teacher_id"
               label="Teacher"
@@ -126,7 +126,7 @@ export default function CourseForm({
               )}
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               name="semester_id"
               label="Semester"

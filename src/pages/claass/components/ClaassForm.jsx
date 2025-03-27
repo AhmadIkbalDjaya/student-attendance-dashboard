@@ -2,6 +2,7 @@ import { Card, Col, Form, Input, Row, Select, Skeleton } from "antd";
 import { useEffect, useState } from "react";
 
 import { getAllMajors } from "../../../services/majorService";
+import { showMessage } from "../../../utils/messageUtils";
 export default function ClaassForm({
   form,
   handleSubmit,
@@ -33,7 +34,7 @@ export default function ClaassForm({
         onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
       >
         <Row gutter={12}>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               name="name"
               label="Name"
@@ -46,7 +47,7 @@ export default function ClaassForm({
               )}
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               name="level"
               label="Level"
@@ -65,7 +66,7 @@ export default function ClaassForm({
               )}
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               name="major_id"
               label="Major"

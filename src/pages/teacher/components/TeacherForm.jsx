@@ -14,7 +14,7 @@ export default function TeacherForm({
         onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
       >
         <Row gutter={12}>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               name="name"
               label="Name"
@@ -27,7 +27,7 @@ export default function TeacherForm({
               )}
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               name="username"
               label="Username"
@@ -40,7 +40,7 @@ export default function TeacherForm({
               )}
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               name="email"
               label="Email"
@@ -54,7 +54,7 @@ export default function TeacherForm({
             </Form.Item>
           </Col>
           {type == "store" && (
-            <Col span={12}>
+            <Col xs={24} sm={12}>
               <Form.Item
                 name="password"
                 label="Password"
@@ -68,7 +68,7 @@ export default function TeacherForm({
               </Form.Item>
             </Col>
           )}
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item name="phone" label="Phone">
               {fetchLoading ? (
                 <Skeleton.Input block active={fetchLoading} />
@@ -77,7 +77,7 @@ export default function TeacherForm({
               )}
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item
               name="gender"
               label="Gender"
