@@ -26,7 +26,7 @@ import IndexAboutUsPage from "./pages/about-us/Index";
 import CreateAboutUsPage from "./pages/about-us/Create";
 import EditAboutUsPage from "./pages/about-us/Edit";
 import NotFoundPage from "./pages/NotFound";
-import LoginPage from "./pages/Login";
+import LoginPage from "./pages/login/Login";
 import { useMessage } from "./utils/messageUtils";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProfilePage from "./pages/profile/Index";

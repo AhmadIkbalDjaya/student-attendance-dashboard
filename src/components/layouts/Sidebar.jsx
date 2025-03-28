@@ -16,7 +16,6 @@ export default function Sidebar() {
         height: "100%",
         position: "sticky",
         top: 0,
-        top: 0,
         bottom: 0,
       }}
       width={240}
