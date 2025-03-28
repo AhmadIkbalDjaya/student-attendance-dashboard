@@ -4,6 +4,7 @@ import {
   Col,
   Flex,
   Form,
+  Grid,
   Image,
   Input,
   Row,
@@ -11,18 +12,18 @@ import {
 } from "antd";
 import { IconLock, IconUser } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 import { showMessage } from "../utils/messageUtils";
 import { isAuthenticated, login } from "../services/authService";
 import sketch from "../assets/sketch.svg";
 import logo from "../assets/react.svg";
-import { useEffect, useState } from "react";
-import { use } from "react";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [loadingSubmit, setLoadingSubmit] = useState(false);
+  const screens = Grid.useBreakpoint();
 
   const handleSubmit = async () => {
     try {
@@ -46,13 +47,16 @@ export default function LoginPage() {
 
   return (
     <Row justify="space-between" align="stretch" style={{ height: "100vh" }}>
-      <Col span={12}>
+      <Col xs={24} sm={12}>
         <Flex
           align="start"
           justify="center"
           vertical
           gap={16}
-          style={{ height: "100%", padding: "0px 100px" }}
+          style={{
+            height: "100%",
+            padding: screens.xs ? "0px 10px" : "0px 100px",
+          }}
         >
           <Image src={logo} preview={false} height={"32px"} />
           <Typography.Title level={3}>Log in to become admin</Typography.Title>
@@ -91,7 +95,7 @@ export default function LoginPage() {
           </Form>
         </Flex>
       </Col>
-      <Col span={12} style={{ background: "#1890ff" }}>
+      <Col xs={0} sm={12} style={{ background: "#1890ff" }}>
         <Flex
           align="stretch"
           justify="center"

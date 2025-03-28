@@ -32,6 +32,7 @@ export default function Header() {
       key: "2",
       label: "Profile",
       extra: <IconUserFilled size={12} />,
+      onClick: () => navigate("profile"),
     },
     {
       key: "3",

@@ -29,6 +29,7 @@ import NotFoundPage from "./pages/NotFound";
 import LoginPage from "./pages/Login";
 import { useMessage } from "./utils/messageUtils";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ProfilePage from "./pages/profile/Index";
 
 function App() {
   const messageContextHolder = useMessage();
@@ -47,6 +48,7 @@ function App() {
           }
         >
           <Route index element={<DashboardPage />} />
+          <Route path="profile" element={<ProfilePage />} />
           <Route path="semester">
             <Route path="" element={<IndexSemesterPage />} />
             <Route path="create" element={<CreateSemesterPage />} />
