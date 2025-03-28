@@ -4,12 +4,11 @@ import {
   IconUserPentagon,
   IconUsers,
 } from "@tabler/icons-react";
-import { Card, Col, Flex, Row, Statistic, Typography } from "antd";
-import { getDashboardData } from "../services/dashboardServive";
-import { showMessage } from "../utils/messageUtils";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { getDashboardData } from "../../../services/dashboardServive";
+import { showMessage } from "../../../utils/messageUtils";
 
-export default function DashboardPage() {
+export const useDashboard = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const [data, setData] = useState();
@@ -25,10 +24,6 @@ export default function DashboardPage() {
       showMessage({ type: "error", content: error.message });
     }
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const statisticsData = [
     {
@@ -57,29 +52,5 @@ export default function DashboardPage() {
     },
   ];
 
-  return (
-    <>
-      <Typography.Title level={3}>Welcome {user.username}</Typography.Title>
-      <Row gutter={[12, 12]}>
-        {statisticsData.map((item, index) => (
-          <Col xs={24} sm={6} key={`statistic-${index}`}>
-            <Card variant="borderless" loading={loadingFetch}>
-              <Statistic
-                title={item.title}
-                value={item.value}
-                valueStyle={{
-                  color: item.color,
-                  fontSize: "30px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "2px",
-                }}
-                prefix={<Flex>{item.icon}</Flex>}
-              />
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    </>
-  );
-}
+  return { user, statisticsData, fetchData, loadingFetch };
+};
