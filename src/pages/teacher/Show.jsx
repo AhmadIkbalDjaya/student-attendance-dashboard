@@ -103,8 +103,8 @@ export default function ShowTeacherPage() {
           </Link>
         </Flex>
       </Flex>
-      <Row gutter={12}>
-        <Col span={16}>
+      <Row gutter={[12, 12]}>
+        <Col xs={24} sm={16}>
           <Card title={"Teacher Information"} loading={fetchLoading}>
             <Row gutter={[12, 12]} justify={"space-between"}>
               <Col span={12}>
@@ -132,7 +132,7 @@ export default function ShowTeacherPage() {
             </Row>
           </Card>
         </Col>
-        <Col span={8}>
+        <Col xs={24} sm={8}>
           <Card loading={fetchLoading} title="Change Password">
             <Form form={form} layout="vertical" onFinish={handleSubmitForm}>
               <Form.Item name="password" label="Password">

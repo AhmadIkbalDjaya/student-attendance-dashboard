@@ -9,9 +9,9 @@ import {
   Row,
   Typography,
 } from "antd";
-import { Link } from "react-router-dom";
 import { changeAuthPassword } from "../../services/authService";
 import { showMessage } from "../../utils/messageUtils";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 
 export default function ProfilePage() {
@@ -21,8 +21,6 @@ export default function ProfilePage() {
 
   const handleSubmitForm = async () => {
     try {
-      console.log(form.getFieldValue());
-
       setLoadingSubmit(true);
       await changeAuthPassword(form.getFieldValue());
       form.resetFields();
