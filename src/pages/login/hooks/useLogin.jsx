@@ -9,7 +9,6 @@ export const useLogin = () => {
   const [loadingSubmit, setLoadingSubmit] = useState(false);
 
   const handleSubmit = async (form) => {
-    console.log(form);
     try {
       setLoadingSubmit(true);
       await login(form.getFieldValue());

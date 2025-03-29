@@ -1,56 +1,24 @@
 import { Breadcrumb, Button, Flex, Form, Typography } from "antd";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-import { getSemester, updateSemester } from "../../services/semesterService";
-import { showMessage } from "../../utils/messageUtils";
 import SemesterForm from "./components/SemesterForm";
+import { useEdit } from "./hooks/useEdit";
 
 export default function EditSemesterPage() {
   const navigate = useNavigate();
-  const { id } = useParams();
   const [form] = Form.useForm();
-  const [submitLoading, setSubmitLoading] = useState(false);
-  const [fetchLoading, setFetchLoading] = useState(false);
-  const handleSubmit = async () => {
-    try {
-      setSubmitLoading(true);
-      await updateSemester(id, form.getFieldValue());
-      navigate("/semester");
-      showMessage({ type: "success", content: "Updated successfully" });
-    } catch (error) {
-      showMessage({ type: "error", content: error.message });
-    } finally {
-      setSubmitLoading(false);
-    }
-  };
-
-  const fetchSemester = async () => {
-    try {
-      setFetchLoading(true);
-      const result = await getSemester(id);
-      form.setFieldsValue(result.data);
-      setFetchLoading(false);
-    } catch (error) {
-      showMessage({ type: "error", content: error.message });
-    }
-  };
+  const {
+    breadcrumbItems,
+    fetchSemester,
+    fetchLoading,
+    handleSubmit,
+    submitLoading,
+  } = useEdit();
 
   useEffect(() => {
-    fetchSemester();
+    fetchSemester(form);
   }, []);
-
-  const breadcrumbItems = [
-    {
-      title: <Link to="/">Dashboard</Link>,
-    },
-    {
-      title: <Link to="/semester">Semester</Link>,
-    },
-    {
-      title: "Edit Semester",
-    },
-  ];
   return (
     <>
       <Breadcrumb separator=">" items={breadcrumbItems} />
@@ -66,7 +34,7 @@ export default function EditSemesterPage() {
           </Button>
           <Button
             loading={submitLoading}
-            onClick={handleSubmit}
+            onClick={() => handleSubmit(form)}
             color="primary"
             variant="solid"
           >
@@ -76,7 +44,7 @@ export default function EditSemesterPage() {
       </Flex>
       <SemesterForm
         form={form}
-        handleSubmit={handleSubmit}
+        handleSubmit={() => handleSubmit(form)}
         fetchLoading={fetchLoading}
       />
     </>
