@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { deleteCourse, getAllCourses } from "../../../services/courseService";
-import { showMessage } from "../../../utils/messageUtils";
-import { tableHeaderStyle } from "../../../utils/tableHeaderStyle";
-import TableAction from "../../../components/TableAction";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+
+import { deleteCourse, getAllCourses } from "../../../services/courseService";
+import { tableHeaderStyle } from "../../../utils/tableHeaderStyle";
+import { showMessage } from "../../../utils/messageUtils";
+import TableAction from "../../../components/TableAction";
 
 export const useIndex = () => {
   const [courses, setCourses] = useState([]);

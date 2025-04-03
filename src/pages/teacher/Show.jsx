@@ -1,4 +1,13 @@
-import { Breadcrumb, Card, Col, Flex, Form, Row, Typography } from "antd";
+import {
+  Breadcrumb,
+  Card,
+  Col,
+  Descriptions,
+  Flex,
+  Form,
+  Row,
+  Typography,
+} from "antd";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -14,9 +23,9 @@ export default function ShowTeacherPage() {
     fetchTeacher,
     fetchLoading,
     handleClickDelete,
-    teacher,
     handleSubmitForm,
     submitLoading,
+    descriptionItems,
   } = useShow();
 
   useEffect(() => {
@@ -36,30 +45,17 @@ export default function ShowTeacherPage() {
       <Row gutter={[12, 12]}>
         <Col xs={24} sm={16}>
           <Card title={"Teacher Information"} loading={fetchLoading}>
-            <Row gutter={[12, 12]} justify={"space-between"}>
-              <Col span={12}>
-                <Typography.Title level={5}>Name</Typography.Title>
-                <Typography.Text>{teacher?.name}</Typography.Text>
-              </Col>
-              <Col span={12}>
-                <Typography.Title level={5}>Username</Typography.Title>
-                <Typography.Text>{teacher?.username}</Typography.Text>
-              </Col>
-              <Col span={12}>
-                <Typography.Title level={5}>Email</Typography.Title>
-                <Typography.Text>{teacher?.email}</Typography.Text>
-              </Col>
-              <Col span={12}>
-                <Typography.Title level={5}>Phone</Typography.Title>
-                <Typography.Text>{teacher?.phone}</Typography.Text>
-              </Col>
-              <Col span={12}>
-                <Typography.Title level={5}>Gender</Typography.Title>
-                <Typography.Text style={{ textTransform: "capitalize" }}>
-                  {teacher?.gender}
-                </Typography.Text>
-              </Col>
-            </Row>
+            <Descriptions
+              size="small"
+              items={descriptionItems}
+              column={2}
+              layout="vertical"
+              labelStyle={{
+                fontWeight: "500",
+                fontSize: "16px",
+                color: "black",
+              }}
+            />
           </Card>
         </Col>
         <Col xs={24} sm={8}>

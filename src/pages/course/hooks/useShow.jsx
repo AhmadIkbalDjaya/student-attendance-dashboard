@@ -1,8 +1,9 @@
-import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import { Modal } from "antd";
+
 import { deleteCourse, getCourse } from "../../../services/courseService";
 import { showMessage } from "../../../utils/messageUtils";
-import { Modal } from "antd";
 
 export const useShow = () => {
   const { id } = useParams();
@@ -53,11 +54,51 @@ export const useShow = () => {
     },
   ];
 
+  const descriptionItems = [
+    {
+      key: "name",
+      label: "Course Name",
+      children: course?.name,
+      span: { xs: 1, sm: 1 },
+    },
+    {
+      key: "claass",
+      label: "Class Name",
+      children: course?.claass,
+      span: { xs: 1, sm: 1 },
+    },
+    {
+      key: "teacher",
+      label: "Teacher",
+      children: course?.teacher,
+      span: { xs: 1, sm: 1 },
+    },
+    {
+      key: "semester",
+      label: "Semester",
+      children: course?.semester,
+      span: { xs: 1, sm: 1 },
+    },
+    {
+      key: "stduent_count",
+      label: "Total Student",
+      children: course?.student_count,
+      span: { xs: 1, sm: 1 },
+    },
+    {
+      key: "total_attendance",
+      label: "Total Attendance",
+      children: course?.attendance_count,
+      span: { xs: 1, sm: 1 },
+    },
+  ];
+
   return {
     breadcrumbItems,
     fetchStudent,
     course,
     fetchLoading,
     handleClickDelete,
+    descriptionItems,
   };
 };

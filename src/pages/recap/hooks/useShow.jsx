@@ -70,6 +70,45 @@ export const useShow = () => {
     },
   ];
 
+  const descriptionItems = [
+    {
+      key: "name",
+      label: "Course Name",
+      children: course?.name,
+      span: { xs: 1, sm: 1 },
+    },
+    {
+      key: "claass",
+      label: "Class Name",
+      children: course?.claass,
+      span: { xs: 1, sm: 1 },
+    },
+    {
+      key: "teacher",
+      label: "Teacher",
+      children: course?.teacher,
+      span: { xs: 1, sm: 1 },
+    },
+    {
+      key: "semester",
+      label: "Semester",
+      children: course?.semester,
+      span: { xs: 1, sm: 1 },
+    },
+    {
+      key: "stduent_count",
+      label: "Total Student",
+      children: course?.student_count,
+      span: { xs: 1, sm: 1 },
+    },
+    {
+      key: "total_attendance",
+      label: "Total Attendance",
+      children: course?.attendance_count,
+      span: { xs: 1, sm: 1 },
+    },
+  ];
+
   return {
     breadcrumbItems,
     course,
@@ -77,5 +116,6 @@ export const useShow = () => {
     fetchLoading,
     fetchRecap,
     columns,
+    descriptionItems,
   };
 };

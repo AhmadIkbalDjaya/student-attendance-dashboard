@@ -1,4 +1,12 @@
-import { Breadcrumb, Card, Col, Flex, Row, Typography } from "antd";
+import {
+  Breadcrumb,
+  Card,
+  Col,
+  Descriptions,
+  Flex,
+  Row,
+  Typography,
+} from "antd";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -10,9 +18,9 @@ export default function ShowStudentPage() {
   const {
     breadcrumbItems,
     fetchStudent,
-    student,
     fetchLoading,
     handleClickDelete,
+    descriptionItems,
   } = useShow();
 
   useEffect(() => {
@@ -32,26 +40,17 @@ export default function ShowStudentPage() {
       <Row gutter={12}>
         <Col span={24}>
           <Card title={"Student Information"} loading={fetchLoading}>
-            <Row gutter={[12, 12]} justify={"space-between"}>
-              <Col span={12}>
-                <Typography.Title level={5}>Name</Typography.Title>
-                <Typography.Text>{student?.name}</Typography.Text>
-              </Col>
-              <Col span={12}>
-                <Typography.Title level={5}>NIS</Typography.Title>
-                <Typography.Text>{student?.nis}</Typography.Text>
-              </Col>
-              <Col span={12}>
-                <Typography.Title level={5}>Class</Typography.Title>
-                <Typography.Text>{student?.claass_name}</Typography.Text>
-              </Col>
-              <Col span={12}>
-                <Typography.Title level={5}>Gender</Typography.Title>
-                <Typography.Text style={{ textTransform: "capitalize" }}>
-                  {student?.gender}
-                </Typography.Text>
-              </Col>
-            </Row>
+            <Descriptions
+              size="small"
+              items={descriptionItems}
+              column={2}
+              layout="vertical"
+              labelStyle={{
+                fontWeight: "500",
+                fontSize: "16px",
+                color: "black",
+              }}
+            />
           </Card>
         </Col>
       </Row>

@@ -1,4 +1,13 @@
-import { Breadcrumb, Button, Card, Col, Flex, Row, Typography } from "antd";
+import {
+  Breadcrumb,
+  Button,
+  Card,
+  Col,
+  Descriptions,
+  Flex,
+  Row,
+  Typography,
+} from "antd";
 import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -12,6 +21,7 @@ export default function ShowCoursePage() {
     course,
     fetchLoading,
     handleClickDelete,
+    descriptionItems,
   } = useShow();
 
   useEffect(() => {
@@ -37,32 +47,17 @@ export default function ShowCoursePage() {
       <Row gutter={12}>
         <Col span={24}>
           <Card title={"Course Information"} loading={fetchLoading}>
-            <Row gutter={[12, 12]} justify={"space-between"}>
-              <Col span={12}>
-                <Typography.Title level={5}>Course Name</Typography.Title>
-                <Typography.Text>{course?.name}</Typography.Text>
-              </Col>
-              <Col span={12}>
-                <Typography.Title level={5}>Class Name</Typography.Title>
-                <Typography.Text>{course?.claass}</Typography.Text>
-              </Col>
-              <Col span={12}>
-                <Typography.Title level={5}>Teacher</Typography.Title>
-                <Typography.Text>{course?.teacher}</Typography.Text>
-              </Col>
-              <Col span={12}>
-                <Typography.Title level={5}>Semester</Typography.Title>
-                <Typography.Text>{course?.semester}</Typography.Text>
-              </Col>
-              <Col span={12}>
-                <Typography.Title level={5}>Total Student</Typography.Title>
-                <Typography.Text>{course?.student_count}</Typography.Text>
-              </Col>
-              <Col span={12}>
-                <Typography.Title level={5}>Total Attendance</Typography.Title>
-                <Typography.Text>{course?.attendance_count}</Typography.Text>
-              </Col>
-            </Row>
+            <Descriptions
+              size="small"
+              items={descriptionItems}
+              column={2}
+              layout="vertical"
+              labelStyle={{
+                fontWeight: "500",
+                fontSize: "16px",
+                color: "black",
+              }}
+            />
           </Card>
         </Col>
       </Row>

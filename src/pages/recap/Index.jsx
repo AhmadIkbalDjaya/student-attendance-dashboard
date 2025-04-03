@@ -21,6 +21,7 @@ export default function IndexRecapPage() {
         pagination={false}
         rowKey={"id"}
         loading={getLoading}
+        size="small"
         scroll={{ y: "60vh", x: "max-content" }}
       />
     </>

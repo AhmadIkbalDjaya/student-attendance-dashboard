@@ -54,11 +54,39 @@ export const useShow = () => {
     },
   ];
 
+  const descriptionItems = [
+    {
+      key: "name",
+      label: "Name",
+      children: student?.name,
+      span: { xs: 1, sm: 1 },
+    },
+    {
+      key: "nis",
+      label: "NIS",
+      children: student?.nis,
+      span: { xs: 1, sm: 1 },
+    },
+    {
+      key: "claass",
+      label: "Class",
+      children: student?.claass_name,
+      span: { xs: 1, sm: 1 },
+    },
+    {
+      key: "gender",
+      label: "Gender",
+      children: student?.gender,
+      span: { xs: 1, sm: 1 },
+    },
+  ];
+
   return {
     breadcrumbItems,
     fetchStudent,
     student,
     fetchLoading,
     handleClickDelete,
+    descriptionItems,
   };
 };

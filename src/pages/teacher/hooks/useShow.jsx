@@ -68,6 +68,39 @@ export const useShow = () => {
     },
   ];
 
+  const descriptionItems = [
+    {
+      key: "name",
+      label: "Course Name",
+      children: teacher?.name,
+      span: { xs: 1, sm: 1 },
+    },
+    {
+      key: "username",
+      label: "Username",
+      children: teacher?.username,
+      span: { xs: 1, sm: 1 },
+    },
+    {
+      key: "email",
+      label: "Email",
+      children: teacher?.email,
+      span: { xs: 1, sm: 1 },
+    },
+    {
+      key: "phone",
+      label: "Phone",
+      children: teacher?.phone,
+      span: { xs: 1, sm: 1 },
+    },
+    {
+      key: "gender",
+      label: "Gender",
+      children: teacher?.gender,
+      span: { xs: 1, sm: 1 },
+    },
+  ];
+
   return {
     breadcrumbItems,
     fetchTeacher,
@@ -76,5 +109,6 @@ export const useShow = () => {
     teacher,
     handleSubmitForm,
     submitLoading,
+    descriptionItems,
   };
 };
