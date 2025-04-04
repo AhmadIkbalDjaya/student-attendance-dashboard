@@ -7,6 +7,7 @@ import {
 import { useState } from "react";
 
 import { getDashboardData } from "../../../services/dashboardServive";
+import { blue, green, red, yellow } from "../../../values/colors";
 import { showMessage } from "../../../utils/messageUtils";
 
 export const useDashboard = () => {
@@ -31,25 +32,25 @@ export const useDashboard = () => {
       title: "Total Students",
       value: data?.student_count,
       icon: <IconUsers size={34} />,
-      color: "#4096ff",
+      color: blue,
     },
     {
       title: "Total Teachers",
       value: data?.teacher_count,
       icon: <IconUserPentagon size={34} />,
-      color: "#fadb14",
+      color: yellow,
     },
     {
       title: "Total Classes",
       value: data?.claass_count,
       icon: <IconChalkboard size={34} />,
-      color: "#a0d911",
+      color: green,
     },
     {
       title: "Total Courses",
       value: data?.course_count,
       icon: <IconBrandDatabricks size={34} />,
-      color: "#f5222d",
+      color: red,
     },
   ];
 

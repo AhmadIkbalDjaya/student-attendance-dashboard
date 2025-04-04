@@ -3,6 +3,7 @@ import { Avatar, Button, Dropdown, Layout, Typography } from "antd";
 
 import useSidebarStore from "../../store/sidebarStore";
 import { showMessage } from "../../utils/messageUtils";
+import { primary, white } from "../../values/colors";
 import { logout } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
 export default function Header() {
@@ -50,7 +51,7 @@ export default function Header() {
         height: "fit-content",
         padding: "10px",
         borderRadius: 8,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: white,
         position: "sticky",
         top: 0,
         zIndex: 10,
@@ -74,7 +75,7 @@ export default function Header() {
           style={{
             marginLeft: "auto",
             cursor: "pointer",
-            backgroundColor: "#1890ff",
+            backgroundColor: primary,
           }}
         >
           {user?.username?.charAt(0).toUpperCase()}

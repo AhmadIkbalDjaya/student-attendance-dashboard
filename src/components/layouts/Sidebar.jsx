@@ -1,6 +1,7 @@
 import { Drawer, Flex, Grid, Image, Layout, Space, Typography } from "antd";
 
 import useSidebarStore from "../../store/sidebarStore";
+import { white } from "../../values/colors";
 import logo from "../../assets/logo.png";
 import SidebarMenu from "./SidebarMenu";
 
@@ -11,7 +12,7 @@ export default function Sidebar() {
   const desktopSidebar = (
     <Layout.Sider
       style={{
-        backgroundColor: "#FFFFFF",
+        backgroundColor: white,
         borderRadius: 8,
         overflow: "auto",
         height: "100%",

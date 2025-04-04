@@ -2,6 +2,8 @@ import { IconEdit, IconEye, IconTrash } from "@tabler/icons-react";
 import { NavLink } from "react-router-dom";
 import { Button, Popover, Space } from "antd";
 
+import { blue, red, yellow } from "../values/colors";
+
 export default function TableAction({
   handleDelete,
   onClickEdit,
@@ -14,16 +16,12 @@ export default function TableAction({
   const editButton = (
     <Button
       type="text"
-      icon={<IconEdit color="#f59f00" />}
+      icon={<IconEdit color={yellow} />}
       onClick={onClickEdit}
     />
   );
   const viewButton = (
-    <Button
-      type="text"
-      icon={<IconEye color="#4096ff" />}
-      onClick={onClickView}
-    />
+    <Button type="text" icon={<IconEye color={blue} />} onClick={onClickView} />
   );
 
   return (
@@ -43,7 +41,7 @@ export default function TableAction({
       <Popover content="Delete">
         <Button
           type="text"
-          icon={<IconTrash color="#d63939" />}
+          icon={<IconTrash color={red} />}
           onClick={handleDelete}
         />
       </Popover>

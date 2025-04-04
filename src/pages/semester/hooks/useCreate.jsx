@@ -17,24 +17,6 @@ export const useCreate = () => {
     } catch (error) {
       showMessage({ type: "error", content: error.message });
       setFormErrors(form, error);
-      // if (error.errors) {
-      //   const errors = error.errors;
-      //   // console.log(errors);
-      //   let fields = [];
-      //   for (let key in errors) {
-      //     fields.push({
-      //       name: key,
-      //       errors: errors[key] ?? false,
-      //     });
-      //   }
-      //   form.setFields(fields);
-      //   // form.setFields([
-      //   //   {
-      //   //     name: "start_year",
-      //   //     errors: errors.start_year ?? false,
-      //   //   },
-      //   // ]);
-      // }
     } finally {
       setSubmitLoading(false);
     }

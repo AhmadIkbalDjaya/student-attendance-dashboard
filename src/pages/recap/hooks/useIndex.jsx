@@ -6,6 +6,7 @@ import { useState } from "react";
 import { tableHeaderStyle } from "../../../utils/tableHeaderStyle";
 import { getAllRecaps } from "../../../services/recapService";
 import { showMessage } from "../../../utils/messageUtils";
+import { blue } from "../../../values/colors";
 
 export const useIndex = () => {
   const [recaps, setRecaps] = useState([]);
@@ -46,7 +47,7 @@ export const useIndex = () => {
       render: (_, record) => (
         <Popover content="View">
           <NavLink to={`/recap/${record.id}`}>
-            <Button type="text" icon={<IconEye color="#4096ff" />} />
+            <Button type="text" icon={<IconEye color={blue} />} />
           </NavLink>
         </Popover>
       ),
