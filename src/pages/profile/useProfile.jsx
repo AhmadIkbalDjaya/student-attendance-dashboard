@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 import { changeAuthPassword } from "../../services/authService";
+import { setFormErrors } from "../../helpers/setFormErrors";
 import { showMessage } from "../../utils/messageUtils";
 
 export const useProfile = () => {
@@ -16,6 +17,7 @@ export const useProfile = () => {
       showMessage({ type: "success", content: "Updated successfully" });
     } catch (error) {
       showMessage({ type: "error", content: error.message });
+      setFormErrors(form, error);
     } finally {
       setLoadingSubmit(false);
     }

@@ -2,6 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 
 import { getCourse, updateCourse } from "../../../services/courseService";
+import { setFormErrors } from "../../../helpers/setFormErrors";
 import { showMessage } from "../../../utils/messageUtils";
 
 export const useEdit = () => {
@@ -17,6 +18,7 @@ export const useEdit = () => {
       showMessage({ type: "success", content: "Updated successfully" });
     } catch (error) {
       showMessage({ type: "error", content: error.message });
+      setFormErrors(form, error);
     } finally {
       setSubmitLoading(false);
     }

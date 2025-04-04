@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Modal } from "antd";
 
 import { deleteTeacher, getTeacher, setTeacherPassword } from "../../../services/teacherService";
+import { setFormErrors } from "../../../helpers/setFormErrors";
 import { showMessage } from "../../../utils/messageUtils";
 
 export const useShow = () => {
@@ -51,6 +52,7 @@ export const useShow = () => {
       form.setFieldValue("password", "");
     } catch (error) {
       showMessage({ type: "error", content: error.message });
+      setFormErrors(form, error);
     } finally {
       setSubmitLoading(false);
     }

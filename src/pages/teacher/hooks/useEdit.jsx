@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import { getTeacher, updateTeacher } from "../../../services/teacherService";
 import { showMessage } from "../../../utils/messageUtils";
+import { setFormErrors } from "../../../helpers/setFormErrors";
 
 export const useEdit = () => {
   const { id } = useParams();
@@ -17,6 +18,7 @@ export const useEdit = () => {
       showMessage({ type: "success", content: "Updated successfully" });
     } catch (error) {
       showMessage({ type: "error", content: error.message });
+      setFormErrors(form, error);
     } finally {
       setSubmitLoading(false);
     }

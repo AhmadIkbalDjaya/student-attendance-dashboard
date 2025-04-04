@@ -27,7 +27,9 @@ export default function SemesterForm({
                   max={2050}
                   style={{ width: "100%" }}
                   placeholder="example: 2025"
-                  onChange={(e) => form.setFieldValue("end_year", e + 1)}
+                  onChange={(e) =>
+                    form.setFieldValue("end_year", parseInt(e) + 1 || "")
+                  }
                 />
               )}
             </Form.Item>

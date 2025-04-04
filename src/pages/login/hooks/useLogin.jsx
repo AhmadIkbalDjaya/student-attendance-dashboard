@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import { isAuthenticated, login } from "../../../services/authService";
+import { setFormErrors } from "../../../helpers/setFormErrors";
 import { showMessage } from "../../../utils/messageUtils";
 
 export const useLogin = () => {
@@ -16,6 +17,7 @@ export const useLogin = () => {
       navigate("/");
     } catch (error) {
       showMessage({ type: "error", content: error.message });
+      setFormErrors(form, error);
     } finally {
       setLoadingSubmit(false);
     }
