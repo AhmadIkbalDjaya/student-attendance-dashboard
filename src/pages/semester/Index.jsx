@@ -1,8 +1,7 @@
-import { Breadcrumb, Button, Flex, Table, Typography } from "antd";
-import { IconPlus } from "@tabler/icons-react";
-import { NavLink } from "react-router-dom";
+import { Breadcrumb, Table, Typography } from "antd";
 import { useEffect } from "react";
 
+import TableHeaderActions from "../../components/TableHeaderActions";
 import DeleteModal from "../../components/DeleteModal";
 import { useIndex } from "./hooks/useIndex";
 
@@ -16,32 +15,24 @@ export default function IndexSemesterPage() {
     deleteData,
     handleCloseDeleteModal,
     handleDelete,
-    page,
-    setPage,
-    meta,
-    perpage,
-    setPerpage,
+    pagination,
+    handleTableChange,
+    search,
+    handleSearch,
   } = useIndex();
 
   useEffect(() => {
     fetchData();
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-  }, [page, perpage]);
+  }, [pagination.current, pagination.pageSize, search]);
 
   return (
     <>
       <Breadcrumb separator=">" items={breadcrumbItems} />
       <Typography.Title level={3}>Semester</Typography.Title>
-      <Flex justify="end" align="center" style={{ marginBottom: "10px" }}>
-        <NavLink to="/semester/create">
-          <Button type="primary" icon={<IconPlus />}>
-            Create
-          </Button>
-        </NavLink>
-      </Flex>
+      <TableHeaderActions
+        handleSearch={handleSearch}
+        createLink={"/semester/create"}
+      />
       <Table
         columns={columns}
         dataSource={semesters}
@@ -50,18 +41,9 @@ export default function IndexSemesterPage() {
         size="small"
         scroll={{ y: "60vh", x: "max-content" }}
         pagination={{
-          current: page,
-          defaultCurrent: 1,
-          pageSize: perpage,
-          defaultPageSize: 10,
+          ...pagination,
           showSizeChanger: true,
-          pageSizeOptions: [10, 15, 25, 50],
-          total: meta?.total_item,
-          onChange: (page, pageSize) => setPage(page),
-          onShowSizeChange: (currentPage, pageSize) => {
-            setPage(1);
-            setPerpage(pageSize);
-          },
+          onChange: handleTableChange,
         }}
       />
 

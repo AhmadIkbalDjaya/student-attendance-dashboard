@@ -6,6 +6,7 @@ import { useState } from "react";
 import { tableHeaderStyle } from "../../../utils/tableHeaderStyle";
 import TableAction from "../../../components/TableAction";
 import { showMessage } from "../../../utils/messageUtils";
+import { debounce } from "../../../utils/debounce";
 import {
   deleteSemester,
   getAllSemester,
@@ -14,17 +15,27 @@ import {
 
 export const useIndex = () => {
   const [semesters, setSemesters] = useState([]);
-  const [meta, setMeta] = useState();
   const [getLoading, setGetLoading] = useState(false);
-  const [page, setPage] = useState(1);
-  const [perpage, setPerpage] = useState(10);
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    total: 0,
+  });
+  const [search, setSearch] = useState("");
 
   const fetchData = async () => {
     try {
       setGetLoading(true);
-      const result = await getAllSemester(page, perpage);
+      const result = await getAllSemester(
+        pagination.current,
+        pagination.pageSize,
+        search
+      );
       setSemesters(result.data);
-      setMeta(result.meta);
+      setPagination((prev) => ({
+        ...prev,
+        total: result.meta?.total_item,
+      }));
     } catch (error) {
       showMessage({ type: "error", content: error.message });
     } finally {
@@ -79,6 +90,31 @@ export const useIndex = () => {
       },
     });
   };
+
+  const handleTableChange = (page, pageSize) => {
+    if (pageSize != pagination.pageSize) {
+      setPagination((prev) => ({
+        ...prev,
+        current: 1,
+        pageSize: pageSize,
+      }));
+    } else {
+      setPagination((prev) => ({
+        ...prev,
+        current: page,
+      }));
+    }
+  };
+
+  const handleSearch = debounce((e) => {
+    setSearch(e.target.value);
+    if (pagination.current != 1) {
+      setPagination((prev) => ({
+        ...prev,
+        current: 1,
+      }));
+    }
+  });
 
   const columns = [
     {
@@ -156,10 +192,9 @@ export const useIndex = () => {
     handleOpenDeleteModal,
     handleCloseDeleteModal,
     handleDelete,
-    page,
-    setPage,
-    meta,
-    perpage,
-    setPerpage,
+    pagination,
+    handleTableChange,
+    search,
+    handleSearch,
   };
 };
