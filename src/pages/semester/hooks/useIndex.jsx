@@ -14,13 +14,17 @@ import {
 
 export const useIndex = () => {
   const [semesters, setSemesters] = useState([]);
+  const [meta, setMeta] = useState();
   const [getLoading, setGetLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [perpage, setPerpage] = useState(10);
 
   const fetchData = async () => {
     try {
       setGetLoading(true);
-      const result = await getAllSemester();
+      const result = await getAllSemester(page, perpage);
       setSemesters(result.data);
+      setMeta(result.meta);
     } catch (error) {
       showMessage({ type: "error", content: error.message });
     } finally {
@@ -152,5 +156,10 @@ export const useIndex = () => {
     handleOpenDeleteModal,
     handleCloseDeleteModal,
     handleDelete,
+    page,
+    setPage,
+    meta,
+    perpage,
+    setPerpage,
   };
 };

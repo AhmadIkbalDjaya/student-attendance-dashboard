@@ -16,11 +16,20 @@ export default function IndexSemesterPage() {
     deleteData,
     handleCloseDeleteModal,
     handleDelete,
+    page,
+    setPage,
+    meta,
+    perpage,
+    setPerpage,
   } = useIndex();
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [page, perpage]);
 
   return (
     <>
@@ -36,11 +45,24 @@ export default function IndexSemesterPage() {
       <Table
         columns={columns}
         dataSource={semesters}
-        pagination={false}
         rowKey={"id"}
         loading={getLoading}
         size="small"
         scroll={{ y: "60vh", x: "max-content" }}
+        pagination={{
+          current: page,
+          defaultCurrent: 1,
+          pageSize: perpage,
+          defaultPageSize: 10,
+          showSizeChanger: true,
+          pageSizeOptions: [10, 15, 25, 50],
+          total: meta?.total_item,
+          onChange: (page, pageSize) => setPage(page),
+          onShowSizeChange: (currentPage, pageSize) => {
+            setPage(1);
+            setPerpage(pageSize);
+          },
+        }}
       />
 
       <DeleteModal
