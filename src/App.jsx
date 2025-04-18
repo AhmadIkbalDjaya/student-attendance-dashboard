@@ -30,6 +30,9 @@ import LoginPage from "./pages/login/Login";
 import { useMessage } from "./utils/messageUtils";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProfilePage from "./pages/profile/Index";
+import IndexMajorPage from "./pages/major/Index";
+import CreateMajorPage from "./pages/major/Create";
+import EditMajorPage from "./pages/major/Edit";
 
 function App() {
   const messageContextHolder = useMessage();
@@ -83,6 +86,11 @@ function App() {
             <Route path="" element={<IndexAboutUsPage />} />
             <Route path="create" element={<CreateAboutUsPage />} />
             <Route path=":id/edit" element={<EditAboutUsPage />} />
+          </Route>
+          <Route path="major">
+            <Route path="" element={<IndexMajorPage />} />
+            <Route path="create" element={<CreateMajorPage />} />
+            <Route path=":id/edit" element={<EditMajorPage />} />
           </Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />

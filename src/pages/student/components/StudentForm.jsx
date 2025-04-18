@@ -12,7 +12,7 @@ export default function StudentForm({
   const fetchClasses = async () => {
     try {
       setFetchClassLoading(true);
-      const result = await getAllClaasses();
+      const result = await getAllClaasses(1, 100);
       setClaasses(result.data);
       setFetchClassLoading(false);
     } catch (error) {

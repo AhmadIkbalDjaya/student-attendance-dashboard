@@ -5,13 +5,13 @@ import TableHeaderActions from "../../components/TableHeaderActions";
 import DeleteModal from "../../components/DeleteModal";
 import { useIndex } from "./hooks/useIndex";
 
-export default function IndexCoursePage() {
+export default function IndexMajorPage() {
   const {
     breadcrumbItems,
     columns,
-    courses,
-    fetchData,
+    aboutUses,
     getLoading,
+    fetchData,
     handleDelete,
     deleteData,
     handleCloseDeleteModal,
@@ -28,14 +28,14 @@ export default function IndexCoursePage() {
   return (
     <>
       <Breadcrumb separator=">" items={breadcrumbItems} />
-      <Typography.Title level={3}>Course</Typography.Title>
+      <Typography.Title level={3}>Major</Typography.Title>
       <TableHeaderActions
         handleSearch={handleSearch}
-        createLink={"/course/create"}
+        createLink={"/major/create"}
       />
       <Table
         columns={columns}
-        dataSource={courses}
+        dataSource={aboutUses}
         rowKey={"id"}
         loading={getLoading}
         size="small"

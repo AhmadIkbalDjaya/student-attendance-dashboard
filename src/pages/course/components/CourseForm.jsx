@@ -19,7 +19,7 @@ export default function CourseForm({
   const fetchClasses = async () => {
     try {
       setFetchClassesLoading(true);
-      const result = await getAllClaasses();
+      const result = await getAllClaasses(1, 100);
       setClaasses(result.data);
       setFetchClassesLoading(false);
     } catch (error) {
@@ -30,7 +30,7 @@ export default function CourseForm({
   const fetchTeachers = async () => {
     try {
       setFetchTeachersLoading(true);
-      const result = await getAllTeachers();
+      const result = await getAllTeachers(1, 100);
       setTeachers(result.data);
       setFetchTeachersLoading(false);
     } catch (error) {
@@ -41,7 +41,7 @@ export default function CourseForm({
   const fetchSemesters = async () => {
     try {
       setFetchSemestersLoading(true);
-      const result = await getAllSemester();
+      const result = await getAllSemester(1, 100);
       setSemester(result.data);
       setFetchSemestersLoading(false);
     } catch (error) {

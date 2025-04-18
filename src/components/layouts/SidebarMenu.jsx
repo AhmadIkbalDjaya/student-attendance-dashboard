@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Grid, Menu } from "antd";
 import {
+  IconBatteryAutomotive,
   IconBooks,
   IconBrandDatabricks,
   IconChalkboard,
@@ -90,6 +91,15 @@ export default function SidebarMenu() {
         screens.xs ? toggle() : null;
       },
     },
+    {
+      key: "major",
+      label: "Major",
+      icon: <IconBatteryAutomotive style={{ marginLeft: -3 }} size={22} />,
+      onClick: () => {
+        navigate("/major");
+        screens.xs ? toggle() : null;
+      },
+    },
   ];
 
   let selectedKey = [];
@@ -109,6 +119,8 @@ export default function SidebarMenu() {
     selectedKey = ["recap"];
   } else if (location.pathname.startsWith("/about-us")) {
     selectedKey = ["about-us"];
+  } else if (location.pathname.startsWith("/major")) {
+    selectedKey = ["major"];
   }
 
   return (
