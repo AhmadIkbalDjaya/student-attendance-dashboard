@@ -7,22 +7,63 @@ import { tableHeaderStyle } from "../../../utils/tableHeaderStyle";
 import { getAllRecaps } from "../../../services/recapService";
 import { showMessage } from "../../../utils/messageUtils";
 import { blue } from "../../../values/colors";
+import { debounce } from "../../../utils/debounce";
 
 export const useIndex = () => {
   const [recaps, setRecaps] = useState([]);
   const [getLoading, setGetLoading] = useState(false);
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    total: 0,
+  });
+  const [search, setSearch] = useState("");
 
   const fetchData = async () => {
     try {
       setGetLoading(true);
-      const result = await getAllRecaps();
+      const result = await getAllRecaps(
+        pagination.current,
+        pagination.pageSize,
+        search
+      );
       setRecaps(result.data);
+      setPagination((prev) => ({
+        ...prev,
+        total: result.meta?.total_item,
+      }));
     } catch (error) {
       showMessage({ type: "error", content: error.message });
     } finally {
       setGetLoading(false);
     }
   };
+
+  const handleTableChange = (page, pageSize) => {
+    if (pageSize != pagination.pageSize) {
+      setPagination((prev) => ({
+        ...prev,
+        current: 1,
+        pageSize: pageSize,
+      }));
+    } else {
+      setPagination((prev) => ({
+        ...prev,
+        current: page,
+      }));
+    }
+  };
+
+  const handleSearch = debounce((e) => {
+    setSearch(e.target.value);
+    if (pagination.current != 1) {
+      setPagination((prev) => ({
+        ...prev,
+        current: 1,
+      }));
+    }
+  });
+
   const columns = [
     {
       title: "Course Name",
@@ -69,5 +110,9 @@ export const useIndex = () => {
     recaps,
     getLoading,
     fetchData,
+    pagination,
+    handleTableChange,
+    search,
+    handleSearch,
   };
 };

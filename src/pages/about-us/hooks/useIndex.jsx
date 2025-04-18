@@ -5,16 +5,31 @@ import { deleteAboutUs, getAllAboutUs } from "../../../services/aboutUsService";
 import { tableHeaderStyle } from "../../../utils/tableHeaderStyle";
 import { showMessage } from "../../../utils/messageUtils";
 import TableAction from "../../../components/TableAction";
+import { debounce } from "../../../utils/debounce";
 
 export const useIndex = () => {
   const [aboutUses, setAboutUses] = useState([]);
   const [getLoading, setGetLoading] = useState(false);
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    total: 0,
+  });
+  const [search, setSearch] = useState("");
 
   const fetchData = async () => {
     try {
       setGetLoading(true);
-      const result = await getAllAboutUs();
+      const result = await getAllAboutUs(
+        pagination.current,
+        pagination.pageSize,
+        search
+      );
       setAboutUses(result.data);
+      setPagination((prev) => ({
+        ...prev,
+        total: result.meta?.total_item,
+      }));
     } catch (error) {
       showMessage({ type: "error", content: error.message });
     } finally {
@@ -52,6 +67,31 @@ export const useIndex = () => {
       record: null,
     });
   };
+
+  const handleTableChange = (page, pageSize) => {
+    if (pageSize != pagination.pageSize) {
+      setPagination((prev) => ({
+        ...prev,
+        current: 1,
+        pageSize: pageSize,
+      }));
+    } else {
+      setPagination((prev) => ({
+        ...prev,
+        current: page,
+      }));
+    }
+  };
+
+  const handleSearch = debounce((e) => {
+    setSearch(e.target.value);
+    if (pagination.current != 1) {
+      setPagination((prev) => ({
+        ...prev,
+        current: 1,
+      }));
+    }
+  });
 
   const columns = [
     {
@@ -114,5 +154,9 @@ export const useIndex = () => {
     handleDelete,
     deleteData,
     handleCloseDeleteModal,
+    pagination,
+    handleTableChange,
+    search,
+    handleSearch,
   };
 };

@@ -1,9 +1,11 @@
 import apiClient from "../config/api";
 import handleApiError from "../helpers/handleApiError";
 
-export const getAllTeachers = async () => {
+export const getAllTeachers = async (page, perpage, search) => {
   try {
-    const response = await apiClient.get("admin/teacher");
+    const response = await apiClient.get("admin/teacher", {
+      params: { page, perpage, search },
+    });
     return response.data;
   } catch (error) {
     return handleApiError(error);

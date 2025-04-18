@@ -44,6 +44,7 @@ export default function IndexSemesterPage() {
           ...pagination,
           showSizeChanger: true,
           onChange: handleTableChange,
+          showTotal: (total) => `Total ${total} items`,
         }}
       />
 

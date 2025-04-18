@@ -1,8 +1,7 @@
-import { Breadcrumb, Button, Flex, Table, Typography } from "antd";
-import { IconPlus } from "@tabler/icons-react";
-import { NavLink } from "react-router-dom";
+import { Breadcrumb, Table, Typography } from "antd";
 import { useEffect } from "react";
 
+import TableHeaderActions from "../../components/TableHeaderActions";
 import DeleteModal from "../../components/DeleteModal";
 import { useIndex } from "./hooks/useIndex";
 
@@ -16,31 +15,37 @@ export default function IndexTeacherPage() {
     deleteData,
     handleCloseDeleteModal,
     handleDelete,
+    pagination,
+    handleTableChange,
+    search,
+    handleSearch,
   } = useIndex();
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [pagination.current, pagination.pageSize, search]);
 
   return (
     <>
       <Breadcrumb separator=">" items={breadcrumbItems} />
       <Typography.Title level={3}>Teacher</Typography.Title>
-      <Flex justify="end" align="center" style={{ marginBottom: "10px" }}>
-        <NavLink to="/teacher/create">
-          <Button type="primary" icon={<IconPlus />}>
-            Create
-          </Button>
-        </NavLink>
-      </Flex>
+      <TableHeaderActions
+        handleSearch={handleSearch}
+        createLink={"/teacher/create"}
+      />
       <Table
         columns={columns}
         dataSource={teachers}
-        pagination={false}
         rowKey={"id"}
         loading={getLoading}
         size="small"
         scroll={{ y: "60vh", x: "max-content" }}
+        pagination={{
+          ...pagination,
+          showSizeChanger: true,
+          onChange: handleTableChange,
+          showTotal: (total) => `Total ${total} items`,
+        }}
       />
 
       <DeleteModal
