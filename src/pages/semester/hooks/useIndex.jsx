@@ -11,6 +11,8 @@ import {
   deleteSemester,
   getAllSemester,
   setActiveSemester,
+  getSemesterIdsList,
+  bulkDeleteSemester,
 } from "../../../services/semesterService";
 
 export const useIndex = () => {
@@ -22,6 +24,7 @@ export const useIndex = () => {
     total: 0,
   });
   const [search, setSearch] = useState("");
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
   const fetchData = async () => {
     try {
@@ -116,6 +119,44 @@ export const useIndex = () => {
     }
   });
 
+  const rowSelection = {
+    selectedRowKeys,
+    onSelect: (record, selected, selectedRows, nativeEvent) => {
+      if (selected) {
+        setSelectedRowKeys([...selectedRowKeys, record.id]);
+      } else {
+        setSelectedRowKeys(selectedRowKeys.filter((key) => key != record.id));
+      }
+    },
+    onSelectAll: async (selected, selectedRows, changeRows) => {
+      const ids = await getSemesterIdsList();
+      if (ids.data.length == selectedRowKeys.length) {
+        setSelectedRowKeys([]);
+      } else {
+        setSelectedRowKeys(ids.data);
+      }
+    },
+  };
+
+  const handleBulkDelete = () => {
+    Modal.confirm({
+      title: `Are you sure you want to delete these ${selectedRowKeys.length} items?`,
+      okText: "Yes",
+      okType: "danger",
+      centered: true,
+      onOk: async () => {
+        try {
+          await bulkDeleteSemester(selectedRowKeys);
+          fetchData();
+          showMessage({ type: "success", content: "Deleted successfully" });
+          setSelectedRowKeys([]);
+        } catch (error) {
+          showMessage({ type: "error", content: error.message });
+        }
+      },
+    });
+  };
+
   const columns = [
     {
       title: "Start Year",
@@ -196,5 +237,7 @@ export const useIndex = () => {
     handleTableChange,
     search,
     handleSearch,
+    rowSelection,
+    handleBulkDelete,
   };
 };

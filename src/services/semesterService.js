@@ -58,3 +58,23 @@ export const setActiveSemester = async (id) => {
     return handleApiError(error);
   }
 };
+
+export const getSemesterIdsList = async () => {
+  try {
+    const response = await apiClient.get("/admin/semester/list/ids");
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+export const bulkDeleteSemester = async (ids) => {
+  try {
+    const response = await apiClient.delete(`/admin/semester/bulk`, {
+      data: { ids },
+    });
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};

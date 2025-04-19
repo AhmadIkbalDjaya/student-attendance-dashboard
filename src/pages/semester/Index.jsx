@@ -19,6 +19,8 @@ export default function IndexSemesterPage() {
     handleTableChange,
     search,
     handleSearch,
+    rowSelection,
+    handleBulkDelete,
   } = useIndex();
 
   useEffect(() => {
@@ -32,6 +34,9 @@ export default function IndexSemesterPage() {
       <TableHeaderActions
         handleSearch={handleSearch}
         createLink={"/semester/create"}
+        showSelectedDropwdown
+        selectedCount={rowSelection.selectedRowKeys.length}
+        handleBulkDelete={handleBulkDelete}
       />
       <Table
         columns={columns}
@@ -46,6 +51,7 @@ export default function IndexSemesterPage() {
           onChange: handleTableChange,
           showTotal: (total) => `Total ${total} items`,
         }}
+        rowSelection={rowSelection}
       />
 
       <DeleteModal
