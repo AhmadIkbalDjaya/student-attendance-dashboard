@@ -1,9 +1,11 @@
 import apiClient from "../config/api";
 import handleApiError from "../helpers/handleApiError";
 
+const API_PREFIX = "/admin/teacher";
+
 export const getAllTeachers = async (page, perpage, search) => {
   try {
-    const response = await apiClient.get("admin/teacher", {
+    const response = await apiClient.get(API_PREFIX, {
       params: { page, perpage, search },
     });
     return response.data;
@@ -14,7 +16,7 @@ export const getAllTeachers = async (page, perpage, search) => {
 
 export const getTeacher = async (id) => {
   try {
-    const response = await apiClient.get(`/admin/teacher/${id}`);
+    const response = await apiClient.get(`${API_PREFIX}/${id}`);
     return response.data;
   } catch (error) {
     return handleApiError(error);
@@ -23,7 +25,7 @@ export const getTeacher = async (id) => {
 
 export const createTeacher = async (data) => {
   try {
-    const response = await apiClient.post("/admin/teacher", data);
+    const response = await apiClient.post(API_PREFIX, data);
     return response.data;
   } catch (error) {
     return handleApiError(error, "Create failed");
@@ -33,7 +35,7 @@ export const createTeacher = async (data) => {
 export const updateTeacher = async (id, data) => {
   try {
     const response = await apiClient.post(
-      `/admin/teacher/${id}?_method=PUT`,
+      `${API_PREFIX}/${id}?_method=PUT`,
       data
     );
     return response.data;
@@ -44,7 +46,7 @@ export const updateTeacher = async (id, data) => {
 
 export const deleteTeacher = async (id) => {
   try {
-    const response = await apiClient.delete(`/admin/teacher/${id}`);
+    const response = await apiClient.delete(`${API_PREFIX}/${id}`);
     return response.data;
   } catch (error) {
     return handleApiError(error, "Deleted failed");
@@ -53,9 +55,29 @@ export const deleteTeacher = async (id) => {
 
 export const setTeacherPassword = async (id, data) => {
   try {
-    const response = await apiClient.post(`/admin/teacher/setPass/${id}`, data);
+    const response = await apiClient.post(`${API_PREFIX}/setPass/${id}`, data);
     return response.data;
   } catch (error) {
     return handleApiError(error);
+  }
+};
+
+export const getTeacherIdsList = async () => {
+  try {
+    const response = await apiClient.get(`${API_PREFIX}/list/ids`);
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+export const bulkDeleteTeacher = async (ids) => {
+  try {
+    const response = await apiClient.delete(`${API_PREFIX}/bulk`, {
+      data: { ids },
+    });
+    return response.data;
+  } catch (error) {
+    return handleApiError(error, "Deleted failed");
   }
 };

@@ -19,6 +19,8 @@ export default function IndexAboutUsPage() {
     handleTableChange,
     search,
     handleSearch,
+    rowSelection,
+    handleBulkDelete,
   } = useIndex();
 
   useEffect(() => {
@@ -32,6 +34,9 @@ export default function IndexAboutUsPage() {
       <TableHeaderActions
         handleSearch={handleSearch}
         createLink={"/about-us/create"}
+        showSelectedDropwdown
+        selectedCount={rowSelection.selectedRowKeys.length}
+        handleBulkDelete={handleBulkDelete}
       />
       <Table
         columns={columns}
@@ -46,6 +51,7 @@ export default function IndexAboutUsPage() {
           onChange: handleTableChange,
           showTotal: (total) => `Total ${total} items`,
         }}
+        rowSelection={rowSelection}
       />
 
       <DeleteModal

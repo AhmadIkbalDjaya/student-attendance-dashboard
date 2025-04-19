@@ -3,7 +3,9 @@ import { Button, Modal, Popover } from "antd";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+import { generateRowSelection } from "../../../utils/generateRowSelection";
 import { tableHeaderStyle } from "../../../utils/tableHeaderStyle";
+import { useBulkDelete } from "../../../hooks/useBulkDelete";
 import TableAction from "../../../components/TableAction";
 import { showMessage } from "../../../utils/messageUtils";
 import { debounce } from "../../../utils/debounce";
@@ -119,43 +121,19 @@ export const useIndex = () => {
     }
   });
 
-  const rowSelection = {
+  const rowSelection = generateRowSelection({
     selectedRowKeys,
-    onSelect: (record, selected, selectedRows, nativeEvent) => {
-      if (selected) {
-        setSelectedRowKeys([...selectedRowKeys, record.id]);
-      } else {
-        setSelectedRowKeys(selectedRowKeys.filter((key) => key != record.id));
-      }
-    },
-    onSelectAll: async (selected, selectedRows, changeRows) => {
-      const ids = await getSemesterIdsList();
-      if (ids.data.length == selectedRowKeys.length) {
-        setSelectedRowKeys([]);
-      } else {
-        setSelectedRowKeys(ids.data);
-      }
-    },
-  };
+    setSelectedRowKeys,
+    fetchAllIds: getSemesterIdsList,
+  });
 
-  const handleBulkDelete = () => {
-    Modal.confirm({
-      title: `Are you sure you want to delete these ${selectedRowKeys.length} items?`,
-      okText: "Yes",
-      okType: "danger",
-      centered: true,
-      onOk: async () => {
-        try {
-          await bulkDeleteSemester(selectedRowKeys);
-          fetchData();
-          showMessage({ type: "success", content: "Deleted successfully" });
-          setSelectedRowKeys([]);
-        } catch (error) {
-          showMessage({ type: "error", content: error.message });
-        }
-      },
-    });
-  };
+  const { handleBulkDelete } = useBulkDelete({
+    selectedItems: selectedRowKeys,
+    clearSelection: setSelectedRowKeys,
+    deleteFuntion: bulkDeleteSemester,
+    refreshData: fetchData,
+    entityName: "semesters",
+  });
 
   const columns = [
     {

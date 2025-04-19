@@ -1,8 +1,11 @@
 import apiClient from "../config/api";
 import handleApiError from "../helpers/handleApiError";
+
+const API_PREFIX = "/admin/semester";
+
 export const getAllSemester = async (page, perpage, search) => {
   try {
-    const response = await apiClient.get("/admin/semester", {
+    const response = await apiClient.get(API_PREFIX, {
       params: { page, perpage, search },
     });
     return response.data;
@@ -13,7 +16,7 @@ export const getAllSemester = async (page, perpage, search) => {
 
 export const getSemester = async (id) => {
   try {
-    const response = await apiClient.get(`/admin/semester/${id}`);
+    const response = await apiClient.get(`${API_PREFIX}/${id}`);
     return response.data;
   } catch (error) {
     return handleApiError(error);
@@ -22,7 +25,7 @@ export const getSemester = async (id) => {
 
 export const createSemester = async (data) => {
   try {
-    const response = await apiClient.post("/admin/semester", data);
+    const response = await apiClient.post(API_PREFIX, data);
     return response.data;
   } catch (error) {
     return handleApiError(error, "Create failed");
@@ -32,7 +35,7 @@ export const createSemester = async (data) => {
 export const updateSemester = async (id, data) => {
   try {
     const response = await apiClient.post(
-      `/admin/semester/${id}?_method=PUT`,
+      `${API_PREFIX}/${id}?_method=PUT`,
       data
     );
     return response.data;
@@ -43,7 +46,7 @@ export const updateSemester = async (id, data) => {
 
 export const deleteSemester = async (id) => {
   try {
-    const response = await apiClient.delete(`/admin/semester/${id}`);
+    const response = await apiClient.delete(`${API_PREFIX}/${id}`);
     return response.data;
   } catch (error) {
     return handleApiError(error, "Deleted failed");
@@ -52,7 +55,7 @@ export const deleteSemester = async (id) => {
 
 export const setActiveSemester = async (id) => {
   try {
-    const response = await apiClient.get(`/admin/semester/${id}/setActive`);
+    const response = await apiClient.get(`${API_PREFIX}/${id}/setActive`);
     return response.data;
   } catch (error) {
     return handleApiError(error);
@@ -61,7 +64,7 @@ export const setActiveSemester = async (id) => {
 
 export const getSemesterIdsList = async () => {
   try {
-    const response = await apiClient.get("/admin/semester/list/ids");
+    const response = await apiClient.get(`${API_PREFIX}/list/ids`);
     return response.data;
   } catch (error) {
     return handleApiError(error);
@@ -70,11 +73,11 @@ export const getSemesterIdsList = async () => {
 
 export const bulkDeleteSemester = async (ids) => {
   try {
-    const response = await apiClient.delete(`/admin/semester/bulk`, {
+    const response = await apiClient.delete(`${API_PREFIX}/bulk`, {
       data: { ids },
     });
     return response.data;
   } catch (error) {
-    return handleApiError(error);
+    return handleApiError(error, "Deleted failed");
   }
 };

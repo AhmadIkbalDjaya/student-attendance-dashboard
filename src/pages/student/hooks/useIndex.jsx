@@ -2,13 +2,17 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 import {
+  bulkDeleteStudent,
   deleteStudent,
   getAllStudents,
+  getStudentIdsList,
 } from "../../../services/studentService";
 import { tableHeaderStyle } from "../../../utils/tableHeaderStyle";
 import { showMessage } from "../../../utils/messageUtils";
 import TableAction from "../../../components/TableAction";
 import { debounce } from "../../../utils/debounce";
+import { generateRowSelection } from "../../../utils/generateRowSelection";
+import { useBulkDelete } from "../../../hooks/useBulkDelete";
 
 export const useIndex = () => {
   const [students, setStudents] = useState([]);
@@ -19,6 +23,7 @@ export const useIndex = () => {
     total: 0,
   });
   const [search, setSearch] = useState("");
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
   const fetchData = async () => {
     try {
@@ -96,6 +101,20 @@ export const useIndex = () => {
     }
   });
 
+  const rowSelection = generateRowSelection({
+    selectedRowKeys,
+    setSelectedRowKeys,
+    fetchAllIds: getStudentIdsList,
+  });
+
+  const { handleBulkDelete } = useBulkDelete({
+    selectedItems: selectedRowKeys,
+    clearSelection: setSelectedRowKeys,
+    deleteFuntion: bulkDeleteStudent,
+    refreshData: fetchData,
+    entityName: "students",
+  });
+
   const columns = [
     {
       title: "NIS",
@@ -149,5 +168,7 @@ export const useIndex = () => {
     handleTableChange,
     search,
     handleSearch,
+    rowSelection,
+    handleBulkDelete,
   };
 };

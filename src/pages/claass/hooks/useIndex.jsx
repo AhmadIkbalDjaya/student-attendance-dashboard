@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+import { bulkDeleteClaass, deleteClaass, getAllClaasses, getClaassIdsList } from "../../../services/claassService";
+import { generateRowSelection } from "../../../utils/generateRowSelection";
 import { tableHeaderStyle } from "../../../utils/tableHeaderStyle";
-import { getAllClaasses } from "../../../services/claassService";
+import { useBulkDelete } from "../../../hooks/useBulkDelete";
 import TableAction from "../../../components/TableAction";
 import { showMessage } from "../../../utils/messageUtils";
 import { debounce } from "../../../utils/debounce";
@@ -17,6 +19,7 @@ export const useIndex = () => {
     total: 0,
   });
   const [search, setSearch] = useState("");
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
   const fetchData = async () => {
     try {
@@ -94,6 +97,20 @@ export const useIndex = () => {
     }
   });
 
+  const rowSelection = generateRowSelection({
+    selectedRowKeys,
+    setSelectedRowKeys,
+    fetchAllIds: getClaassIdsList,
+  });
+
+  const { handleBulkDelete } = useBulkDelete({
+    selectedItems: selectedRowKeys,
+    clearSelection: setSelectedRowKeys,
+    deleteFuntion: bulkDeleteClaass,
+    refreshData: fetchData,
+    entityName: "classes",
+  });
+
   const columns = [
     {
       title: "Name",
@@ -152,5 +169,7 @@ export const useIndex = () => {
     handleTableChange,
     search,
     handleSearch,
+    rowSelection,
+    handleBulkDelete,
   };
 };

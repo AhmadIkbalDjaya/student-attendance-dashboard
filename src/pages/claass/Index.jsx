@@ -19,6 +19,8 @@ export default function IndexClaassPage() {
     handleTableChange,
     search,
     handleSearch,
+    rowSelection,
+    handleBulkDelete,
   } = useIndex();
 
   useEffect(() => {
@@ -32,6 +34,9 @@ export default function IndexClaassPage() {
       <TableHeaderActions
         handleSearch={handleSearch}
         createLink={"/claass/create"}
+        showSelectedDropwdown
+        selectedCount={rowSelection.selectedRowKeys.length}
+        handleBulkDelete={handleBulkDelete}
       />
       <Table
         columns={columns}
@@ -46,6 +51,7 @@ export default function IndexClaassPage() {
           onChange: handleTableChange,
           showTotal: (total) => `Total ${total} items`,
         }}
+        rowSelection={rowSelection}
       />
 
       <DeleteModal

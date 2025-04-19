@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+import { generateRowSelection } from "../../../utils/generateRowSelection";
 import { tableHeaderStyle } from "../../../utils/tableHeaderStyle";
+import { useBulkDelete } from "../../../hooks/useBulkDelete";
 import { showMessage } from "../../../utils/messageUtils";
 import TableAction from "../../../components/TableAction";
 import {
+  bulkDeleteTeacher,
   deleteTeacher,
   getAllTeachers,
+  getTeacherIdsList,
 } from "../../../services/teacherService";
 import { debounce } from "../../../utils/debounce";
 
@@ -19,6 +23,7 @@ export const useIndex = () => {
     total: 0,
   });
   const [search, setSearch] = useState("");
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
   const fetchData = async () => {
     try {
@@ -96,6 +101,20 @@ export const useIndex = () => {
     }
   });
 
+  const rowSelection = generateRowSelection({
+    selectedRowKeys,
+    setSelectedRowKeys,
+    fetchAllIds: getTeacherIdsList,
+  });
+
+  const { handleBulkDelete } = useBulkDelete({
+    selectedItems: selectedRowKeys,
+    clearSelection: setSelectedRowKeys,
+    deleteFuntion: bulkDeleteTeacher,
+    refreshData: fetchData,
+    entityName: "teachers",
+  });
+
   const columns = [
     {
       title: "Name",
@@ -149,5 +168,7 @@ export const useIndex = () => {
     handleTableChange,
     search,
     handleSearch,
+    rowSelection,
+    handleBulkDelete,
   };
 };

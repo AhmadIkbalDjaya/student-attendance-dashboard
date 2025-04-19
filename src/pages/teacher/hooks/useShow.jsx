@@ -92,7 +92,7 @@ export const useShow = () => {
     {
       key: "phone",
       label: "Phone",
-      children: teacher?.phone,
+      children: teacher?.phone ?? "-",
       span: { xs: 1, sm: 1 },
     },
     {

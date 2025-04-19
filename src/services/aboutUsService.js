@@ -1,9 +1,11 @@
 import apiClient from "../config/api";
 import handleApiError from "../helpers/handleApiError";
 
+const API_PREFIX = "/admin/aboutUs";
+
 export const getAllAboutUs = async (page, perpage, search) => {
   try {
-    const response = await apiClient.get("/admin/aboutUs", {
+    const response = await apiClient.get(API_PREFIX, {
       params: { page, perpage, search },
     });
     return response.data;
@@ -14,7 +16,7 @@ export const getAllAboutUs = async (page, perpage, search) => {
 
 export const getAboutUs = async (id) => {
   try {
-    const response = await apiClient.get(`/admin/aboutUs/${id}`);
+    const response = await apiClient.get(`${API_PREFIX}/${id}`);
     return response.data;
   } catch (error) {
     return handleApiError(error);
@@ -23,7 +25,7 @@ export const getAboutUs = async (id) => {
 
 export const createAboutUs = async (data) => {
   try {
-    const response = await apiClient.post("/admin/aboutUs", data);
+    const response = await apiClient.post(API_PREFIX, data);
     return response.data;
   } catch (error) {
     return handleApiError(error, "Create failed");
@@ -33,7 +35,7 @@ export const createAboutUs = async (data) => {
 export const updateAboutUs = async (id, data) => {
   try {
     const response = await apiClient.post(
-      `/admin/aboutUs/${id}?_method=PUT`,
+      `${API_PREFIX}/${id}?_method=PUT`,
       data
     );
     return response.data;
@@ -44,7 +46,27 @@ export const updateAboutUs = async (id, data) => {
 
 export const deleteAboutUs = async (id) => {
   try {
-    const response = await apiClient.delete(`/admin/aboutUs/${id}`);
+    const response = await apiClient.delete(`${API_PREFIX}/${id}`);
+    return response.data;
+  } catch (error) {
+    return handleApiError(error, "Deleted failed");
+  }
+};
+
+export const getAboutUsIdsList = async () => {
+  try {
+    const response = await apiClient.get(`${API_PREFIX}/list/ids`);
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};
+
+export const bulkDeleteAboutUs = async (ids) => {
+  try {
+    const response = await apiClient.delete(`${API_PREFIX}/bulk`, {
+      data: { ids },
+    });
     return response.data;
   } catch (error) {
     return handleApiError(error, "Deleted failed");
