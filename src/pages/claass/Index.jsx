@@ -16,7 +16,7 @@ export default function IndexClaassPage() {
     handleCloseDeleteModal,
     handleDelete,
     pagination,
-    handleTableChange,
+    handlePaginationChange,
     search,
     handleSearch,
     rowSelection,
@@ -48,7 +48,7 @@ export default function IndexClaassPage() {
         pagination={{
           ...pagination,
           showSizeChanger: true,
-          onChange: handleTableChange,
+          onChange: handlePaginationChange,
           showTotal: (total) => `Total ${total} items`,
         }}
         rowSelection={rowSelection}

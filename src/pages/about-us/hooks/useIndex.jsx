@@ -7,23 +7,18 @@ import {
   getAboutUsIdsList,
   getAllAboutUs,
 } from "../../../services/aboutUsService";
-import { generateRowSelection } from "../../../utils/generateRowSelection";
+import { useTableRowSelection } from "../../../hooks/useTableRowSelection";
+import { useTablePagination } from "../../../hooks/useTablePagination";
 import { tableHeaderStyle } from "../../../utils/tableHeaderStyle";
+import { useTableDelete } from "../../../hooks/useTableDelete";
 import { useBulkDelete } from "../../../hooks/useBulkDelete";
 import { showMessage } from "../../../utils/messageUtils";
 import TableAction from "../../../components/TableAction";
-import { debounce } from "../../../utils/debounce";
+import { useSearch } from "../../../hooks/useSearch";
 
 export const useIndex = () => {
   const [aboutUses, setAboutUses] = useState([]);
   const [getLoading, setGetLoading] = useState(false);
-  const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize: 10,
-    total: 0,
-  });
-  const [search, setSearch] = useState("");
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
   const fetchData = async () => {
     try {
@@ -45,67 +40,22 @@ export const useIndex = () => {
     }
   };
 
-  const handleDelete = async (id) => {
-    try {
-      await deleteAboutUs(id);
-      fetchData();
-      showMessage({ type: "success", content: "Deleted successfully" });
-    } catch (error) {
-      showMessage({ type: "error", content: error.message });
-    } finally {
-      handleCloseDeleteModal();
-    }
-  };
+  const { pagination, setPagination, handlePaginationChange } =
+    useTablePagination();
+  const { search, handleSearch } = useSearch({ pagination, setPagination });
 
-  const [deleteData, setDeleteData] = useState({
-    show: false,
-    record: null,
+  const {
+    deleteData,
+    handleOpenDeleteModal,
+    handleCloseDeleteModal,
+    handleDelete,
+  } = useTableDelete({
+    deleteFunction: deleteAboutUs,
+    refreshData: fetchData,
   });
 
-  const handleOpenDeleteModal = (record) => {
-    setDeleteData({
-      show: true,
-      record,
-    });
-  };
-
-  const handleCloseDeleteModal = () => {
-    setDeleteData({
-      show: false,
-      record: null,
-    });
-  };
-
-  const handleTableChange = (page, pageSize) => {
-    if (pageSize != pagination.pageSize) {
-      setPagination((prev) => ({
-        ...prev,
-        current: 1,
-        pageSize: pageSize,
-      }));
-    } else {
-      setPagination((prev) => ({
-        ...prev,
-        current: page,
-      }));
-    }
-  };
-
-  const handleSearch = debounce((e) => {
-    setSearch(e.target.value);
-    if (pagination.current != 1) {
-      setPagination((prev) => ({
-        ...prev,
-        current: 1,
-      }));
-    }
-  });
-
-  const rowSelection = generateRowSelection({
-    selectedRowKeys,
-    setSelectedRowKeys,
-    fetchAllIds: getAboutUsIdsList,
-  });
+  const { selectedRowKeys, setSelectedRowKeys, rowSelection } =
+    useTableRowSelection({ fetchAllKeys: getAboutUsIdsList });
 
   const { handleBulkDelete } = useBulkDelete({
     selectedItems: selectedRowKeys,
@@ -176,7 +126,7 @@ export const useIndex = () => {
     deleteData,
     handleCloseDeleteModal,
     pagination,
-    handleTableChange,
+    handlePaginationChange,
     search,
     handleSearch,
     rowSelection,

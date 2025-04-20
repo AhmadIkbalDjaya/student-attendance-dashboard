@@ -8,17 +8,14 @@ import { useBulkDelete } from "../../../hooks/useBulkDelete";
 import { showMessage } from "../../../utils/messageUtils";
 import TableAction from "../../../components/TableAction";
 import { debounce } from "../../../utils/debounce";
+import { useTablePagination } from "../../../hooks/useTablePagination";
+import { useSearch } from "../../../hooks/useSearch";
+import { useTableDelete } from "../../../hooks/useTableDelete";
+import { useTableRowSelection } from "../../../hooks/useTableRowSelection";
 
 export const useIndex = () => {
   const [courses, setCourses] = useState([]);
   const [getLoading, setGetLoading] = useState(false);
-  const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize: 10,
-    total: 0,
-  });
-  const [search, setSearch] = useState("");
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
   const fetchData = async () => {
     try {
@@ -40,67 +37,22 @@ export const useIndex = () => {
     }
   };
 
-  const handleDelete = async (id) => {
-    try {
-      await deleteCourse(id);
-      fetchData();
-      showMessage({ type: "success", content: "Deleted successfully" });
-    } catch (error) {
-      showMessage({ type: "error", content: error.message });
-    } finally {
-      handleCloseDeleteModal();
-    }
-  };
+  const { pagination, setPagination, handlePaginationChange } =
+    useTablePagination();
+  const { search, handleSearch } = useSearch({ pagination, setPagination });
 
-  const [deleteData, setDeleteData] = useState({
-    show: false,
-    record: null,
+  const {
+    deleteData,
+    handleOpenDeleteModal,
+    handleCloseDeleteModal,
+    handleDelete,
+  } = useTableDelete({
+    deleteFunction: deleteCourse,
+    refreshData: fetchData,
   });
 
-  const handleOpenDeleteModal = (record) => {
-    setDeleteData({
-      show: true,
-      record,
-    });
-  };
-
-  const handleCloseDeleteModal = () => {
-    setDeleteData({
-      show: false,
-      record: null,
-    });
-  };
-
-  const handleTableChange = (page, pageSize) => {
-    if (pageSize != pagination.pageSize) {
-      setPagination((prev) => ({
-        ...prev,
-        current: 1,
-        pageSize: pageSize,
-      }));
-    } else {
-      setPagination((prev) => ({
-        ...prev,
-        current: page,
-      }));
-    }
-  };
-
-  const handleSearch = debounce((e) => {
-    setSearch(e.target.value);
-    if (pagination.current != 1) {
-      setPagination((prev) => ({
-        ...prev,
-        current: 1,
-      }));
-    }
-  });
-
-  const rowSelection = generateRowSelection({
-    selectedRowKeys,
-    setSelectedRowKeys,
-    fetchAllIds: getCourseIdsList,
-  });
+  const { selectedRowKeys, setSelectedRowKeys, rowSelection } =
+    useTableRowSelection({ fetchAllKeys: getCourseIdsList });
 
   const { handleBulkDelete } = useBulkDelete({
     selectedItems: selectedRowKeys,
@@ -161,7 +113,7 @@ export const useIndex = () => {
     deleteData,
     handleCloseDeleteModal,
     pagination,
-    handleTableChange,
+    handlePaginationChange,
     search,
     handleSearch,
     rowSelection,

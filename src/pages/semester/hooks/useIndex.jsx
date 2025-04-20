@@ -3,12 +3,6 @@ import { Button, Modal, Popover } from "antd";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-import { generateRowSelection } from "../../../utils/generateRowSelection";
-import { tableHeaderStyle } from "../../../utils/tableHeaderStyle";
-import { useBulkDelete } from "../../../hooks/useBulkDelete";
-import TableAction from "../../../components/TableAction";
-import { showMessage } from "../../../utils/messageUtils";
-import { debounce } from "../../../utils/debounce";
 import {
   deleteSemester,
   getAllSemester,
@@ -16,17 +10,18 @@ import {
   getSemesterIdsList,
   bulkDeleteSemester,
 } from "../../../services/semesterService";
+import { useTableRowSelection } from "../../../hooks/useTableRowSelection";
+import { useTablePagination } from "../../../hooks/useTablePagination";
+import { tableHeaderStyle } from "../../../utils/tableHeaderStyle";
+import { useTableDelete } from "../../../hooks/useTableDelete";
+import { useBulkDelete } from "../../../hooks/useBulkDelete";
+import TableAction from "../../../components/TableAction";
+import { showMessage } from "../../../utils/messageUtils";
+import { useSearch } from "../../../hooks/useSearch";
 
 export const useIndex = () => {
   const [semesters, setSemesters] = useState([]);
   const [getLoading, setGetLoading] = useState(false);
-  const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize: 10,
-    total: 0,
-  });
-  const [search, setSearch] = useState("");
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
   const fetchData = async () => {
     try {
@@ -48,36 +43,30 @@ export const useIndex = () => {
     }
   };
 
-  const handleDelete = async (id) => {
-    try {
-      await deleteSemester(id);
-      fetchData();
-      showMessage({ type: "success", content: "Deleted successfully" });
-    } catch (error) {
-      showMessage({ type: "error", content: error.message });
-    } finally {
-      handleCloseDeleteModal();
-    }
-  };
+  const { pagination, setPagination, handlePaginationChange } =
+    useTablePagination();
+  const { search, handleSearch } = useSearch({ pagination, setPagination });
 
-  const [deleteData, setDeleteData] = useState({
-    show: false,
-    record: null,
+  const {
+    deleteData,
+    handleOpenDeleteModal,
+    handleCloseDeleteModal,
+    handleDelete,
+  } = useTableDelete({
+    deleteFunction: deleteSemester,
+    refreshData: fetchData,
   });
 
-  const handleOpenDeleteModal = (record) => {
-    setDeleteData({
-      show: true,
-      record,
-    });
-  };
+  const { selectedRowKeys, setSelectedRowKeys, rowSelection } =
+    useTableRowSelection({ fetchAllKeys: getSemesterIdsList });
 
-  const handleCloseDeleteModal = () => {
-    setDeleteData({
-      show: false,
-      record: null,
-    });
-  };
+  const { handleBulkDelete } = useBulkDelete({
+    selectedItems: selectedRowKeys,
+    clearSelection: setSelectedRowKeys,
+    deleteFuntion: bulkDeleteSemester,
+    refreshData: fetchData,
+    entityName: "semesters",
+  });
 
   const handleSetActiveSemester = (semesterId) => {
     Modal.confirm({
@@ -95,45 +84,6 @@ export const useIndex = () => {
       },
     });
   };
-
-  const handleTableChange = (page, pageSize) => {
-    if (pageSize != pagination.pageSize) {
-      setPagination((prev) => ({
-        ...prev,
-        current: 1,
-        pageSize: pageSize,
-      }));
-    } else {
-      setPagination((prev) => ({
-        ...prev,
-        current: page,
-      }));
-    }
-  };
-
-  const handleSearch = debounce((e) => {
-    setSearch(e.target.value);
-    if (pagination.current != 1) {
-      setPagination((prev) => ({
-        ...prev,
-        current: 1,
-      }));
-    }
-  });
-
-  const rowSelection = generateRowSelection({
-    selectedRowKeys,
-    setSelectedRowKeys,
-    fetchAllIds: getSemesterIdsList,
-  });
-
-  const { handleBulkDelete } = useBulkDelete({
-    selectedItems: selectedRowKeys,
-    clearSelection: setSelectedRowKeys,
-    deleteFuntion: bulkDeleteSemester,
-    refreshData: fetchData,
-    entityName: "semesters",
-  });
 
   const columns = [
     {
@@ -212,7 +162,7 @@ export const useIndex = () => {
     handleCloseDeleteModal,
     handleDelete,
     pagination,
-    handleTableChange,
+    handlePaginationChange,
     search,
     handleSearch,
     rowSelection,

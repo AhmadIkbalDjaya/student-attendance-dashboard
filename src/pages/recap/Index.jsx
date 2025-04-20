@@ -12,7 +12,7 @@ export default function IndexRecapPage() {
     getLoading,
     fetchData,
     pagination,
-    handleTableChange,
+    handlePaginationChange,
     search,
     handleSearch,
   } = useIndex();
@@ -40,7 +40,7 @@ export default function IndexRecapPage() {
         pagination={{
           ...pagination,
           showSizeChanger: true,
-          onChange: handleTableChange,
+          onChange: handlePaginationChange,
           showTotal: (total) => `Total ${total} items`,
         }}
       />
