@@ -9,3 +9,17 @@ export const getDashboardData = async () => {
     return handleApiError(error);
   }
 };
+
+export const getAttendaceOverview = async (date, search) => {
+  try {
+    const response = await apiClient.get("/admin/attendance/overview", {
+      params: {
+        date,
+        search,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return handleApiError(error);
+  }
+};

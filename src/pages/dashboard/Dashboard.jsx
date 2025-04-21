@@ -2,6 +2,7 @@ import { Card, Col, Flex, Row, Statistic, Typography } from "antd";
 import { useEffect } from "react";
 
 import { useDashboard } from "./hooks/useDashboard";
+import AttendanceOverviewTable from "./components/AttendanceOverviewTable";
 
 export default function DashboardPage() {
   const { user, fetchData, statisticsData, loadingFetch } = useDashboard();
@@ -38,6 +39,8 @@ export default function DashboardPage() {
           </Col>
         ))}
       </Row>
+
+      <AttendanceOverviewTable />
     </>
   );
 }
