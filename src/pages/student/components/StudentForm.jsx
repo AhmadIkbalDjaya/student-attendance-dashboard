@@ -1,6 +1,8 @@
 import { Card, Col, Form, Input, Row, Select, Skeleton } from "antd";
-import { getAllClaasses } from "../../../services/claassService";
+import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+
+import { getAllClaasses } from "../../../services/claassService";
 
 export default function StudentForm({
   form,
@@ -20,7 +22,13 @@ export default function StudentForm({
     }
   };
 
+  const [searchParams] = useSearchParams();
+  const claass_id = searchParams.get("claass_id");
+
   useEffect(() => {
+    if (claass_id) {
+      form.setFieldValue("claass_id", parseInt(claass_id));
+    }
     fetchClasses();
   }, []);
 
@@ -98,6 +106,7 @@ export default function StudentForm({
                       .toLowerCase()
                       .includes(input.toLowerCase())
                   }
+                  disabled={claass_id !== null}
                 />
               )}
             </Form.Item>

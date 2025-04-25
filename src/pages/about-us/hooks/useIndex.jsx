@@ -9,9 +9,9 @@ import {
 } from "../../../services/aboutUsService";
 import { useTableRowSelection } from "../../../hooks/useTableRowSelection";
 import { useTablePagination } from "../../../hooks/useTablePagination";
-import { tableHeaderStyle } from "../../../utils/tableHeaderStyle";
 import { useTableDelete } from "../../../hooks/useTableDelete";
 import { useBulkDelete } from "../../../hooks/useBulkDelete";
+import { tableHeaderStyle } from "../../../values/styles";
 import { showMessage } from "../../../utils/messageUtils";
 import TableAction from "../../../components/TableAction";
 import { useSearch } from "../../../hooks/useSearch";

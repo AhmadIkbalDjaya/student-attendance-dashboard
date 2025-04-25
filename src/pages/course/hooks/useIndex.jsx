@@ -1,19 +1,26 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-import { bulkDeleteCourse, deleteCourse, getAllCourses, getCourseIdsList } from "../../../services/courseService";
-import { generateRowSelection } from "../../../utils/generateRowSelection";
-import { tableHeaderStyle } from "../../../utils/tableHeaderStyle";
+import {
+  bulkDeleteCourse,
+  deleteCourse,
+  getAllCourses,
+  getCourseIdsList,
+} from "../../../services/courseService";
+import { useTableRowSelection } from "../../../hooks/useTableRowSelection";
+import { useTablePagination } from "../../../hooks/useTablePagination";
+import { useTableDelete } from "../../../hooks/useTableDelete";
 import { useBulkDelete } from "../../../hooks/useBulkDelete";
+import { tableHeaderStyle } from "../../../values/styles";
 import { showMessage } from "../../../utils/messageUtils";
 import TableAction from "../../../components/TableAction";
-import { debounce } from "../../../utils/debounce";
-import { useTablePagination } from "../../../hooks/useTablePagination";
 import { useSearch } from "../../../hooks/useSearch";
-import { useTableDelete } from "../../../hooks/useTableDelete";
-import { useTableRowSelection } from "../../../hooks/useTableRowSelection";
 
-export const useIndex = () => {
+export const useIndex = ({
+  claassId = null,
+  teacherId = null,
+  studentId = null,
+} = {}) => {
   const [courses, setCourses] = useState([]);
   const [getLoading, setGetLoading] = useState(false);
 
@@ -23,7 +30,10 @@ export const useIndex = () => {
       const result = await getAllCourses(
         pagination.current,
         pagination.pageSize,
-        search
+        search,
+        claassId,
+        teacherId,
+        studentId
       );
       setCourses(result.data);
       setPagination((prev) => ({
@@ -52,7 +62,9 @@ export const useIndex = () => {
   });
 
   const { selectedRowKeys, setSelectedRowKeys, rowSelection } =
-    useTableRowSelection({ fetchAllKeys: getCourseIdsList });
+    useTableRowSelection({
+      fetchAllKeys: () => getCourseIdsList(claassId, teacherId, studentId),
+    });
 
   const { handleBulkDelete } = useBulkDelete({
     selectedItems: selectedRowKeys,
@@ -61,7 +73,6 @@ export const useIndex = () => {
     refreshData: fetchData,
     entityName: "courses",
   });
-
 
   const columns = [
     {
@@ -79,13 +90,23 @@ export const useIndex = () => {
       minWidth: 80,
     },
     {
+      title: "Teacher",
+      dataIndex: "teacher",
+      key: "teacher",
+      onHeaderCell: tableHeaderStyle,
+      minWidth: 80,
+    },
+    {
       title: "Action",
       key: "action",
       fixed: "right",
       width: 100,
       render: (_, record) => (
         <TableAction
-          editLink={`/course/${record.id}/edit`}
+          editLink={`/course/${record.id}/edit
+          ${claassId ? `?claass_id=${claassId}` : ""}
+          ${teacherId ? (claassId ? "&" : "?") + `teacher_id=${teacherId}` : ""}
+          `}
           handleDelete={() => handleOpenDeleteModal(record)}
           viewAction
           viewLink={`/course/${record.id}`}

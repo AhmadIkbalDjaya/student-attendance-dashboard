@@ -3,6 +3,7 @@ import { getAllClaasses } from "../../../services/claassService";
 import { getAllTeachers } from "../../../services/teacherService";
 import { getAllSemester } from "../../../services/semesterService";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 export default function CourseForm({
   form,
@@ -49,7 +50,17 @@ export default function CourseForm({
     }
   };
 
+  const [searchParams] = useSearchParams();
+  const claass_id = searchParams.get("claass_id");
+  const teacher_id = searchParams.get("teacher_id");
+
   useEffect(() => {
+    if (claass_id) {
+      form.setFieldValue("claass_id", parseInt(claass_id));
+    }
+    if (teacher_id) {
+      form.setFieldValue("teacher_id", parseInt(teacher_id));
+    }
     fetchClasses();
     fetchTeachers();
     fetchSemesters();
@@ -97,6 +108,7 @@ export default function CourseForm({
                       .toLowerCase()
                       .includes(input.toLowerCase())
                   }
+                  disabled={claass_id !== null}
                 />
               )}
             </Form.Item>
@@ -122,6 +134,7 @@ export default function CourseForm({
                       .toLowerCase()
                       .includes(input.toLowerCase())
                   }
+                  disabled={teacher_id !== null}
                 />
               )}
             </Form.Item>

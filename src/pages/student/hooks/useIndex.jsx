@@ -9,14 +9,14 @@ import {
 } from "../../../services/studentService";
 import { useTableRowSelection } from "../../../hooks/useTableRowSelection";
 import { useTablePagination } from "../../../hooks/useTablePagination";
-import { tableHeaderStyle } from "../../../utils/tableHeaderStyle";
 import { useTableDelete } from "../../../hooks/useTableDelete";
 import { useBulkDelete } from "../../../hooks/useBulkDelete";
+import { tableHeaderStyle } from "../../../values/styles";
 import { showMessage } from "../../../utils/messageUtils";
 import TableAction from "../../../components/TableAction";
 import { useSearch } from "../../../hooks/useSearch";
 
-export const useIndex = () => {
+export const useIndex = ({ claassId = null, courseId = null } = {}) => {
   const [students, setStudents] = useState([]);
   const [getLoading, setGetLoading] = useState(false);
 
@@ -26,7 +26,9 @@ export const useIndex = () => {
       const result = await getAllStudents(
         pagination.current,
         pagination.pageSize,
-        search
+        search,
+        claassId,
+        courseId
       );
       setStudents(result.data);
       setPagination((prev) => ({
@@ -55,7 +57,7 @@ export const useIndex = () => {
   });
 
   const { selectedRowKeys, setSelectedRowKeys, rowSelection } =
-    useTableRowSelection({ fetchAllKeys: getStudentIdsList });
+    useTableRowSelection({ fetchAllKeys: () => getStudentIdsList(claassId, courseId) });
 
   const { handleBulkDelete } = useBulkDelete({
     selectedItems: selectedRowKeys,
@@ -87,7 +89,9 @@ export const useIndex = () => {
       width: 100,
       render: (_, record) => (
         <TableAction
-          editLink={`/student/${record.id}/edit`}
+          editLink={`/student/${record.id}/edit${
+            claassId ? `?claass_id=${claassId}` : ""
+          }`}
           handleDelete={() => handleOpenDeleteModal(record)}
           viewAction
           viewLink={`/student/${record.id}`}

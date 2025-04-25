@@ -5,6 +5,7 @@ import { getCourse, updateCourse } from "../../../services/courseService";
 import { setFormErrors } from "../../../helpers/setFormErrors";
 import { showMessage } from "../../../utils/messageUtils";
 
+
 export const useEdit = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ export const useEdit = () => {
     try {
       setSubmitLoading(true);
       await updateCourse(id, form.getFieldValue());
-      navigate("/course");
+      navigate(-1);
       showMessage({ type: "success", content: "Updated successfully" });
     } catch (error) {
       showMessage({ type: "error", content: error.message });

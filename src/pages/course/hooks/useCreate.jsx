@@ -12,7 +12,7 @@ export const useCreate = () => {
     try {
       setSubmitLoading(true);
       await createCourse(form.getFieldValue());
-      navigate("/course");
+      navigate(-1);
       showMessage({ type: "success", content: "Created successfully" });
     } catch (error) {
       showMessage({ type: "error", content: error.message });

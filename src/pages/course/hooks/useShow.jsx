@@ -93,6 +93,21 @@ export const useShow = () => {
     },
   ];
 
+  const descriptionItemsTimestamp = [
+    {
+      key: "created_at",
+      label: "Created at",
+      children: course?.created_at,
+      span: { xs: 1, md: 2 },
+    },
+    {
+      key: "updated_at",
+      label: "Updated at",
+      children: course?.updated_at,
+      span: { xs: 1, md: 2 },
+    },
+  ];
+
   return {
     breadcrumbItems,
     fetchStudent,
@@ -100,5 +115,6 @@ export const useShow = () => {
     fetchLoading,
     handleClickDelete,
     descriptionItems,
+    descriptionItemsTimestamp,
   };
 };

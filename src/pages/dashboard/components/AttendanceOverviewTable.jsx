@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
 import { Card, DatePicker, Flex, Grid, Input, Table, Typography } from "antd";
-import { tableHeaderStyle } from "../../../utils/tableHeaderStyle";
+import { useEffect, useState } from "react";
+import dayjs from "dayjs";
+
 import { getAttendaceOverview } from "../../../services/dashboardServive";
+import { tableHeaderStyle } from "../../../values/styles";
 import { showMessage } from "../../../utils/messageUtils";
 import { useSearch } from "../../../hooks/useSearch";
-import dayjs from "dayjs";
 
 export default function AttendanceOverviewTable() {
   const [data, setData] = useState([]);
@@ -123,7 +124,6 @@ export default function AttendanceOverviewTable() {
             placeholder="Search..."
             allowClear
             onChange={handleSearch}
-            // onSearch={(value) => console.log(value)}
           />
           <DatePicker
             format={"DD MMM YYYY "}

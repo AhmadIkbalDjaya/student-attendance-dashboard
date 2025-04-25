@@ -15,7 +15,7 @@ export const useEdit = () => {
     try {
       setSubmitLoading(true);
       await updateStudent(id, form.getFieldValue());
-      navigate("/student");
+      navigate(-1);
       showMessage({ type: "success", content: "Updated successfully" });
     } catch (error) {
       showMessage({ type: "error", content: error.message });

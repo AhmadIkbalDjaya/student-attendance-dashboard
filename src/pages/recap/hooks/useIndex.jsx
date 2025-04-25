@@ -4,9 +4,9 @@ import { Button, Popover } from "antd";
 import { useState } from "react";
 
 import { useTablePagination } from "../../../hooks/useTablePagination";
-import { tableHeaderStyle } from "../../../utils/tableHeaderStyle";
 import { getAllRecaps } from "../../../services/recapService";
 import { showMessage } from "../../../utils/messageUtils";
+import { tableHeaderStyle } from "../../../values/styles";
 import { useSearch } from "../../../hooks/useSearch";
 import { blue } from "../../../values/colors";
 

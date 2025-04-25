@@ -12,6 +12,7 @@ import {
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 
+import { useIndex as useIndexStudent } from "../student/hooks/useIndex";
 import { useIndex as useIndexCourse } from "../course/hooks/useIndex";
 import TableHeaderActions from "../../components/TableHeaderActions";
 import { descriptionsLabelStyle } from "../../values/styles";
@@ -19,26 +20,28 @@ import DeleteModal from "../../components/DeleteModal";
 import ShowAction from "../../components/ShowAction";
 import { useShow } from "./hooks/useShow";
 
-export default function ShowStudentPage() {
+export default function ShowClaassPage() {
   const { id } = useParams();
   const {
     breadcrumbItems,
-    fetchStudent,
+    fetchClaass,
     fetchLoading,
     handleClickDelete,
     descriptionItems,
     descriptionItemsTimestamp,
+    showRelation,
+    setShowRelation,
   } = useShow();
 
   useEffect(() => {
-    fetchStudent();
+    fetchClaass();
   }, []);
 
   return (
     <>
       <Breadcrumb separator=">" items={breadcrumbItems} />
       <Flex justify="space-between" style={{ margin: "10px 0" }}>
-        <Typography.Title level={3}>Student Detail</Typography.Title>
+        <Typography.Title level={3}>Class Detail</Typography.Title>
         <ShowAction
           handleClickDelete={handleClickDelete}
           editLink={`/student/${id}/edit`}
@@ -46,7 +49,7 @@ export default function ShowStudentPage() {
       </Flex>
       <Row gutter={[12, 10]}>
         <Col xs={24} md={16}>
-          <Card title={"Student Information"} loading={fetchLoading}>
+          <Card title={"Class Information"} loading={fetchLoading}>
             <Descriptions
               size="small"
               items={descriptionItems}
@@ -75,20 +78,82 @@ export default function ShowStudentPage() {
       >
         <Radio.Group
           block
-          options={[{ label: "Courses", value: "courses" }]}
-          defaultValue="courses"
+          options={[
+            { label: "Students", value: "students" },
+            { label: "Courses", value: "courses" },
+          ]}
           optionType="button"
+          value={showRelation}
+          onChange={(e) => setShowRelation(e.target.value)}
         />
       </Card>
 
       <Card>
-        <StudentCourses />
+        {showRelation === "students" && <ClaassStudents />}
+        {showRelation === "courses" && <ClaassCourses />}
       </Card>
     </>
   );
 }
 
-const StudentCourses = () => {
+const ClaassStudents = () => {
+  const { id } = useParams();
+  const {
+    fetchData,
+    getLoading,
+    columns,
+    students,
+    deleteData,
+    handleCloseDeleteModal,
+    handleDelete,
+    pagination,
+    handlePaginationChange,
+    search,
+    handleSearch,
+    rowSelection,
+    handleBulkDelete,
+  } = useIndexStudent({ claassId: id });
+
+  useEffect(() => {
+    fetchData();
+  }, [pagination.current, pagination.pageSize, search]);
+
+  return (
+    <>
+      <TableHeaderActions
+        handleSearch={handleSearch}
+        createLink={`/student/create?claass_id=${id}`}
+        showSelectedDropwdown
+        selectedCount={rowSelection.selectedRowKeys.length}
+        handleBulkDelete={handleBulkDelete}
+      />
+      <Table
+        columns={columns}
+        dataSource={students}
+        rowKey={"id"}
+        loading={getLoading}
+        size="small"
+        scroll={{ y: "60vh", x: "max-content" }}
+        pagination={{
+          ...pagination,
+          showSizeChanger: true,
+          onChange: handlePaginationChange,
+          showTotal: (total) => `Total ${total} items`,
+        }}
+        rowSelection={rowSelection}
+      />
+
+      <DeleteModal
+        open={deleteData.show}
+        onClose={handleCloseDeleteModal}
+        onOk={() => handleDelete(deleteData.record.id)}
+        title="Are you sure delete this data?"
+      />
+    </>
+  );
+};
+
+const ClaassCourses = () => {
   const { id } = useParams();
   const {
     columns,
@@ -104,7 +169,7 @@ const StudentCourses = () => {
     handleSearch,
     rowSelection,
     handleBulkDelete,
-  } = useIndexCourse({ studentId: id });
+  } = useIndexCourse({ claassId: id });
 
   useEffect(() => {
     fetchData();
@@ -114,13 +179,13 @@ const StudentCourses = () => {
     <>
       <TableHeaderActions
         handleSearch={handleSearch}
-        showCreateButton={false}
+        createLink={`/course/create?claass_id=${id}`}
         showSelectedDropwdown
         selectedCount={rowSelection.selectedRowKeys.length}
         handleBulkDelete={handleBulkDelete}
       />
       <Table
-        columns={columns.filter((column) => column.key !== "action")}
+        columns={columns}
         dataSource={courses}
         rowKey={"id"}
         loading={getLoading}

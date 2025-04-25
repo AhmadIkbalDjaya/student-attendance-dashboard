@@ -8,6 +8,7 @@ import EditSemesterPage from "./pages/semester/Edit";
 import IndexClaassPage from "./pages/claass/Index";
 import CreateClaassPage from "./pages/claass/Create";
 import EditClaassPage from "./pages/claass/Edit";
+import ShowClaassPage from "./pages/claass/Show";
 import IndexTeacherPage from "./pages/teacher/Index";
 import CreateTeacherPage from "./pages/teacher/Create";
 import EditTeacherPage from "./pages/teacher/Edit";
@@ -61,6 +62,7 @@ function App() {
             <Route path="" element={<IndexClaassPage />} />
             <Route path="create" element={<CreateClaassPage />} />
             <Route path=":id/edit" element={<EditClaassPage />} />
+            <Route path=":id" element={<ShowClaassPage />} />
           </Route>
           <Route path="teacher">
             <Route path="" element={<IndexTeacherPage />} />

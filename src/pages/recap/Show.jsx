@@ -13,6 +13,7 @@ import { IconPrinter } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 
+import { descriptionsLabelStyle } from "../../values/styles";
 import { useShow } from "./hooks/useShow";
 
 export default function ShowRecapPage() {
@@ -55,11 +56,7 @@ export default function ShowRecapPage() {
               items={descriptionItems}
               column={2}
               layout="vertical"
-              labelStyle={{
-                fontWeight: "500",
-                fontSize: "16px",
-                color: "black",
-              }}
+              labelStyle={descriptionsLabelStyle}
             />
           </Card>
         </Col>

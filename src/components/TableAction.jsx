@@ -12,6 +12,7 @@ export default function TableAction({
   viewAction = false,
   onClickView,
   viewLink,
+  
 }) {
   const editButton = (
     <Button

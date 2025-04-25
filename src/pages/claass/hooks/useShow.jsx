@@ -1,20 +1,22 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
-
-import { deleteStudent, getStudent } from "../../../services/studentService";
-import { showMessage } from "../../../utils/messageUtils";
 import { Modal } from "antd";
+
+import { deleteClaass, getClaass } from "../../../services/claassService";
+import { showMessage } from "../../../utils/messageUtils";
 
 export const useShow = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [student, setStudent] = useState();
+  const [claass, setClaass] = useState();
   const [fetchLoading, setFetchLoading] = useState(false);
-  const fetchStudent = async () => {
+  const [showRelation, setShowRelation] = useState("students");
+
+  const fetchClaass = async () => {
     try {
       setFetchLoading(true);
-      const result = await getStudent(id);
-      setStudent(result.data);
+      const result = await getClaass(id);
+      setClaass(result.data);
     } catch (error) {
       showMessage({ type: "error", content: error.message });
     } finally {
@@ -24,9 +26,9 @@ export const useShow = () => {
 
   const handleDelete = async (id) => {
     try {
-      await deleteStudent(id);
-      navigate("/student");
-      showMessage({ type: "success", content: "Deleted successfully" });
+      await deleteClaass(id);
+      navigate("/claass");
+      showMessage({ type: "success", content: "Delete class successfully" });
     } catch (error) {
       showMessage({ type: "error", content: error.message });
     }
@@ -34,49 +36,43 @@ export const useShow = () => {
 
   const handleClickDelete = () => {
     Modal.confirm({
-      title: "Are you sure delete this data?",
+      title: "Are you sure delete this class?",
       okText: "Delete",
       okType: "danger",
       centered: true,
-      onOk: () => handleDelete(id),
+      onOK: () => handleDelete(id),
     });
   };
-
-  const breadcrumbItems = [
-    {
-      title: <Link to="/">Dashboard</Link>,
-    },
-    {
-      title: <Link to="/student">Student</Link>,
-    },
-    {
-      title: "Detail Student",
-    },
-  ];
 
   const descriptionItems = [
     {
       key: "name",
-      label: "Name",
-      children: student?.name,
+      label: "Class Name",
+      children: claass?.name,
       span: { xs: 1, sm: 1 },
     },
     {
-      key: "nis",
-      label: "NIS",
-      children: student?.nis,
+      key: "level",
+      label: "Level",
+      children: claass?.level,
       span: { xs: 1, sm: 1 },
     },
     {
-      key: "claass",
-      label: "Class",
-      children: student?.claass_name,
+      key: "major",
+      label: "Major",
+      children: claass?.major,
       span: { xs: 1, sm: 1 },
     },
     {
-      key: "gender",
-      label: "Gender",
-      children: student?.gender,
+      key: "students_count",
+      label: "Total Students",
+      children: claass?.students_count,
+      span: { xs: 1, sm: 1 },
+    },
+    {
+      key: "courses_count",
+      label: "Total Courses",
+      children: claass?.courses_count,
       span: { xs: 1, sm: 1 },
     },
   ];
@@ -85,24 +81,37 @@ export const useShow = () => {
     {
       key: "created_at",
       label: "Created at",
-      children: student?.created_at,
+      children: claass?.created_at,
       span: { xs: 1, md: 2 },
     },
     {
       key: "updated_at",
       label: "Updated at",
-      children: student?.updated_at,
+      children: claass?.updated_at,
       span: { xs: 1, md: 2 },
+    },
+  ];
+
+  const breadcrumbItems = [
+    {
+      title: <Link to="/">Dashboard</Link>,
+    },
+    {
+      title: <Link to="/claass">Class</Link>,
+    },
+    {
+      title: "Detail Claass",
     },
   ];
 
   return {
     breadcrumbItems,
-    fetchStudent,
-    student,
+    fetchClaass,
     fetchLoading,
     handleClickDelete,
     descriptionItems,
     descriptionItemsTimestamp,
+    showRelation,
+    setShowRelation,
   };
 };

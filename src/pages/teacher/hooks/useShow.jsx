@@ -101,6 +101,12 @@ export const useShow = () => {
       children: teacher?.gender,
       span: { xs: 1, sm: 1 },
     },
+    {
+      key: "courses_count",
+      label: "Total Courses",
+      children: teacher?.courses_count,
+      span: { xs: 1, sm: 1 },
+    },
   ];
 
   return {

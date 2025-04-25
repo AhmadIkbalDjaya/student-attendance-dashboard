@@ -1,12 +1,26 @@
-import apiClient from "../config/api";
 import handleApiError from "../helpers/handleApiError";
+import apiClient from "../config/api";
 
 const API_PREFIX = "/admin/course";
 
-export const getAllCourses = async (page, perpage, search) => {
+export const getAllCourses = async (
+  page,
+  perpage,
+  search,
+  claassId,
+  teacherId,
+  studentId
+) => {
   try {
     const response = await apiClient.get(API_PREFIX, {
-      params: { page, perpage, search },
+      params: {
+        page,
+        perpage,
+        search,
+        claass_id: claassId,
+        teacher_id: teacherId,
+        student_id: studentId,
+      },
     });
     return response.data;
   } catch (error) {
@@ -53,9 +67,15 @@ export const deleteCourse = async (id) => {
   }
 };
 
-export const getCourseIdsList = async () => {
+export const getCourseIdsList = async (claassId, teacherId, studentId) => {
   try {
-    const response = await apiClient.get(`${API_PREFIX}/list/ids`);
+    const response = await apiClient.get(`${API_PREFIX}/list/ids`, {
+      params: {
+        claass_id: claassId,
+        teacher_id: teacherId,
+        student_id: studentId,
+      },
+    });
     return response.data;
   } catch (error) {
     return handleApiError(error);
