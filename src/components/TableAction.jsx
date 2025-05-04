@@ -7,12 +7,12 @@ import { blue, red, yellow } from "../values/colors";
 export default function TableAction({
   handleDelete,
   onClickEdit,
+  editAction = true,
   editLink,
   children,
   viewAction = false,
   onClickView,
   viewLink,
-  
 }) {
   const editButton = (
     <Button
@@ -36,9 +36,15 @@ export default function TableAction({
           )}
         </Popover>
       )}
-      <Popover content="Edit">
-        {editLink ? <NavLink to={editLink}>{editButton}</NavLink> : editButton}
-      </Popover>
+      {editAction && (
+        <Popover content="Edit">
+          {editLink ? (
+            <NavLink to={editLink}>{editButton}</NavLink>
+          ) : (
+            editButton
+          )}
+        </Popover>
+      )}
       <Popover content="Delete">
         <Button
           type="text"

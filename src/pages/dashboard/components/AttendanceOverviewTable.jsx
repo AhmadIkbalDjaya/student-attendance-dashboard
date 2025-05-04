@@ -2,7 +2,7 @@ import { Card, DatePicker, Flex, Grid, Input, Table, Typography } from "antd";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 
-import { getAttendaceOverview } from "../../../services/dashboardServive";
+import { getAttendances } from "../../../services/attendanceService";
 import { tableHeaderStyle } from "../../../values/styles";
 import { showMessage } from "../../../utils/messageUtils";
 import { useSearch } from "../../../hooks/useSearch";
@@ -18,9 +18,11 @@ export default function AttendanceOverviewTable() {
   const fetchData = async () => {
     try {
       setFetchLoading(true);
-      const response = await getAttendaceOverview(
-        date ? dayjs(date).format("YYYY-MM-DD") : "",
-        search
+      const response = await getAttendances(
+        null,
+        null,
+        search,
+        date ? dayjs(date).format("YYYY-MM-DD") : ""
       );
       setData(response.data);
       setFetchLoading(false);

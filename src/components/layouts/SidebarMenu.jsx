@@ -7,6 +7,7 @@ import {
   IconChalkboard,
   IconChartInfographic,
   IconHome,
+  IconNotebook,
   IconUserCircle,
   IconUserPentagon,
   IconUsers,
@@ -97,6 +98,15 @@ export default function SidebarMenu() {
       icon: <IconBatteryAutomotive style={{ marginLeft: -3 }} size={22} />,
       onClick: () => {
         navigate("/major");
+        screens.xs ? toggle() : null;
+      },
+    },
+    {
+      key: "attendance",
+      label: "Attendance",
+      icon: <IconNotebook style={{ marginLeft: -3 }} size={22} />,
+      onClick: () => {
+        navigate("/attendance");
         screens.xs ? toggle() : null;
       },
     },

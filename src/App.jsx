@@ -34,6 +34,8 @@ import ProfilePage from "./pages/profile/Index";
 import IndexMajorPage from "./pages/major/Index";
 import CreateMajorPage from "./pages/major/Create";
 import EditMajorPage from "./pages/major/Edit";
+import IndexAttendancePage from "./pages/attendance/Index";
+import ShowAttendancePage from "./pages/attendance/Show";
 
 function App() {
   const messageContextHolder = useMessage();
@@ -94,6 +96,8 @@ function App() {
             <Route path="create" element={<CreateMajorPage />} />
             <Route path=":id/edit" element={<EditMajorPage />} />
           </Route>
+          <Route path="attendance" element={<IndexAttendancePage />} />
+          <Route path="attendance/:id" element={<ShowAttendancePage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
