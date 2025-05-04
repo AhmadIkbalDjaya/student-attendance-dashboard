@@ -73,7 +73,7 @@ export const useShow = () => {
   const descriptionItems = [
     {
       key: "name",
-      label: "Course Name",
+      label: "Teacher Name",
       children: teacher?.name,
       span: { xs: 1, sm: 1 },
     },
