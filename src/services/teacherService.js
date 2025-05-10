@@ -1,7 +1,7 @@
 import apiClient from "../config/api";
 import handleApiError from "../helpers/handleApiError";
 
-const API_PREFIX = "/admin/teacher";
+const API_PREFIX = "/admin/teachers";
 
 export const getAllTeachers = async (page, perpage, search) => {
   try {
@@ -55,7 +55,7 @@ export const deleteTeacher = async (id) => {
 
 export const setTeacherPassword = async (id, data) => {
   try {
-    const response = await apiClient.post(`${API_PREFIX}/setPass/${id}`, data);
+    const response = await apiClient.post(`${API_PREFIX}/${id}/set-password`, data);
     return response.data;
   } catch (error) {
     return handleApiError(error);
@@ -64,7 +64,7 @@ export const setTeacherPassword = async (id, data) => {
 
 export const getTeacherIdsList = async () => {
   try {
-    const response = await apiClient.get(`${API_PREFIX}/list/ids`);
+    const response = await apiClient.get(`${API_PREFIX}/ids`);
     return response.data;
   } catch (error) {
     return handleApiError(error);

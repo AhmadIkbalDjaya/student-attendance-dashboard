@@ -1,7 +1,7 @@
 import apiClient from "../config/api";
 import handleApiError from "../helpers/handleApiError";
 
-const API_PREFIX = "/admin/major";
+const API_PREFIX = "/admin/majors";
 
 export const getAllMajors = async (page, perpage, search) => {
   try {
@@ -55,7 +55,7 @@ export const deleteMajor = async (id) => {
 
 export const getMajorIdsList = async () => {
   try {
-    const response = await apiClient.get(`${API_PREFIX}/list/ids`);
+    const response = await apiClient.get(`${API_PREFIX}/ids`);
     return response.data;
   } catch (error) {
     return handleApiError(error);

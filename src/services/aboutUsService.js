@@ -1,7 +1,7 @@
 import apiClient from "../config/api";
 import handleApiError from "../helpers/handleApiError";
 
-const API_PREFIX = "/admin/aboutUs";
+const API_PREFIX = "/admin/about-us";
 
 export const getAllAboutUs = async (page, perpage, search) => {
   try {
@@ -55,7 +55,7 @@ export const deleteAboutUs = async (id) => {
 
 export const getAboutUsIdsList = async () => {
   try {
-    const response = await apiClient.get(`${API_PREFIX}/list/ids`);
+    const response = await apiClient.get(`${API_PREFIX}/ids`);
     return response.data;
   } catch (error) {
     return handleApiError(error);

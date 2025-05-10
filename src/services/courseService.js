@@ -1,7 +1,7 @@
 import handleApiError from "../helpers/handleApiError";
 import apiClient from "../config/api";
 
-const API_PREFIX = "/admin/course";
+const API_PREFIX = "/admin/courses";
 
 export const getAllCourses = async (
   page,
@@ -69,7 +69,7 @@ export const deleteCourse = async (id) => {
 
 export const getCourseIdsList = async (claassId, teacherId, studentId) => {
   try {
-    const response = await apiClient.get(`${API_PREFIX}/list/ids`, {
+    const response = await apiClient.get(`${API_PREFIX}/ids`, {
       params: {
         claass_id: claassId,
         teacher_id: teacherId,

@@ -1,7 +1,7 @@
 import handleApiError from "../helpers/handleApiError";
 import apiClient from "../config/api";
 
-const API_PREFIX = "/admin/attendance";
+const API_PREFIX = "/admin/attendances";
 
 export const getAttendances = async (page, perpage, search, date) => {
   try {
@@ -39,7 +39,7 @@ export const deleteAttendance = async (id) => {
 
 export const getAttendanceIdsList = async () => {
   try {
-    const response = await apiClient.get(`${API_PREFIX}/list/ids`);
+    const response = await apiClient.get(`${API_PREFIX}/ids`);
     return response.data;
   } catch (error) {
     return handleApiError(error);

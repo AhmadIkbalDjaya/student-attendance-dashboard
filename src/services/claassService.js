@@ -1,7 +1,7 @@
 import apiClient from "../config/api";
 import handleApiError from "../helpers/handleApiError";
 
-const API_PREFIX = "/admin/claass";
+const API_PREFIX = "/admin/claasses";
 
 export const getAllClaasses = async (page, perpage, search) => {
   try {
@@ -55,7 +55,7 @@ export const deleteClaass = async (id) => {
 
 export const getClaassIdsList = async () => {
   try {
-    const response = await apiClient.get(`${API_PREFIX}/list/ids`);
+    const response = await apiClient.get(`${API_PREFIX}/ids`);
     return response.data;
   } catch (error) {
     return handleApiError(error);

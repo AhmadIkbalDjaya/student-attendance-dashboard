@@ -1,7 +1,7 @@
 import apiClient from "../config/api";
 import handleApiError from "../helpers/handleApiError";
 
-const API_PREFIX = "/admin/student";
+const API_PREFIX = "/admin/students";
 
 export const getAllStudents = async (
   page,
@@ -67,7 +67,7 @@ export const deleteStudent = async (id) => {
 
 export const getStudentIdsList = async (claassId, courseId) => {
   try {
-    const response = await apiClient.get(`${API_PREFIX}/list/ids`, {
+    const response = await apiClient.get(`${API_PREFIX}/ids`, {
       params: { claass_id: claassId, course_id: courseId },
     });
     return response.data;

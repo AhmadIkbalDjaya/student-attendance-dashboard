@@ -1,19 +1,12 @@
 import apiClient from "../config/api";
 import handleApiError from "../helpers/handleApiError";
-export const getAllRecaps = async (page, perpage, search) => {
-  try {
-    const response = await apiClient.get("/admin/recap", {
-      params: { page, perpage, search },
-    });
-    return response.data;
-  } catch (error) {
-    return handleApiError(error);
-  }
-};
 
-export const getCourseRecap = async (id) => {
+const API_PREFIX = "/admin/courses";
+
+export const getCourseRecap = async (courseId) => {
   try {
-    const response = await apiClient.get(`/recap/${id}`);
+    const response = await apiClient.get(`${API_PREFIX}/${courseId}/recap`);
+
     return response.data;
   } catch (error) {
     return handleApiError(error);

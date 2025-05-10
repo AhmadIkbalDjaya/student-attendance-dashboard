@@ -4,7 +4,7 @@ import { Button, Popover } from "antd";
 import { useState } from "react";
 
 import { useTablePagination } from "../../../hooks/useTablePagination";
-import { getAllRecaps } from "../../../services/recapService";
+import { getAllCourses } from "../../../services/courseService";
 import { showMessage } from "../../../utils/messageUtils";
 import { tableHeaderStyle } from "../../../values/styles";
 import { useSearch } from "../../../hooks/useSearch";
@@ -17,7 +17,7 @@ export const useIndex = () => {
   const fetchData = async () => {
     try {
       setGetLoading(true);
-      const result = await getAllRecaps(
+      const result = await getAllCourses(
         pagination.current,
         pagination.pageSize,
         search
@@ -41,8 +41,8 @@ export const useIndex = () => {
   const columns = [
     {
       title: "Course Name",
-      dataIndex: "course",
-      key: "course",
+      dataIndex: "name",
+      key: "name",
       onHeaderCell: tableHeaderStyle,
       minWidth: 80,
     },

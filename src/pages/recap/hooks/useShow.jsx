@@ -3,23 +3,35 @@ import { useState } from "react";
 
 import { getCourseRecap } from "../../../services/recapService";
 import { showMessage } from "../../../utils/messageUtils";
+import { getCourse } from "../../../services/courseService";
 
 export const useShow = () => {
   const { id } = useParams();
   const [course, setCourse] = useState();
   const [recaps, setRecaps] = useState([]);
   const [fetchLoading, setFetchLoading] = useState(false);
+  const [fetchCourseLoading, setFetchCourseLoading] = useState(false);
   const fetchRecap = async () => {
     try {
       setFetchLoading(true);
       const result = await getCourseRecap(id);
       setRecaps(result.data.students_recap);
-      setCourse(result.data.course);
       setFetchLoading(false);
     } catch (error) {
       showMessage({ type: "error", content: error.message });
     }
   };
+
+  const fetchCourse = async () => {
+    try {
+      setFetchCourseLoading(true);
+      const result = await getCourse(id);
+      setCourse(result.data);
+      setFetchCourseLoading(false);
+    } catch (error) {
+      showMessage({ type: "error", content: error.message });
+    }
+  }
   const columns = [
     {
       title: "Name",
@@ -115,6 +127,7 @@ export const useShow = () => {
     recaps,
     fetchLoading,
     fetchRecap,
+    fetchCourse,
     columns,
     descriptionItems,
   };

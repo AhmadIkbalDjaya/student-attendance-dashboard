@@ -22,12 +22,14 @@ export default function ShowRecapPage() {
     recaps,
     fetchLoading,
     fetchRecap,
+    fetchCourse,
     columns,
     descriptionItems,
   } = useShow();
 
   useEffect(() => {
     fetchRecap();
+    fetchCourse();
   }, []);
 
   return (

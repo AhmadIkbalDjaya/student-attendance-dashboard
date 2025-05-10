@@ -1,7 +1,7 @@
 import apiClient from "../config/api";
 import handleApiError from "../helpers/handleApiError";
 
-const API_PREFIX = "/admin/semester";
+const API_PREFIX = "/admin/semesters";
 
 export const getAllSemester = async (page, perpage, search) => {
   try {
@@ -55,7 +55,7 @@ export const deleteSemester = async (id) => {
 
 export const setActiveSemester = async (id) => {
   try {
-    const response = await apiClient.get(`${API_PREFIX}/${id}/setActive`);
+    const response = await apiClient.get(`${API_PREFIX}/${id}/set-active`);
     return response.data;
   } catch (error) {
     return handleApiError(error);
@@ -64,7 +64,7 @@ export const setActiveSemester = async (id) => {
 
 export const getSemesterIdsList = async () => {
   try {
-    const response = await apiClient.get(`${API_PREFIX}/list/ids`);
+    const response = await apiClient.get(`${API_PREFIX}/ids`);
     return response.data;
   } catch (error) {
     return handleApiError(error);
