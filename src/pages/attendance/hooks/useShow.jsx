@@ -8,6 +8,7 @@ import {
   getAttendance,
   getAttendanceStatuses,
 } from "../../../services/attendanceService";
+import { getStudentAttendance } from "../../../services/studentAttendanceService";
 import { tableHeaderStyle } from "../../../values/styles";
 import { showMessage } from "../../../utils/messageUtils";
 import { blue, green } from "../../../values/colors";
@@ -25,10 +26,9 @@ export const useShow = () => {
     try {
       setFetchLoading(true);
       const result = await getAttendance(id);
-      setAttendance(result.data.attendance);
-      setStudentAttendances(result.data.student_attendances);
+      setAttendance(result.data);
     } catch (error) {
-      showMessage({ type: "error", message: error.response.data.message });
+      showMessage({ type: "error", message: error.message });
     } finally {
       setFetchLoading(false);
     }
@@ -39,7 +39,16 @@ export const useShow = () => {
       const result = await getAttendanceStatuses();
       setStatuses(result.data);
     } catch (error) {
-      showMessage({ type: "error", message: error.response.data.message });
+      showMessage({ type: "error", message: error.message });
+    }
+  };
+
+  const fetchStudentAttendances = async () => {
+    try {
+      const result = await getStudentAttendance(id);
+      setStudentAttendances(result.data);
+    } catch (error) {
+      showMessage({ type: "error", message: error.message });
     }
   };
 
@@ -110,18 +119,19 @@ export const useShow = () => {
   ];
 
   const descriptionItemsSummary = [
+    ...statuses.map((status) => {
+      return {
+        key: status.id,
+        label: `${status.name}`,
+        children: attendance?.[statusesFields[status.id - 1]],
+      };
+    }),
     {
       key: "total_student",
       label: "Total Student",
       children: attendance?.students_count,
+      span: { xs: 2, sm: 2 },
     },
-    ...statuses.map((status) => {
-      return {
-        key: status.id,
-        label: `Total ${status.name}`,
-        children: attendance?.[statusesFields[status.id - 1]],
-      };
-    }),
   ];
 
   const columns = [
@@ -145,6 +155,8 @@ export const useShow = () => {
       key: "gender",
       onHeaderCell: tableHeaderStyle,
       minWidth: 80,
+      render: (_, record) =>
+        record.gender.charAt(0).toUpperCase() + record.gender.slice(1),
     },
     {
       title: "H",
@@ -198,6 +210,7 @@ export const useShow = () => {
   return {
     breadcrumbItems,
     fetchAttendance,
+    fetchStudentAttendances,
     fetchStatuses,
     statuses,
     fetchLoading,

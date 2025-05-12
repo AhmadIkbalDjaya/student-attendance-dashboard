@@ -1,9 +1,11 @@
+import dayjs from "dayjs";
+
 import handleApiError from "../helpers/handleApiError";
 import apiClient from "../config/api";
 
 const API_PREFIX = "/admin/attendances";
 
-export const getAttendances = async (page, perpage, search, date) => {
+export const getAllAttendances = async (page, perpage, search, date) => {
   try {
     const response = await apiClient.get(`${API_PREFIX}`, {
       params: {
@@ -25,6 +27,34 @@ export const getAttendance = async (id) => {
     return response.data;
   } catch (error) {
     return handleApiError(error);
+  }
+};
+
+export const createAttendance = async (data) => {
+  try {
+    const { title, datetime, course_id } = data;
+    const response = await apiClient.post(`${API_PREFIX}`, {
+      title,
+      datetime: dayjs(datetime).format("YYYY-MM-DD HH:mm:ss") ?? null,
+      course_id,
+    });
+    return response.data;
+  } catch (error) {
+    return handleApiError(error, "Create failed");
+  }
+};
+
+export const updateAttendance = async (id, data) => {
+  try {
+    const { title, datetime, course_id } = data;
+    const response = await apiClient.post(`${API_PREFIX}/${id}?_method=PUT`, {
+      title,
+      datetime: dayjs(datetime).format("YYYY-MM-DD HH:mm:ss") ?? null,
+      course_id,
+    });
+    return response.data;
+  } catch (error) {
+    return handleApiError(error, "Update failed");
   }
 };
 

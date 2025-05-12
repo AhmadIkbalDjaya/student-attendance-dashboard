@@ -1,8 +1,9 @@
 import { Breadcrumb, Table, Typography } from "antd";
-import { useIndex } from "./hooks/useIndex";
 import { useEffect } from "react";
+
 import TableHeaderActions from "../../components/TableHeaderActions";
 import DeleteModal from "../../components/DeleteModal";
+import { useIndex } from "./hooks/useIndex";
 
 export default function IndexAttendancePage() {
   const {
@@ -32,7 +33,8 @@ export default function IndexAttendancePage() {
       <Typography.Title level={3}>Attendance</Typography.Title>
       <TableHeaderActions
         handleSearch={handleSearch}
-        showCreateButton={false}
+        // showCreateButton={false}
+        createLink={"/attendance/create"}
         showSelectedDropwdown
         selectedCount={rowSelection.selectedRowKeys.length}
         handleBulkDelete={handleBulkDelete}

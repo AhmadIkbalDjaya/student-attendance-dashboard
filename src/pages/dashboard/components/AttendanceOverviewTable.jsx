@@ -2,7 +2,7 @@ import { Card, DatePicker, Flex, Grid, Input, Table, Typography } from "antd";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 
-import { getAttendances } from "../../../services/attendanceService";
+import { getAllAttendances } from "../../../services/attendanceService";
 import { tableHeaderStyle } from "../../../values/styles";
 import { showMessage } from "../../../utils/messageUtils";
 import { useSearch } from "../../../hooks/useSearch";
@@ -18,7 +18,7 @@ export default function AttendanceOverviewTable() {
   const fetchData = async () => {
     try {
       setFetchLoading(true);
-      const response = await getAttendances(
+      const response = await getAllAttendances(
         null,
         null,
         search,

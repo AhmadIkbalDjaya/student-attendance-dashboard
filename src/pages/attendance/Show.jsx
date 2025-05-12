@@ -9,16 +9,18 @@ import {
   Table,
   Typography,
 } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 import { descriptionsLabelStyle } from "../../values/styles";
 import { useShow } from "./hooks/useShow";
 
 export default function ShowAttendancePage() {
+  const { id } = useParams();
   const {
     breadcrumbItems,
     fetchAttendance,
+    fetchStudentAttendances,
     fetchStatuses,
     statuses,
     fetchLoading,
@@ -30,8 +32,9 @@ export default function ShowAttendancePage() {
   } = useShow();
 
   useEffect(() => {
-    fetchAttendance();
     fetchStatuses();
+    fetchAttendance();
+    fetchStudentAttendances();
   }, []);
 
   return (
@@ -43,11 +46,11 @@ export default function ShowAttendancePage() {
           <Button onClick={handleClickDelete} color="danger" variant="outlined">
             Delete
           </Button>
-          {/* <Link to={``}>
+          <Link to={`/attendance/${id}/edit`}>
             <Button color="primary" variant="solid">
               Edit
             </Button>
-          </Link> */}
+          </Link>
         </Flex>
       </Flex>
 

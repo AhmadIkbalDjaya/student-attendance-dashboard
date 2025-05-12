@@ -36,6 +36,8 @@ import CreateMajorPage from "./pages/major/Create";
 import EditMajorPage from "./pages/major/Edit";
 import IndexAttendancePage from "./pages/attendance/Index";
 import ShowAttendancePage from "./pages/attendance/Show";
+import { CreateAttendancePage } from "./pages/attendance/Create";
+import EditAttendancePage from "./pages/attendance/Edit";
 
 function App() {
   const messageContextHolder = useMessage();
@@ -96,8 +98,12 @@ function App() {
             <Route path="create" element={<CreateMajorPage />} />
             <Route path=":id/edit" element={<EditMajorPage />} />
           </Route>
-          <Route path="attendance" element={<IndexAttendancePage />} />
-          <Route path="attendance/:id" element={<ShowAttendancePage />} />
+          <Route path="attendance">
+            <Route path="" element={<IndexAttendancePage />} />
+            <Route path="create" element={<CreateAttendancePage />} />
+            <Route path=":id" element={<ShowAttendancePage />} />
+            <Route path=":id/Edit" element={<EditAttendancePage />} />
+          </Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

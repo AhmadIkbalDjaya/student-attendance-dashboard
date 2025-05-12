@@ -1,19 +1,20 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+
 import {
   bulkDeleteAttendance,
   deleteAttendance,
   getAttendanceIdsList,
-  getAttendances,
+  getAllAttendances,
 } from "../../../services/attendanceService";
-import { showMessage } from "../../../utils/messageUtils";
+import { useTableRowSelection } from "../../../hooks/useTableRowSelection";
 import { useTablePagination } from "../../../hooks/useTablePagination";
-import { useState } from "react";
-import { useSearch } from "../../../hooks/useSearch";
 import { useTableDelete } from "../../../hooks/useTableDelete";
+import { useBulkDelete } from "../../../hooks/useBulkDelete";
+import { showMessage } from "../../../utils/messageUtils";
 import { tableHeaderStyle } from "../../../values/styles";
 import TableAction from "../../../components/TableAction";
-import { useTableRowSelection } from "../../../hooks/useTableRowSelection";
-import { useBulkDelete } from "../../../hooks/useBulkDelete";
+import { useSearch } from "../../../hooks/useSearch";
 
 export const useIndex = () => {
   const [attendances, setAttendances] = useState([]);
@@ -26,7 +27,11 @@ export const useIndex = () => {
   const fetchData = async () => {
     try {
       setGetLoading(true);
-      const result = await getAttendances();
+      const result = await getAllAttendances(
+        pagination.current,
+        pagination.pageSize,
+        search
+      );
       setAttendances(result.data);
       setPagination((prev) => ({
         ...prev,
@@ -133,10 +138,10 @@ export const useIndex = () => {
       width: 100,
       render: (_, record) => (
         <TableAction
-          editAction={false}
           handleDelete={() => handleOpenDeleteModal(record)}
           viewAction
           viewLink={`/attendance/${record.id}`}
+          editLink={`/attendance/${record.id}/edit`}
         ></TableAction>
       ),
     },
