@@ -6,6 +6,7 @@ import { getAllAttendances } from "../../../services/attendanceService";
 import { tableHeaderStyle } from "../../../values/styles";
 import { showMessage } from "../../../utils/messageUtils";
 import { useSearch } from "../../../hooks/useSearch";
+import TableAction from "../../../components/TableAction";
 
 export default function AttendanceOverviewTable() {
   const [data, setData] = useState([]);
@@ -107,6 +108,20 @@ export default function AttendanceOverviewTable() {
       width: 50,
       align: "center",
       render: (text) => <span style={{ fontWeight: "bold" }}>{text}</span>,
+    },
+    {
+      title: "View",
+      key: "view",
+      fixed: "right",
+      width: 30,
+      render: (_, record) => (
+        <TableAction
+          viewAction
+          viewLink={`/attendance/${record.id}`}
+          editAction={false}
+          deleteAction={false}
+        ></TableAction>
+      ),
     },
   ];
 

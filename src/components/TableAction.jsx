@@ -13,6 +13,7 @@ export default function TableAction({
   viewAction = false,
   onClickView,
   viewLink,
+  deleteAction = true,
 }) {
   const editButton = (
     <Button
@@ -45,13 +46,15 @@ export default function TableAction({
           )}
         </Popover>
       )}
-      <Popover content="Delete">
-        <Button
-          type="text"
-          icon={<IconTrash color={red} />}
-          onClick={handleDelete}
-        />
-      </Popover>
+      {deleteAction && (
+        <Popover content="Delete">
+          <Button
+            type="text"
+            icon={<IconTrash color={red} />}
+            onClick={handleDelete}
+          />
+        </Popover>
+      )}
       {children}
     </Space>
   );

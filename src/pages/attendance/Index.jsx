@@ -33,7 +33,6 @@ export default function IndexAttendancePage() {
       <Typography.Title level={3}>Attendance</Typography.Title>
       <TableHeaderActions
         handleSearch={handleSearch}
-        // showCreateButton={false}
         createLink={"/attendance/create"}
         showSelectedDropwdown
         selectedCount={rowSelection.selectedRowKeys.length}

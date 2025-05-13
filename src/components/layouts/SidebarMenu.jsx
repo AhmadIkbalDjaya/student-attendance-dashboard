@@ -70,20 +70,20 @@ export default function SidebarMenu() {
       },
     },
     {
+      key: "attendance",
+      label: "Attendance",
+      icon: <IconNotebook style={{ marginLeft: -3 }} size={22} />,
+      onClick: () => {
+        navigate("/attendance");
+        screens.xs ? toggle() : null;
+      },
+    },
+    {
       key: "recap",
       label: "Recap",
       icon: <IconChartInfographic style={{ marginLeft: -3 }} size={22} />,
       onClick: () => {
         navigate("/recap");
-        screens.xs ? toggle() : null;
-      },
-    },
-    {
-      key: "about-us",
-      label: "About Us",
-      icon: <IconUserCircle style={{ marginLeft: -3 }} size={22} />,
-      onClick: () => {
-        navigate("/about-us");
         screens.xs ? toggle() : null;
       },
     },
@@ -97,11 +97,11 @@ export default function SidebarMenu() {
       },
     },
     {
-      key: "attendance",
-      label: "Attendance",
-      icon: <IconNotebook style={{ marginLeft: -3 }} size={22} />,
+      key: "about-us",
+      label: "About Us",
+      icon: <IconUserCircle style={{ marginLeft: -3 }} size={22} />,
       onClick: () => {
-        navigate("/attendance");
+        navigate("/about-us");
         screens.xs ? toggle() : null;
       },
     },
